@@ -1,0 +1,11 @@
+# Files not uploaded to Shopify when pushing the theme
+.git/
+.github/
+node_modules/
+package.json
+package-lock.json
+*.md
+.theme-check.yml
+.editorconfig
+.prettierrc
+.prettierignore

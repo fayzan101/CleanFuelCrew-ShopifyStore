@@ -1,0 +1,95 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Amadal",
+    "theme_version": "1.0.0",
+    "theme_author": "Amadal",
+    "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
+    "theme_support_url": "https://help.shopify.com/"
+  },
+  {
+    "name": "t:settings_schema.colors.name",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_background",
+        "label": "t:settings_schema.colors.settings.background.label",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "t:settings_schema.colors.settings.text.label",
+        "default": "#121212"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "t:settings_schema.colors.settings.accent.label",
+        "default": "#1a1a1a"
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.typography.name",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "t:settings_schema.typography.settings.body.label",
+        "default": "assistant_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "t:settings_schema.typography.settings.heading.label",
+        "default": "assistant_n4"
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.logo.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "t:settings_schema.logo.settings.logo.label"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 50,
+        "max": 300,
+        "step": 10,
+        "unit": "px",
+        "label": "t:settings_schema.logo.settings.logo_width.label",
+        "default": 120
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "t:settings_schema.logo.settings.favicon.label"
+      }
+    ]
+  },
+  {
+    "name": "t:settings_schema.social.name",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "t:settings_schema.social.settings.instagram.label"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "t:settings_schema.social.settings.facebook.label"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "t:settings_schema.social.settings.twitter.label"
+      }
+    ]
+  }
+]

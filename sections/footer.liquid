@@ -1,0 +1,33 @@
+<footer class="footer" role="contentinfo" {{ section.shopify_attributes }}>
+  <div class="page-width footer__inner">
+    <nav aria-label="Footer">
+      <ul class="footer__nav" role="list">
+        {%- for link in section.settings.menu.links -%}
+          <li>
+            <a href="{{ link.url }}">{{ link.title | escape }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <p class="footer__copyright">
+      {{ 'sections.footer.copyright' | t: year: 'now' | date: '%Y', shop_name: shop.name }}
+    </p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "section",
+  "class": "section-footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "footer"
+    }
+  ]
+}
+{% endschema %}

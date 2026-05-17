@@ -1,0 +1,33 @@
+<div class="section blog" {{ section.shopify_attributes }}>
+  <div class="page-width">
+    <h1>{{ blog.title | escape }}</h1>
+
+    {%- paginate blog.articles by 6 -%}
+      <ul class="blog-list" role="list">
+        {%- for article in blog.articles -%}
+          <li class="blog-list__item">
+            <h2>
+              <a href="{{ article.url }}">{{ article.title | escape }}</a>
+            </h2>
+            {%- if article.excerpt != blank -%}
+              <p>{{ article.excerpt | strip_html | truncate: 160 }}</p>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if paginate.pages > 1 -%}
+        {% render 'pagination', paginate: paginate %}
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog",
+  "tag": "section",
+  "class": "section-main-blog",
+  "settings": []
+}
+{% endschema %}

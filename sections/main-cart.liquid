@@ -1,0 +1,69 @@
+<div class="section cart" {{ section.shopify_attributes }}>
+  <div class="page-width">
+    <h1>{{ 'cart.general.title' | t }}</h1>
+
+    {%- if cart != empty -%}
+      <form action="{{ routes.cart_url }}" method="post" id="cart">
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">{{ 'products.product.quantity' | t }}</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for item in cart.items -%}
+              <tr>
+                <td>
+                  <a href="{{ item.url }}">{{ item.product.title | escape }}</a>
+                  {%- unless item.product.has_only_default_variant -%}
+                    <p>{{ item.variant.title }}</p>
+                  {%- endunless -%}
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    data-index="{{ forloop.index }}"
+                    aria-label="{{ 'products.product.quantity' | t }}"
+                  >
+                </td>
+                <td>{{ item.final_line_price | money }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+
+        <p class="cart__subtotal">
+          {{ 'cart.general.subtotal' | t }}: {{ cart.total_price | money }}
+        </p>
+
+        <div class="cart__actions">
+          <button type="submit" name="update" class="button button--secondary">
+            {{ 'cart.general.update' | t }}
+          </button>
+          <button type="submit" name="checkout" class="button">
+            {{ 'cart.general.checkout' | t }}
+          </button>
+        </div>
+      </form>
+    {%- else -%}
+      <p>{{ 'cart.general.empty' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="button">
+        {{ 'general.continue_shopping' | t }}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "section",
+  "class": "section-main-cart",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,31 @@
+<article class="section article" {{ section.shopify_attributes }}>
+  <div class="page-width">
+    <header>
+      <h1>{{ article.title | escape }}</h1>
+      <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+        {{ article.published_at | date: format: 'abbreviated_date' }}
+      </time>
+    </header>
+
+    {%- if article.image -%}
+      {{
+        article.image
+        | image_url: width: 1200
+        | image_tag: loading: 'eager', widths: '400, 800, 1200', sizes: '(min-width: 990px) 80vw, 100vw'
+      }}
+    {%- endif -%}
+
+    <div class="rte article__content">
+      {{ article.content }}
+    </div>
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "class": "section-main-article",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,31 @@
+<div class="section list-collections" {{ section.shopify_attributes }}>
+  <div class="page-width">
+    <h1>{{ 'collections.general.title' | t }}</h1>
+
+    <ul class="collection-list" role="list">
+      {%- for collection in collections -%}
+        <li class="collection-list__item">
+          <a href="{{ collection.url }}">
+            {%- if collection.featured_image -%}
+              {{
+                collection.featured_image
+                | image_url: width: 600
+                | image_tag: loading: 'lazy', widths: '200, 400, 600', alt: collection.title
+              }}
+            {%- endif -%}
+            <h2>{{ collection.title | escape }}</h2>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "tag": "section",
+  "class": "section-main-list-collections",
+  "settings": []
+}
+{% endschema %}

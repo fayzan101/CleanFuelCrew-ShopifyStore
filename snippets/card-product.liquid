@@ -1,0 +1,32 @@
+{%- liquid
+  assign ratio = 1
+  if media_aspect_ratio == 'portrait'
+    assign ratio = 0.8
+  endif
+-%}
+
+<div class="card-product">
+  <a href="{{ card_product.url }}" class="card-product__link">
+    <div class="card-product__media" style="--aspect-ratio: {{ ratio }};">
+      {%- if card_product.featured_media -%}
+        {{
+          card_product.featured_media
+          | image_url: width: 600
+          | image_tag:
+            class: 'card-product__image',
+            loading: 'lazy',
+            widths: '200, 400, 600',
+            sizes: '(min-width: 990px) 25vw, 50vw',
+            alt: card_product.featured_media.alt | escape
+        }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'card-product__image placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="card-product__info">
+      <h3 class="card-product__title h4">{{ card_product.title | escape }}</h3>
+      {% render 'price', product: card_product, show_badges: true %}
+    </div>
+  </a>
+</div>

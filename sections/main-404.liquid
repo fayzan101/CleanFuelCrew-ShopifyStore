@@ -1,0 +1,16 @@
+<div class="section page-404" {{ section.shopify_attributes }}>
+  <div class="page-width text-center">
+    <h1>{{ 'general.404.title' | t }}</h1>
+    <p>{{ 'general.404.subtext' | t }}</p>
+    <a href="{{ routes.root_url }}" class="button">{{ 'general.continue_shopping' | t }}</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404",
+  "tag": "section",
+  "class": "section-main-404",
+  "settings": []
+}
+{% endschema %}

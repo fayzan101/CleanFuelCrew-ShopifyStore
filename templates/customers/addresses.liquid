@@ -1,0 +1,16 @@
+<div class="section customer-addresses">
+  <div class="page-width">
+    <h1>Addresses</h1>
+
+    {%- for address in customer.addresses -%}
+      <div class="address-card">
+        {%- if address == customer.default_address -%}
+          <p><strong>Default</strong></p>
+        {%- endif -%}
+        {{ address | format_address }}
+      </div>
+    {%- endfor -%}
+
+    <p><a href="{{ routes.account_url }}">{{ 'customer.account.return' | t }}</a></p>
+  </div>
+</div>

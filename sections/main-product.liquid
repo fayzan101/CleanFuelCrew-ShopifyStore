@@ -1,0 +1,79 @@
+<div class="section product" {{ section.shopify_attributes }}>
+  <div class="page-width product__grid">
+    <div class="product__media">
+      {%- if product.featured_media -%}
+        {{
+          product.featured_media
+          | image_url: width: 1200
+          | image_tag: loading: 'eager', widths: '400, 800, 1200', sizes: '(min-width: 990px) 50vw, 100vw'
+        }}
+      {%- endif -%}
+    </div>
+
+    <div class="product__info">
+      <h1>{{ product.title | escape }}</h1>
+      {% render 'price', product: product, use_variant: true, show_badges: true %}
+
+      {%- form 'product', product, id: 'product-form', class: 'product-form' -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <div class="field">
+              <label for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
+              <select
+                id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                name="options[{{ option.name | escape }}]"
+              >
+                {%- for value in option.values -%}
+                  <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>
+                    {{ value }}
+                  </option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="field">
+          <label for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
+          <input
+            type="number"
+            name="quantity"
+            id="Quantity-{{ section.id }}"
+            min="1"
+            value="1"
+          >
+        </div>
+
+        <button
+          type="submit"
+          name="add"
+          class="button"
+          {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+        >
+          {%- if product.selected_or_first_available_variant.available -%}
+            {{ 'products.product.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.product.sold_out' | t }}
+          {%- endif -%}
+        </button>
+      {%- endform -%}
+
+      {%- if product.description != blank -%}
+        <div class="product__description rte">
+          {{ product.description }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product information",
+  "tag": "section",
+  "class": "section-main-product",
+  "settings": []
+}
+{% endschema %}

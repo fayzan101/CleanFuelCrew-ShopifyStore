@@ -1,0 +1,35 @@
+{
+  "settings_schema": {
+    "colors": {
+      "name": "Colors",
+      "settings": {
+        "background": { "label": "Background" },
+        "text": { "label": "Text" },
+        "accent": { "label": "Accent" }
+      }
+    },
+    "typography": {
+      "name": "Typography",
+      "settings": {
+        "body": { "label": "Body font" },
+        "heading": { "label": "Heading font" }
+      }
+    },
+    "logo": {
+      "name": "Logo",
+      "settings": {
+        "logo": { "label": "Logo image" },
+        "logo_width": { "label": "Logo width" },
+        "favicon": { "label": "Favicon" }
+      }
+    },
+    "social": {
+      "name": "Social media",
+      "settings": {
+        "instagram": { "label": "Instagram URL" },
+        "facebook": { "label": "Facebook URL" },
+        "twitter": { "label": "X (Twitter) URL" }
+      }
+    }
+  }
+}

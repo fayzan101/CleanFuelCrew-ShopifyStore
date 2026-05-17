@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Shopify CLI
+.shopify/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.*
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build artifacts
+dist/
+.cache/

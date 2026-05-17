@@ -1,0 +1,19 @@
+{
+  "current": {
+    "color_background": "#ffffff",
+    "color_text": "#121212",
+    "color_accent": "#1a1a1a",
+    "logo_width": 120,
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      }
+    },
+    "content_for_index": []
+  }
+}

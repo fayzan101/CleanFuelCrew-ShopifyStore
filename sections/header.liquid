@@ -1,0 +1,54 @@
+<header class="header" role="banner" {{ section.shopify_attributes }}>
+  <div class="page-width header__inner" style="--logo-width: {{ settings.logo_width }}px;">
+    <a href="{{ routes.root_url }}" class="header__logo">
+      {%- if settings.logo != blank -%}
+        {{
+          settings.logo
+          | image_url: width: settings.logo_width
+          | image_tag: alt: shop.name, widths: '100, 200, 300'
+        }}
+      {%- else -%}
+        <span class="h4">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="header__nav-wrapper" aria-label="{{ 'sections.header.menu' | t }}">
+      <ul class="header__nav" role="list">
+        {%- for link in section.settings.menu.links -%}
+          <li>
+            <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>
+              {{ link.title | escape }}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header__icons">
+      <a href="{{ routes.search_url }}" class="header__icon-link">
+        <span class="visually-hidden">{{ 'general.search.search' | t }}</span>
+        Search
+      </a>
+      <a href="{{ routes.cart_url }}" class="header__icon-link" id="cart-icon-bubble">
+        <span class="visually-hidden">{{ 'sections.header.cart' | t }}</span>
+        Cart ({{ cart.item_count }})
+      </a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "section",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}
