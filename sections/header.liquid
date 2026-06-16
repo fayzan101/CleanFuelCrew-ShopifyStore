@@ -1,38 +1,52 @@
 <header class="header" role="banner" {{ section.shopify_attributes }}>
   <div class="page-width header__inner" style="--logo-width: {{ settings.logo_width }}px;">
-    <a href="{{ routes.root_url }}" class="header__logo">
-      {%- if settings.logo != blank -%}
-        {{
-          settings.logo
-          | image_url: width: settings.logo_width
-          | image_tag: alt: shop.name, widths: '100, 200, 300'
-        }}
-      {%- else -%}
-        <span class="h4">{{ shop.name }}</span>
-      {%- endif -%}
-    </a>
+    <div class="header__left">
+      <a href="{{ routes.root_url }}" class="header__logo">
+        {%- if settings.logo != blank -%}
+          {{
+            settings.logo
+            | image_url: width: settings.logo_width
+            | image_tag: alt: shop.name, widths: '100, 200, 300'
+          }}
+        {%- else -%}
+          <img src="{{ 'Logo.png' | asset_url }}" alt="{{ shop.name }}" class="header__logo-fallback" height="80px" width="80px" />
+        {%- endif -%}
+      </a>
+    </div>
 
     <nav class="header__nav-wrapper" aria-label="{{ 'sections.header.menu' | t }}">
       <ul class="header__nav" role="list">
-        {%- for link in section.settings.menu.links -%}
-          <li>
-            <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>
-              {{ link.title | escape }}
-            </a>
-          </li>
-        {%- endfor -%}
+        {%- if section.settings.menu != blank and section.settings.menu.links.size >= 5 -%}
+          {%- for link in section.settings.menu.links -%}
+            <li>
+              <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>
+                {{ link.title | escape }}
+              </a>
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          <li><a href="{{ routes.root_url }}">HOME</a></li>
+          <li><a href="{{ routes.all_products_collection_url }}">SHOP</a></li>
+          <li><a href="/pages/about">ABOUT</a></li>
+          <li><a href="/pages/recipes">RECIPES</a></li>
+          <li><a href="/pages/contact">CONTACT</a></li>
+        {%- endif -%}
       </ul>
     </nav>
 
-    <div class="header__icons">
-      <a href="{{ routes.search_url }}" class="header__icon-link">
-        <span class="visually-hidden">{{ 'general.search.search' | t }}</span>
-        Search
-      </a>
-      <a href="{{ routes.cart_url }}" class="header__icon-link" id="cart-icon-bubble">
-        <span class="visually-hidden">{{ 'sections.header.cart' | t }}</span>
-        Cart ({{ cart.item_count }})
-      </a>
+    <div class="header__right">
+      <div class="header__icons">
+        <a href="{{ routes.search_url }}" class="header__icon-link" aria-label="{{ 'general.search.search' | t }}">
+          <span class="header__icon-img" style="--icon-url: url('{{ 'search.svg' | asset_url }}');"></span>
+        </a>
+        <a href="{{ routes.cart_url }}" class="header__icon-link header__cart" id="cart-icon-bubble" aria-label="{{ 'sections.header.cart' | t }}">
+          <span class="header__icon-img" style="--icon-url: url('{{ 'cart.svg' | asset_url }}');"></span>
+          <span class="cart-count">{{ cart.item_count }}</span>
+        </a>
+        <a href="{{ routes.account_url }}" class="header__icon-link" aria-label="Account">
+          <span class="header__icon-img" style="--icon-url: url('{{ 'profile.svg' | asset_url }}');"></span>
+        </a>
+      </div>
     </div>
   </div>
 </header>

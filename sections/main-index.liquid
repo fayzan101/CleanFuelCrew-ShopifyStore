@@ -1,4 +1,10 @@
 <div class="section" {{ section.shopify_attributes }}>
+  {% render 'page-banner',
+    banner_title: section.settings.banner_title | default: 'Home',
+    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
+    banner_image: section.settings.banner_image
+  %}
+
   <div class="page-width">
     {%- if section.settings.heading != blank -%}
       <h1>{{ section.settings.heading | escape }}</h1>
@@ -19,10 +25,27 @@
 
 {% schema %}
 {
-  "name": "Homepage featured collection",
+  "name": "Featured collection",
   "tag": "section",
   "class": "section-main-index",
   "settings": [
+    {
+      "type": "text",
+      "id": "banner_title",
+      "label": "Banner title",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "banner_subtitle",
+      "label": "Banner subtitle",
+      "default": "Home / Shop"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    },
     {
       "type": "text",
       "id": "heading",
@@ -56,7 +79,7 @@
   ],
   "presets": [
     {
-      "name": "Homepage featured collection"
+      "name": "Featured collection"
     }
   ]
 }

@@ -1,4 +1,10 @@
 <div class="section page" {{ section.shopify_attributes }}>
+  {% render 'page-banner',
+    banner_title: page.title,
+    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Page',
+    banner_image: section.settings.banner_image
+  %}
+
   <div class="page-width">
     <h1>{{ page.title | escape }}</h1>
     <div class="rte">{{ page.content }}</div>
@@ -10,6 +16,18 @@
   "name": "Page",
   "tag": "section",
   "class": "section-main-page",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_subtitle",
+      "label": "Banner subtitle",
+      "default": "Home / Page"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    }
+  ]
 }
 {% endschema %}

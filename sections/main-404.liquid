@@ -1,4 +1,10 @@
 <div class="section page-404" {{ section.shopify_attributes }}>
+  {% render 'page-banner',
+    banner_title: 'Page not found',
+    banner_subtitle: section.settings.banner_subtitle | default: 'Home / 404',
+    banner_image: section.settings.banner_image
+  %}
+
   <div class="page-width text-center">
     <h1>{{ 'general.404.title' | t }}</h1>
     <p>{{ 'general.404.subtext' | t }}</p>
@@ -11,6 +17,18 @@
   "name": "404",
   "tag": "section",
   "class": "section-main-404",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_subtitle",
+      "label": "Banner subtitle",
+      "default": "Home / 404"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    }
+  ]
 }
 {% endschema %}

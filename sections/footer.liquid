@@ -1,18 +1,53 @@
-<footer class="footer" role="contentinfo" {{ section.shopify_attributes }}>
+<footer class="footer" role="contentinfo" style="background-image: url('{{ 'footer-bg.png' | asset_url }}');" {{ section.shopify_attributes }}>
   <div class="page-width footer__inner">
-    <nav aria-label="Footer">
-      <ul class="footer__nav" role="list">
-        {%- for link in section.settings.menu.links -%}
-          <li>
-            <a href="{{ link.url }}">{{ link.title | escape }}</a>
-          </li>
-        {%- endfor -%}
-      </ul>
-    </nav>
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="{{ routes.root_url }}" class="footer__logo">
+          {%- if settings.logo != blank -%}
+            {{ settings.logo | image_url: width: 180 | image_tag: alt: shop.name }}
+          {%- else -%}
+             <img src="{{ 'Logo.png' | asset_url }}" alt="{{ shop.name }}" class="header__logo-fallback" height="80px" width="80px" />
+          {%- endif -%}
+        </a>
+        <p class="footer__desc">{{ shop.meta_description | default: 'The Clean Spread delivers natural, high-quality products you can trust every day. We keep it simple, pure, and honest.' }}</p>
+      </div>
 
-    <p class="footer__copyright">
-      {{ 'sections.footer.copyright' | t: year: 'now' | date: '%Y', shop_name: shop.name }}
-    </p>
+      <div class="footer__cols">
+        <div class="footer__col">
+          <h4 class="footer__col-title">Quick Links</h4>
+          <ul>
+            {%- for link in linklists.main-menu.links limit:4 -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h4 class="footer__col-title">Products</h4>
+          <ul>
+            {%- assign prods = collections.all.products | slice: 0,4 -%}
+            {%- for p in prods -%}
+              <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <div class="footer__col">
+          <h4 class="footer__col-title">Get in Touch</h4>
+          <p>Dubai Based</p>
+          <br>
+          <h5 class="footer__col-title">Follow Us On</h5>
+          <p><a href="#" aria-label="Instagram">
+            <span class="footer__social-icon" style="--icon-url: url('{{ 'insta.svg' | asset_url }}');"></span>
+          </a></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      <p class="footer__credit">{{ section.settings.credit }}</p>
+    </div>
   </div>
 </footer>
 
@@ -27,6 +62,12 @@
       "id": "menu",
       "label": "Menu",
       "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "credit",
+      "label": "Theme Credit",
+      "default": "Handcrafted with love in the UAE"
     }
   ]
 }

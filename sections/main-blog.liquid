@@ -1,4 +1,10 @@
 <div class="section blog" {{ section.shopify_attributes }}>
+  {% render 'page-banner',
+    banner_title: blog.title,
+    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Blog',
+    banner_image: section.settings.banner_image | default: blog.image
+  %}
+
   <div class="page-width">
     <h1>{{ blog.title | escape }}</h1>
 
@@ -28,6 +34,18 @@
   "name": "Blog",
   "tag": "section",
   "class": "section-main-blog",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_subtitle",
+      "label": "Banner subtitle",
+      "default": "Home / Blog"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    }
+  ]
 }
 {% endschema %}

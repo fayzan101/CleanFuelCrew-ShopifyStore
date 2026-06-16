@@ -1,4 +1,10 @@
 <div class="section collection" {{ section.shopify_attributes }}>
+  {% render 'page-banner',
+    banner_title: collection.title,
+    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
+    banner_image: section.settings.banner_image | default: collection.featured_image
+  %}
+
   <div class="page-width">
     <h1>{{ collection.title | escape }}</h1>
 
@@ -32,6 +38,17 @@
   "tag": "section",
   "class": "section-main-collection",
   "settings": [
+    {
+      "type": "text",
+      "id": "banner_subtitle",
+      "label": "Banner subtitle",
+      "default": "Home / Shop"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    },
     {
       "type": "range",
       "id": "products_per_page",

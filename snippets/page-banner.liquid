@@ -1,0 +1,42 @@
+{%- liquid
+  assign banner_title = banner_title | default: 'Page'
+  assign banner_subtitle = banner_subtitle | default: ''
+-%}
+
+<section class="page-banner">
+  <div class="page-banner__media">
+    {%- if banner_image != blank -%}
+      {{
+        banner_image
+        | image_url: width: 1800
+        | image_tag:
+          class: 'page-banner__image',
+          loading: 'eager',
+          widths: '750, 1100, 1500, 1800',
+          sizes: '100vw',
+          alt: banner_title
+      }}
+    {%- else -%}
+      <div class="page-banner__image page-banner__image--placeholder" aria-hidden="true"></div>
+    {%- endif -%}
+  </div>
+
+  <div class="page-banner__overlay" aria-hidden="true"></div>
+
+  <div class="page-width page-banner__content">
+      <h1 class="page-banner__title">{{ banner_title | escape }}</h1>
+    {%- if banner_subtitle != blank -%}
+      <p class="page-banner__eyebrow">{{ banner_subtitle | escape }}</p>
+    {%- endif -%}
+  </div>
+</section>
+
+{%  style  %}
+
+.page-banner__image {
+  background: red;
+  width: 100%;
+  height: 300px;
+}
+
+{% endstyle %}

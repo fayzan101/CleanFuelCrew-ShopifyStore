@@ -1,4 +1,10 @@
 <div class="section search" {{ section.shopify_attributes }}>
+  {% render 'page-banner',
+    banner_title: 'Search',
+    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Search',
+    banner_image: section.settings.banner_image
+  %}
+
   <div class="page-width">
     <h1>{{ 'general.search.search' | t }}</h1>
 
@@ -40,6 +46,18 @@
   "name": "Search",
   "tag": "section",
   "class": "section-main-search",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_subtitle",
+      "label": "Banner subtitle",
+      "default": "Home / Search"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    }
+  ]
 }
 {% endschema %}

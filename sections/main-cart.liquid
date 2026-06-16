@@ -1,4 +1,10 @@
 <div class="section cart" {{ section.shopify_attributes }}>
+  {% render 'page-banner',
+    banner_title: 'Cart',
+    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Cart',
+    banner_image: section.settings.banner_image
+  %}
+
   <div class="page-width">
     <h1>{{ 'cart.general.title' | t }}</h1>
 
@@ -64,6 +70,18 @@
   "name": "Cart",
   "tag": "section",
   "class": "section-main-cart",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "banner_subtitle",
+      "label": "Banner subtitle",
+      "default": "Home / Cart"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    }
+  ]
 }
 {% endschema %}
