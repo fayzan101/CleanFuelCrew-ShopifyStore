@@ -8,7 +8,7 @@
   {%- endif -%}
 
   <div class="page-width">
-    {%- if section.settings.heading != blank -%}
+    {% comment %} {%- if section.settings.heading != blank -%}
       <h1>{{ section.settings.heading | escape }}</h1>
     {%- endif -%}
 
@@ -22,7 +22,7 @@
         {%- endfor -%}
       </ul>
     {%- endif -%}
-  </div>
+  </div> {% endcomment %}
 </div>
 
 {% schema %}

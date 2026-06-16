@@ -1,84 +1,395 @@
-<div class="section product" {{ section.shopify_attributes }}>
+<div class="section product-page" {{ section.shopify_attributes }}>
   {%- liquid
+    assign ingredients_metafield = product.metafields.custom.ingredients
+    assign allergens_metafield = product.metafields.custom.allergens
+    assign expiry_metafield = product.metafields.custom.expiry
+
+    assign review_count = 0
+    assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media
+    assign current_variant = product.selected_or_first_available_variant
+    assign shipping_page = pages[section.settings.shipping_page_handle]
+    assign product_category = product.type
+    if product_category == blank and product.collections.size > 0
+      assign product_category = product.collections.first.title
+    endif
+
+    assign share_url = shop.url | append: product.url
+    assign share_image = featured_media | image_url: width: 1200
+    assign featured_zoom_url = featured_media | image_url: width: 2400
+
     assign product_banner_subtitle = 'Home / Shop / ' | append: product.title
     if section.settings.banner_subtitle != blank
       assign product_banner_subtitle = section.settings.banner_subtitle
     endif
   -%}
-  {% render 'page-banner',
-    banner_title: product.title,
-    banner_subtitle: product_banner_subtitle,
-    banner_image: section.settings.banner_image | default: product.featured_media
-  %}
 
-  <div class="page-width product__grid">
-    <div class="product__media">
-      {%- if product.featured_media -%}
-        {{
-          product.featured_media
-          | image_url: width: 1200
-          | image_tag: loading: 'eager', widths: '400, 800, 1200', sizes: '(min-width: 990px) 50vw, 100vw'
-        }}
-      {%- endif -%}
-    </div>
+  {%- if section.settings.show_banner -%}
+    {% render 'page-banner',
+      banner_title: product.title,
+      banner_subtitle: product_banner_subtitle,
+      banner_image: section.settings.banner_image | default: featured_media
+    %}
+  {%- endif -%}
 
-    <div class="product__info">
-      <h1>{{ product.title | escape }}</h1>
-      {% render 'price', product: product, use_variant: true, show_badges: true %}
-
-      {%- form 'product', product, id: 'product-form', class: 'product-form' -%}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-
-        {%- unless product.has_only_default_variant -%}
-          {%- for option in product.options_with_values -%}
-            <div class="field">
-              <label for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
-              <select
-                id="Option-{{ section.id }}-{{ forloop.index0 }}"
-                name="options[{{ option.name | escape }}]"
-              >
-                {%- for value in option.values -%}
-                  <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>
-                    {{ value }}
-                  </option>
+  <div class="page-width product-page__hero">
+    <div class="product__layout">
+      <div class="product__media-col">
+        {%- if product.media.size > 0 -%}
+          <div class="product__gallery" data-product-gallery>
+            {%- if product.media.size > 1 -%}
+              <ul class="product__thumbs product__thumbs--vertical" role="list">
+                {%- for media in product.media -%}
+                  <li>
+                    <button
+                      type="button"
+                      class="product__thumb{% if media == featured_media %} is-active{% endif %}"
+                      data-action="product-thumb"
+                      data-media-url="{{ media | image_url: width: 1200 }}"
+                      data-media-url-zoom="{{ media | image_url: width: 2400 }}"
+                      data-media-index="{{ forloop.index0 }}"
+                      aria-label="View image {{ forloop.index }}"
+                    >
+                      {{
+                        media
+                        | image_url: width: 160
+                        | image_tag: loading: 'lazy', widths: '80, 160', sizes: '80px', alt: media.alt
+                      }}
+                    </button>
+                  </li>
                 {%- endfor -%}
-              </select>
+              </ul>
+            {%- endif -%}
+
+            <div class="product__main-wrap">
+              <div class="product__main-media" data-product-zoom>
+                {{
+                  featured_media
+                  | image_url: width: 1200
+                  | image_tag:
+                    id: 'ProductMainImage',
+                    loading: 'eager',
+                    widths: '400, 800, 1200',
+                    sizes: '(min-width: 990px) 50vw, 100vw',
+                    alt: featured_media.alt | default: product.title,
+                    data-zoom-url: featured_zoom_url
+                }}
+              </div>
+
+              {%- if product.media.size > 1 -%}
+                <button type="button" class="product__gallery-nav product__gallery-nav--prev" data-action="product-gallery-prev" aria-label="Previous image">
+                  <span aria-hidden="true">&#8249;</span>
+                </button>
+                <button type="button" class="product__gallery-nav product__gallery-nav--next" data-action="product-gallery-next" aria-label="Next image">
+                  <span aria-hidden="true">&#8250;</span>
+                </button>
+              {%- endif -%}
             </div>
-          {%- endfor -%}
-        {%- endunless -%}
 
-        <div class="field">
-          <label for="Quantity-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
-          <input
-            type="number"
-            name="quantity"
-            id="Quantity-{{ section.id }}"
-            min="1"
-            value="1"
-          >
+            <div class="product-zoom-flyout" id="ProductZoomFlyout" hidden>
+              <div class="product-zoom-flyout__inner"></div>
+            </div>
+          </div>
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'product__placeholder' }}
+        {%- endif -%}
+      </div>
+
+      <div class="product__info-col">
+        {%- if section.settings.show_banner -%}
+          <h2 class="product__title">{{ product.title | escape }}</h2>
+        {%- else -%}
+          <h1 class="product__title">{{ product.title | escape }}</h1>
+        {%- endif -%}
+
+        <div class="product__price-wrap">
+          {% render 'price', product: product, use_variant: true, show_badges: false %}
         </div>
 
-        <button
-          type="submit"
-          name="add"
-          class="button"
-          {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
-        >
-          {%- if product.selected_or_first_available_variant.available -%}
-            {{ 'products.product.add_to_cart' | t }}
-          {%- else -%}
-            {{ 'products.product.sold_out' | t }}
+        {%- if product.description != blank -%}
+          <div class="product__description rte">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+
+        {%- form 'product', product, id: 'product-form', class: 'product-form' -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="field product-form__option">
+                <label for="Option-{{ section.id }}-{{ forloop.index0 }}">{{ option.name }}</label>
+                <select
+                  id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                  name="options[{{ option.name | escape }}]"
+                >
+                  {%- for value in option.values -%}
+                    <option value="{{ value | escape }}"{% if option.selected_value == value %} selected{% endif %}>
+                      {{ value }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <div class="product-form__actions">
+            <div class="quantity-stepper" data-quantity-stepper>
+              <button type="button" class="quantity-stepper__btn" data-action="qty-minus" aria-label="Decrease quantity">&#8722;</button>
+              <input
+                type="number"
+                name="quantity"
+                id="Quantity-{{ section.id }}"
+                class="quantity-stepper__input"
+                min="1"
+                value="1"
+                aria-label="{{ 'products.product.quantity' | t }}"
+              >
+              <button type="button" class="quantity-stepper__btn" data-action="qty-plus" aria-label="Increase quantity">&#43;</button>
+            </div>
+
+            <button
+              type="submit"
+              name="add"
+              class="button product-form__submit"
+              {% unless current_variant.available %}disabled{% endunless %}
+            >
+              {%- if current_variant.available -%}
+                Add to cart
+              {%- else -%}
+                {{ 'products.product.sold_out' | t }}
+              {%- endif -%}
+            </button>
+
+            <button
+              type="button"
+              class="product-wishlist"
+              data-action="wishlist-toggle"
+              data-product-id="{{ product.id }}"
+              data-product-handle="{{ product.handle }}"
+              data-product-title="{{ product.title | escape }}"
+              data-product-url="{{ product.url }}"
+              data-product-image="{{ featured_media | image_url: width: 600 }}"
+              data-product-price="{{ current_variant.price | money }}"
+              aria-label="Add to wishlist"
+              aria-pressed="false"
+            >
+              {% render 'icon-heart' %}
+            </button>
+          </div>
+        {%- endform -%}
+
+        <div class="product__meta">
+          {%- if product_category != blank -%}
+            <p class="product__category">
+              <span class="product__meta-label">Category:</span>
+              {{ product_category | escape }}
+            </p>
           {%- endif -%}
-        </button>
-      {%- endform -%}
 
-      {%- if product.description != blank -%}
-        <div class="product__description rte">
-          {{ product.description }}
+          {%- if shipping_page != blank -%}
+            <a href="{{ shipping_page.url }}" class="product__shipping-link">Shipping &amp; Returns</a>
+          {%- elsif section.settings.shipping_page_handle != blank -%}
+            <a href="/pages/{{ section.settings.shipping_page_handle }}" class="product__shipping-link">Shipping &amp; Returns</a>
+          {%- endif -%}
         </div>
-      {%- endif -%}
+
+        <div class="product__share">
+          <span class="product__share-label">Share:</span>
+          <div class="product__share-links">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on Facebook">f</a>
+            <a href="https://wa.me/?text={{ product.title | url_encode }}%20{{ share_url | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on WhatsApp">w</a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on LinkedIn">in</a>
+            <a href="https://pinterest.com/pin/create/button/?url={{ share_url | url_encode }}&amp;media={{ share_image | url_encode }}&amp;description={{ product.title | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on Pinterest">p</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <div class="page-width product-page__tabs-wrap">
+    <div class="product-tabs" data-product-tabs>
+      <div class="product-tabs__nav" role="tablist">
+        <button
+          type="button"
+          class="product-tabs__btn is-active"
+          role="tab"
+          aria-selected="true"
+          aria-controls="ProductTabDescription"
+          id="ProductTabBtnDescription"
+          data-action="product-tab"
+          data-tab="description"
+        >
+          Description
+        </button>
+        <button
+          type="button"
+          class="product-tabs__btn"
+          role="tab"
+          aria-selected="false"
+          aria-controls="ProductTabReviews"
+          id="ProductTabBtnReviews"
+          data-action="product-tab"
+          data-tab="reviews"
+        >
+          Reviews ({{ review_count }})
+        </button>
+      </div>
+
+      <div
+        class="product-tabs__panel is-active"
+        id="ProductTabDescription"
+        role="tabpanel"
+        aria-labelledby="ProductTabBtnDescription"
+        data-tab-panel="description"
+      >
+        <div class="product-accordion">
+          <details class="product-accordion__item" open>
+            <summary class="product-accordion__summary">
+              <span class="product-accordion__icon product-accordion__icon--ingredients" aria-hidden="true"></span>
+              <span class="product-accordion__title">Ingredients</span>
+              <span class="product-accordion__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="product-accordion__body rte">
+              {%- if ingredients_metafield != blank -%}
+                {{ ingredients_metafield | metafield_tag }}
+              {%- else -%}
+                {% render 'ingredients-list', lines: section.settings.default_ingredients_list %}
+              {%- endif -%}
+            </div>
+          </details>
+
+          <details class="product-accordion__item">
+            <summary class="product-accordion__summary">
+              <span class="product-accordion__icon product-accordion__icon--allergens" aria-hidden="true"></span>
+              <span class="product-accordion__title">Allergens</span>
+              <span class="product-accordion__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="product-accordion__body rte">
+              {%- if allergens_metafield != blank -%}
+                {{ allergens_metafield | metafield_tag }}
+              {%- elsif section.settings.default_allergens != blank -%}
+                {{ section.settings.default_allergens }}
+              {%- else -%}
+                <p>May contain traces of nuts. Please check the label if you have allergies.</p>
+              {%- endif -%}
+            </div>
+          </details>
+
+          <details class="product-accordion__item">
+            <summary class="product-accordion__summary">
+              <span class="product-accordion__icon product-accordion__icon--expiry" aria-hidden="true"></span>
+              <span class="product-accordion__title">Expiry</span>
+              <span class="product-accordion__chevron" aria-hidden="true"></span>
+            </summary>
+            <div class="product-accordion__body rte">
+              {%- if expiry_metafield != blank -%}
+                {{ expiry_metafield | metafield_tag }}
+              {%- elsif section.settings.default_expiry != blank -%}
+                {{ section.settings.default_expiry }}
+              {%- else -%}
+                <p>Best before 12 months from production. Store in a cool, dry place after opening.</p>
+              {%- endif -%}
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <div
+        class="product-tabs__panel"
+        id="ProductTabReviews"
+        role="tabpanel"
+        aria-labelledby="ProductTabBtnReviews"
+        data-tab-panel="reviews"
+        hidden
+      >
+        <div class="product-reviews">
+          <h2 class="product-reviews__heading">Reviews</h2>
+
+          {%- if review_count == 0 -%}
+            <p class="product-reviews__empty">There are no reviews yet.</p>
+            <p class="product-reviews__prompt">
+              Be the first to review &ldquo;{{ product.title | escape }}&rdquo;
+            </p>
+          {%- endif -%}
+
+          <p class="product-reviews__note">
+            <em>Your email address will not be published. Required fields are marked *</em>
+          </p>
+
+          <form class="product-reviews__form" action="#" method="post">
+            <div class="field">
+              <label>Your rating <span aria-hidden="true">*</span></label>
+              <div class="product-reviews__stars" role="group" aria-label="Rating">
+                {%- for i in (1..5) -%}
+                  <button type="button" class="product-reviews__star" data-action="review-star" data-value="{{ i }}" aria-label="{{ i }} stars">&#9734;</button>
+                {%- endfor -%}
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="ReviewBody-{{ section.id }}">Your review <span aria-hidden="true">*</span></label>
+              <textarea id="ReviewBody-{{ section.id }}" name="review[body]" rows="6" required></textarea>
+            </div>
+
+            <div class="product-reviews__row">
+              <div class="field">
+                <label for="ReviewName-{{ section.id }}">Name <span aria-hidden="true">*</span></label>
+                <input type="text" id="ReviewName-{{ section.id }}" name="review[author]" required>
+              </div>
+              <div class="field">
+                <label for="ReviewEmail-{{ section.id }}">Email <span aria-hidden="true">*</span></label>
+                <input type="email" id="ReviewEmail-{{ section.id }}" name="review[email]" required>
+              </div>
+            </div>
+
+            <div class="field product-reviews__checkbox">
+              <label>
+                <input type="checkbox" name="review[save]">
+                Save my name, email, and website in this browser for the next time I comment.
+              </label>
+            </div>
+
+            <button type="submit" class="button product-reviews__submit">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.show_related -%}
+    <div class="page-width product-related">
+      <h2 class="product-related__heading">{{ section.settings.related_heading }}</h2>
+
+      <div class="product-related__slider" data-related-slider>
+        <div class="product-related__track">
+          {%- assign related_shown = 0 -%}
+          {%- if product.collections.size > 0 -%}
+            {%- assign related_collection = product.collections.first -%}
+            {%- for related_product in related_collection.products -%}
+              {%- if related_product.id != product.id and related_shown < section.settings.related_count -%}
+                <div class="product-related__slide">
+                  {% render 'card-product', card_product: related_product, media_aspect_ratio: 'square' %}
+                </div>
+                {%- assign related_shown = related_shown | plus: 1 -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+
+          {%- if related_shown == 0 -%}
+            {%- for related_product in collections.all.products limit: section.settings.related_count -%}
+              {%- if related_product.id != product.id -%}
+                <div class="product-related__slide">
+                  {% render 'card-product', card_product: related_product, media_aspect_ratio: 'square' %}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+
+        <div class="product-related__dots" data-related-dots aria-hidden="true"></div>
+      </div>
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
@@ -88,6 +399,12 @@
   "class": "section-main-product",
   "settings": [
     {
+      "type": "checkbox",
+      "id": "show_banner",
+      "label": "Show page banner",
+      "default": true
+    },
+    {
       "type": "text",
       "id": "banner_subtitle",
       "label": "Banner subtitle",
@@ -96,7 +413,57 @@
     {
       "type": "image_picker",
       "id": "banner_image",
-      "label": "Banner image"
+      "label": "Banner image",
+      "info": "Uses product featured image if empty"
+    },
+    {
+      "type": "text",
+      "id": "shipping_page_handle",
+      "label": "Shipping page handle",
+      "default": "shipping-returns",
+      "info": "Link for Shipping & Returns (create a page with this handle in admin)"
+    },
+    {
+      "type": "textarea",
+      "id": "default_ingredients_list",
+      "label": "Default ingredients list",
+      "default": "100% natural ingredients\nNo refined sugar\nSmall-batch crafted",
+      "info": "One ingredient per line. Shown as a list when product has no ingredients metafield (custom.ingredients)"
+    },
+    {
+      "type": "richtext",
+      "id": "default_allergens",
+      "label": "Default allergens text",
+      "default": "<p>May contain traces of nuts. Please check the label if you have allergies.</p>",
+      "info": "Shown when product has no allergens metafield (custom.allergens)"
+    },
+    {
+      "type": "richtext",
+      "id": "default_expiry",
+      "label": "Default expiry text",
+      "default": "<p>Best before 12 months from production. Store in a cool, dry place after opening.</p>",
+      "info": "Shown when product has no expiry metafield (custom.expiry)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related",
+      "label": "Show related products",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "related_heading",
+      "label": "Related products heading",
+      "default": "Related Product"
+    },
+    {
+      "type": "range",
+      "id": "related_count",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "label": "Related products to show"
     }
   ]
 }

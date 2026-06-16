@@ -2,7 +2,12 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {}
+      "settings": {
+        "show_banner": true,
+        "default_ingredients_list": "100% natural ingredients\nNo refined sugar\nSmall-batch crafted",
+        "default_allergens": "<p>May contain traces of nuts. Please check the label if you have allergies.</p>",
+        "default_expiry": "<p>Best before 12 months from production. Store in a cool, dry place after opening.</p>"
+      }
     }
   },
   "order": ["main"]

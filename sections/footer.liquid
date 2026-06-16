@@ -16,19 +16,30 @@
         <div class="footer__col">
           <h4 class="footer__col-title">Quick Links</h4>
           <ul>
-            {%- for link in linklists.main-menu.links limit:4 -%}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {%- endfor -%}
+            {% render 'site-nav-links', menu: section.settings.menu %}
           </ul>
         </div>
 
         <div class="footer__col">
           <h4 class="footer__col-title">Products</h4>
           <ul>
-            {%- assign prods = collections.all.products | slice: 0,4 -%}
-            {%- for p in prods -%}
-              <li><a href="{{ p.url }}">{{ p.title }}</a></li>
-            {%- endfor -%}
+            {%- liquid
+              assign footer_collection = nil
+              if section.settings.products_collection != blank and section.settings.products_collection.products_count > 0
+                assign footer_collection = section.settings.products_collection
+              elsif collections.all.products_count > 0
+                assign footer_collection = collections.all
+              elsif collections.frontpage.products_count > 0
+                assign footer_collection = collections.frontpage
+              endif
+            -%}
+            {%- if footer_collection != blank -%}
+              {%- for product in footer_collection.products limit: section.settings.products_to_show -%}
+                <li><a href="{{ product.url }}">{{ product.title | escape }}</a></li>
+              {%- endfor -%}
+            {%- else -%}
+              <li><a href="{{ routes.all_products_collection_url }}">View all products</a></li>
+            {%- endif -%}
           </ul>
         </div>
 
@@ -61,7 +72,23 @@
       "type": "link_list",
       "id": "menu",
       "label": "Menu",
-      "default": "footer"
+      "default": "main-menu",
+      "info": "Same links as the header navigation"
+    },
+    {
+      "type": "collection",
+      "id": "products_collection",
+      "label": "Products column collection",
+      "info": "Leave empty to use all products automatically"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show"
     },
     {
       "type": "text",

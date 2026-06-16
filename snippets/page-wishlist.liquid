@@ -1,0 +1,16 @@
+<div class="section wishlist-page"{% if shopify_attributes != blank %} {{ shopify_attributes }}{% endif %}>
+  {% render 'page-banner',
+    banner_title: 'Wishlist',
+    banner_subtitle: 'Home / Wishlist',
+    banner_image: blank
+  %}
+
+  <div class="page-width wishlist-page__inner" data-wishlist-page>
+    <p class="wishlist-page__empty" data-wishlist-empty hidden>
+      Your wishlist is empty.
+      <a href="{{ routes.all_products_collection_url }}">Continue shopping</a>
+    </p>
+
+    <div class="wishlist-page__grid" data-wishlist-grid hidden></div>
+  </div>
+</div>

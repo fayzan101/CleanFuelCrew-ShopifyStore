@@ -1,0 +1,35 @@
+{%- comment -%}
+  Shared site navigation links — used in header and footer.
+  Pass menu: section.settings.menu (link_list object)
+{%- endcomment -%}
+
+{%- if menu != blank and menu.links.size >= 5 -%}
+  {%- for link in menu.links -%}
+    <li>
+      <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>
+        {{ link.title | escape }}
+      </a>
+    </li>
+  {%- endfor -%}
+{%- else -%}
+  {%- assign about_page = pages.about -%}
+  {%- assign recipes_page = pages.recipes -%}
+  {%- assign contact_page = pages.contact -%}
+  <li><a href="{{ routes.root_url }}"{% if request.path == routes.root_url %} aria-current="page"{% endif %}>Home</a></li>
+  <li><a href="{{ routes.all_products_collection_url }}">Shop</a></li>
+  <li>
+    <a href="{{ about_page.url | default: '/pages/about' }}"{% if about_page != blank and about_page.url == request.path %} aria-current="page"{% endif %}>
+      About
+    </a>
+  </li>
+  <li>
+    <a href="{{ recipes_page.url | default: '/pages/recipes' }}"{% if recipes_page != blank and recipes_page.url == request.path %} aria-current="page"{% endif %}>
+      Recipes
+    </a>
+  </li>
+  <li>
+    <a href="{{ contact_page.url | default: '/pages/contact' }}"{% if contact_page != blank and contact_page.url == request.path %} aria-current="page"{% endif %}>
+      Contact
+    </a>
+  </li>
+{%- endif -%}

@@ -1,16 +1,5 @@
 <header class="header" role="banner" {{ section.shopify_attributes }}>
   <div class="page-width header__inner" style="--logo-width: {{ settings.logo_width }}px;">
-    <button
-      type="button"
-      class="header__menu-toggle"
-      data-action="toggle-menu"
-      aria-controls="HeaderNav"
-      aria-expanded="false"
-      aria-label="Open menu"
-    >
-      <span class="header__menu-icon" aria-hidden="true"></span>
-    </button>
-
     <div class="header__left">
       <a href="{{ routes.root_url }}" class="header__logo">
         {%- if settings.logo != blank -%}
@@ -23,40 +12,31 @@
           <img src="{{ 'Logo.png' | asset_url }}" alt="{{ shop.name }}" class="header__logo-fallback" height="80" width="80">
         {%- endif -%}
       </a>
+
+      <button
+        type="button"
+        class="header__menu-toggle"
+        data-action="toggle-menu"
+        aria-controls="HeaderNav"
+        aria-expanded="false"
+        aria-label="Open menu"
+      >
+        <span class="header__menu-icon" aria-hidden="true"></span>
+      </button>
     </div>
 
     <nav class="header__nav-wrapper" id="HeaderNav" aria-label="{{ 'sections.header.menu' | t }}">
+      <button
+        type="button"
+        class="header__menu-close"
+        data-action="toggle-menu"
+        aria-label="Close menu"
+      >
+        <span class="header__close-icon" aria-hidden="true"></span>
+      </button>
+
       <ul class="header__nav" role="list">
-        {%- if section.settings.menu != blank and section.settings.menu.links.size >= 5 -%}
-          {%- for link in section.settings.menu.links -%}
-            <li>
-              <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>
-                {{ link.title | escape }}
-              </a>
-            </li>
-          {%- endfor -%}
-        {%- else -%}
-          {%- assign about_page = pages.about -%}
-          {%- assign recipes_page = pages.recipes -%}
-          {%- assign contact_page = pages.contact -%}
-          <li><a href="{{ routes.root_url }}">HOME</a></li>
-          <li><a href="{{ routes.all_products_collection_url }}">SHOP</a></li>
-          <li>
-            <a href="{{ about_page.url | default: '/pages/about' }}"{% if about_page != blank and about_page.url == request.path %} aria-current="page"{% endif %}>
-              ABOUT
-            </a>
-          </li>
-          <li>
-            <a href="{{ recipes_page.url | default: '/pages/recipes' }}"{% if recipes_page != blank and recipes_page.url == request.path %} aria-current="page"{% endif %}>
-              RECIPES
-            </a>
-          </li>
-          <li>
-            <a href="{{ contact_page.url | default: '/pages/contact' }}"{% if contact_page != blank and contact_page.url == request.path %} aria-current="page"{% endif %}>
-              CONTACT
-            </a>
-          </li>
-        {%- endif -%}
+        {% render 'site-nav-links', menu: section.settings.menu %}
       </ul>
     </nav>
 
@@ -64,6 +44,10 @@
       <div class="header__icons">
         <a href="{{ routes.search_url }}" class="header__icon-link" aria-label="{{ 'general.search.search' | t }}">
           <span class="header__icon-img" style="--icon-url: url('{{ 'search.svg' | asset_url }}');"></span>
+        </a>
+        <a href="{{ pages.wishlist.url | default: '/pages/wishlist' }}" class="header__icon-link header__wishlist" aria-label="Wishlist">
+          {% render 'icon-heart' %}
+          <span class="wishlist-count" data-wishlist-count hidden>0</span>
         </a>
         <a href="{{ routes.cart_url }}" class="header__icon-link header__cart" id="cart-icon-bubble" aria-label="{{ 'sections.header.cart' | t }}">
           <span class="header__icon-img" style="--icon-url: url('{{ 'cart.svg' | asset_url }}');"></span>

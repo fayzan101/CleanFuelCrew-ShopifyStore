@@ -1,0 +1,16 @@
+{%- comment -%}
+  Renders a newline-separated string as a bullet list.
+  @param {string} lines - One list item per line
+{%- endcomment -%}
+
+{%- if lines != blank -%}
+  <ul>
+    {%- assign line_items = lines | newline_to_br | split: '<br />' -%}
+    {%- for line in line_items -%}
+      {%- assign item = line | strip -%}
+      {%- if item != blank -%}
+        <li>{{ item }}</li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

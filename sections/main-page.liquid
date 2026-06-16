@@ -9,6 +9,9 @@
   {%- when 'recipes' -%}
     {% render 'page-recipes', shopify_attributes: section.shopify_attributes %}
 
+  {%- when 'wishlist' -%}
+    {% render 'page-wishlist', shopify_attributes: section.shopify_attributes %}
+
   {%- else -%}
     {% render 'page-default', section: section, shopify_attributes: section.shopify_attributes %}
 {%- endcase -%}
@@ -21,7 +24,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Banner settings below apply to generic pages only. About and Recipes control their own banners in snippets/page-about.liquid and snippets/page-recipes.liquid."
+      "content": "Banner settings below apply to generic pages only. About, Recipes, and Wishlist control their own banners in snippets."
     },
     {
       "type": "checkbox",
