@@ -101,11 +101,35 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Header */
+.section-header {
+  z-index: 200;
+}
+
+.section-header.is-stuck {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.section-header.is-stuck .header {
+  box-shadow: 0 2px 16px rgba(92, 61, 46, 0.1);
+}
+
+.header-placeholder {
+  display: block;
+}
+
+.header-placeholder[hidden] {
+  display: none;
+}
+
 .header {
   background: var(--color-primary);
   font-family: "DM Sans", sans-serif;
   position: relative;
-  z-index: 100;
+  z-index: 1;
 }
 
 .header__inner {
@@ -693,6 +717,7 @@ body.menu-open .header__menu-icon::after {
   padding: 1.2rem var(--page-margin);
   font-size: 16px;
   font-weight: 400;
+  height: 50px !important;
   background: var(--color-secondary);
   color: var(--color-background);
   font-family: "DM Sans", sans-serif;
