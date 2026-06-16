@@ -1,15 +1,17 @@
-<div class="section page" {{ section.shopify_attributes }}>
-  {% render 'page-banner',
-    banner_title: page.title,
-    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Page',
-    banner_image: section.settings.banner_image
-  %}
+{%- comment -%}
+  Router only — picks the page snippet by handle. Each snippet handles its own banner.
+{%- endcomment -%}
 
-  <div class="page-width">
-    <h1>{{ page.title | escape }}</h1>
-    <div class="rte">{{ page.content }}</div>
-  </div>
-</div>
+{%- case page.handle -%}
+  {%- when 'about' -%}
+    {% render 'page-about', shopify_attributes: section.shopify_attributes %}
+
+  {%- when 'recipes' -%}
+    {% render 'page-recipes', shopify_attributes: section.shopify_attributes %}
+
+  {%- else -%}
+    {% render 'page-default', section: section, shopify_attributes: section.shopify_attributes %}
+{%- endcase -%}
 
 {% schema %}
 {
@@ -17,6 +19,16 @@
   "tag": "section",
   "class": "section-main-page",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "Banner settings below apply to generic pages only. About and Recipes control their own banners in snippets/page-about.liquid and snippets/page-recipes.liquid."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_banner",
+      "label": "Show page banner",
+      "default": true
+    },
     {
       "type": "text",
       "id": "banner_subtitle",

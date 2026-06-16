@@ -1,7 +1,13 @@
 <div class="section product" {{ section.shopify_attributes }}>
+  {%- liquid
+    assign product_banner_subtitle = 'Home / Shop / ' | append: product.title
+    if section.settings.banner_subtitle != blank
+      assign product_banner_subtitle = section.settings.banner_subtitle
+    endif
+  -%}
   {% render 'page-banner',
     banner_title: product.title,
-    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
+    banner_subtitle: product_banner_subtitle,
     banner_image: section.settings.banner_image | default: product.featured_media
   %}
 
@@ -85,7 +91,7 @@
       "type": "text",
       "id": "banner_subtitle",
       "label": "Banner subtitle",
-      "default": "Home / Shop"
+      "info": "Leave blank for Home / Shop / [product name]"
     },
     {
       "type": "image_picker",

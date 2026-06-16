@@ -3,6 +3,7 @@
     "main": {
       "type": "main-index",
       "settings": {
+        "show_banner": false,
         "heading": "Featured products",
         "products_to_show": 4
       }

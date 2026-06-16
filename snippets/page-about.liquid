@@ -1,0 +1,45 @@
+<div class="section about-page"{% if shopify_attributes != blank %} {{ shopify_attributes }}{% endif %}>
+  {% render 'page-banner',
+    banner_title: page.title,
+    banner_subtitle: 'Home / About',
+    banner_image: blank
+  %}
+
+  <div class="page-width about-page__inner">
+    <div class="about-page__intro">
+      <p class="about-page__lead">
+        The Clean Spread delivers natural, high-quality products you can trust every day.
+        We keep it simple, pure, and honest.
+      </p>
+    </div>
+
+    <div class="about-page__grid">
+      <div class="about-page__card">
+        <h2 class="about-page__card-title">Our Story</h2>
+        <p>
+          We started with a simple idea: food should be clean, honest, and made with ingredients
+          you can actually pronounce. Every jar we make is crafted in small batches so quality
+          never gets lost along the way.
+        </p>
+      </div>
+
+      <div class="about-page__card">
+        <h2 class="about-page__card-title">What We Believe</h2>
+        <ul class="about-page__list">
+          <li>100% natural ingredients — no shortcuts</li>
+          <li>Small-batch quality you can taste</li>
+          <li>Transparent sourcing from trusted suppliers</li>
+          <li>Honest labeling, always</li>
+        </ul>
+      </div>
+
+      <div class="about-page__card about-page__card--highlight">
+        <h2 class="about-page__card-title">Made in Dubai</h2>
+        <p>
+          Proudly Dubai based, we serve families who care about what goes on their table.
+          From our kitchen to yours — spread the good stuff.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

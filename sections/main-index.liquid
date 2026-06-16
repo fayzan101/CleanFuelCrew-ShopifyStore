@@ -1,9 +1,11 @@
 <div class="section" {{ section.shopify_attributes }}>
-  {% render 'page-banner',
-    banner_title: section.settings.banner_title | default: 'Home',
-    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
-    banner_image: section.settings.banner_image
-  %}
+  {%- if section.settings.show_banner -%}
+    {% render 'page-banner',
+      banner_title: section.settings.banner_title | default: 'Home',
+      banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
+      banner_image: section.settings.banner_image
+    %}
+  {%- endif -%}
 
   <div class="page-width">
     {%- if section.settings.heading != blank -%}
@@ -29,6 +31,12 @@
   "tag": "section",
   "class": "section-main-index",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_banner",
+      "label": "Show page banner",
+      "default": false
+    },
     {
       "type": "text",
       "id": "banner_title",

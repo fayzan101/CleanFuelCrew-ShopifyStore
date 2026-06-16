@@ -1,0 +1,17 @@
+<div class="section page"{% if shopify_attributes != blank %} {{ shopify_attributes }}{% endif %}>
+  {%- if section.settings.show_banner -%}
+    {% render 'page-banner',
+      banner_title: page.title,
+      banner_subtitle: section.settings.banner_subtitle | default: 'Home / Page',
+      banner_image: section.settings.banner_image
+    %}
+  {%- else -%}
+    <div class="page-width">
+      <h1 class="page-heading">{{ page.title | escape }}</h1>
+    </div>
+  {%- endif -%}
+
+  <div class="page-width page__inner">
+    <div class="rte">{{ page.content }}</div>
+  </div>
+</div>

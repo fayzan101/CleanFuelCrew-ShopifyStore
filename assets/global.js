@@ -4,21 +4,36 @@
 (function () {
   'use strict';
 
-  /**
-   * Delegated click handler for elements with [data-action]
-   */
+  const menuToggle = document.querySelector('[data-action="toggle-menu"]');
+  const headerNav = document.getElementById('HeaderNav');
+
+  function setMenuOpen(isOpen) {
+    document.body.classList.toggle('menu-open', isOpen);
+
+    if (menuToggle) {
+      menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    }
+  }
+
   document.addEventListener('click', (event) => {
     const target = event.target.closest('[data-action]');
     if (!target) return;
 
-    const action = target.dataset.action;
+    if (target.dataset.action === 'toggle-menu') {
+      setMenuOpen(!document.body.classList.contains('menu-open'));
+    }
+  });
 
-    switch (action) {
-      case 'toggle-menu':
-        document.body.classList.toggle('menu-open');
-        break;
-      default:
-        break;
+  if (headerNav) {
+    headerNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => setMenuOpen(false));
+    });
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 989) {
+      setMenuOpen(false);
     }
   });
 })();
