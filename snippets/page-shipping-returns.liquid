@@ -1,0 +1,30 @@
+<div class="section shipping-page"{% if shopify_attributes != blank %} {{ shopify_attributes }}{% endif %}>
+  {% render 'page-banner',
+    banner_title: page.title,
+    banner_subtitle: 'Home / Shipping & Returns',
+    banner_image: blank
+  %}
+
+  <div class="page-width shipping-page__inner">
+    <div class="shipping-page__content rte">
+      {%- if page.content != blank -%}
+        {{ page.content }}
+      {%- else -%}
+        <h1 class="shipping-page__title">Shipping & Returns</h1>
+        <p>
+          We aim to deliver your order as quickly as possible. Most UAE orders are processed within
+          1-2 business days and delivered within 3-5 business days, depending on your location.
+        </p>
+        <p>
+          If you are not satisfied with your purchase, please contact us within 14 days of delivery.
+          Unopened products may be eligible for a return or exchange. Shipping fees on returns may apply
+          unless the item arrived damaged or incorrect.
+        </p>
+        <p>
+          For questions about your order, delivery, or returns, reach out to us through our Contact page
+          and we will be happy to help.
+        </p>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

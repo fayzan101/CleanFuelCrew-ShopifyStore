@@ -15,7 +15,7 @@
 
     assign share_url = shop.url | append: product.url
     assign share_image = featured_media | image_url: width: 1200
-    assign featured_zoom_url = featured_media | image_url: width: 2400
+    assign featured_zoom_url = featured_media | image_url: width: 3000
 
     assign product_banner_subtitle = 'Home / Shop / ' | append: product.title
     if section.settings.banner_subtitle != blank
@@ -45,7 +45,7 @@
                       class="product__thumb{% if media == featured_media %} is-active{% endif %}"
                       data-action="product-thumb"
                       data-media-url="{{ media | image_url: width: 1200 }}"
-                      data-media-url-zoom="{{ media | image_url: width: 2400 }}"
+                      data-media-url-zoom="{{ media | image_url: width: 3000 }}"
                       data-media-index="{{ forloop.index0 }}"
                       aria-label="View image {{ forloop.index }}"
                     >
@@ -74,15 +74,6 @@
                     data-zoom-url: featured_zoom_url
                 }}
               </div>
-
-              {%- if product.media.size > 1 -%}
-                <button type="button" class="product__gallery-nav product__gallery-nav--prev" data-action="product-gallery-prev" aria-label="Previous image">
-                  <span aria-hidden="true">&#8249;</span>
-                </button>
-                <button type="button" class="product__gallery-nav product__gallery-nav--next" data-action="product-gallery-next" aria-label="Next image">
-                  <span aria-hidden="true">&#8250;</span>
-                </button>
-              {%- endif -%}
             </div>
 
             <div class="product-zoom-flyout" id="ProductZoomFlyout" hidden>
@@ -196,10 +187,18 @@
         <div class="product__share">
           <span class="product__share-label">Share:</span>
           <div class="product__share-links">
-            <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on Facebook">f</a>
-            <a href="https://wa.me/?text={{ product.title | url_encode }}%20{{ share_url | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on WhatsApp">w</a>
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on LinkedIn">in</a>
-            <a href="https://pinterest.com/pin/create/button/?url={{ share_url | url_encode }}&amp;media={{ share_image | url_encode }}&amp;description={{ product.title | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on Pinterest">p</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on Facebook">
+              <span class="product__share-icon" style="--icon-url: url('{{ 'facebook-svgrepo-com.svg' | asset_url }}');"></span>
+            </a>
+            <a href="https://wa.me/?text={{ product.title | url_encode }}%20{{ share_url | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on WhatsApp">
+              <span class="product__share-icon" style="--icon-url: url('{{ 'whatsapp-svgrepo-com.svg' | asset_url }}');"></span>
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on LinkedIn">
+              <span class="product__share-icon" style="--icon-url: url('{{ 'linkedin-svgrepo-com.svg' | asset_url }}');"></span>
+            </a>
+            <a href="https://pinterest.com/pin/create/button/?url={{ share_url | url_encode }}&amp;media={{ share_image | url_encode }}&amp;description={{ product.title | url_encode }}" class="product__share-link" target="_blank" rel="noopener" aria-label="Share on Pinterest">
+              <span class="product__share-icon" style="--icon-url: url('{{ 'pinterest-svgrepo-com.svg' | asset_url }}');"></span>
+            </a>
           </div>
         </div>
       </div>

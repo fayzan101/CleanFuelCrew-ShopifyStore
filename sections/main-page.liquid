@@ -12,6 +12,9 @@
   {%- when 'wishlist' -%}
     {% render 'page-wishlist', shopify_attributes: section.shopify_attributes %}
 
+  {%- when 'shipping-returns' -%}
+    {% render 'page-shipping-returns', shopify_attributes: section.shopify_attributes %}
+
   {%- else -%}
     {% render 'page-default', section: section, shopify_attributes: section.shopify_attributes %}
 {%- endcase -%}
@@ -24,7 +27,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Banner settings below apply to generic pages only. About, Recipes, and Wishlist control their own banners in snippets."
+      "content": "Banner settings below apply to generic pages only. About, Recipes, Wishlist, and Shipping & Returns control their own layout in snippets."
     },
     {
       "type": "checkbox",

@@ -49,7 +49,7 @@
     if (!zoomRoot || !mainImage || !flyout || !flyoutInner) return;
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-    const flyoutSize = 280;
+    const flyoutSize = 320;
     const offset = 24;
 
     function updateFlyoutBackground() {
@@ -134,23 +134,6 @@
         panel.classList.toggle('is-active', isActive);
         panel.hidden = !isActive;
       });
-      return;
-    }
-
-    if (action === 'product-gallery-prev' || action === 'product-gallery-next') {
-      const gallery = target.closest('[data-product-gallery]');
-      const thumbs = gallery?.querySelectorAll('.product__thumb');
-      if (!thumbs || thumbs.length === 0) return;
-
-      let activeIndex = Array.from(thumbs).findIndex((item) => item.classList.contains('is-active'));
-      if (activeIndex < 0) activeIndex = 0;
-
-      const delta = action === 'product-gallery-next' ? 1 : -1;
-      const nextIndex = (activeIndex + delta + thumbs.length) % thumbs.length;
-      const nextThumb = thumbs[nextIndex];
-
-      setProductMainImage(nextThumb.dataset.mediaUrl, nextThumb.dataset.mediaUrlZoom);
-      setActiveThumb(nextThumb);
       return;
     }
 
