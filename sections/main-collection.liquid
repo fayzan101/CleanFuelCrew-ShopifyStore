@@ -10,7 +10,7 @@
       <div class="collection-page__main">
         {%- paginate collection.products by section.settings.products_per_page -%}
           <div class="collection-toolbar">
-            <p class="collection-toolbar__count" data-collection-count>
+            <p class="collection-toolbar__count" data-collection-count data-default-count="Showing all {{ collection.products_count }} result{% if collection.products_count != 1 %}s{% endif %}">
               Showing all {{ collection.products_count }} result{% if collection.products_count != 1 %}s{% endif %}
             </p>
 
@@ -39,6 +39,7 @@
                 <li
                   class="product-grid__item"
                   data-product-item
+                  data-product-title="{{ product.title | escape }}"
                   data-product-type="{{ product.type | escape }}"
                   data-product-category-id="{{ product.category.id | default: '' | escape }}"
                   data-product-category-name="{{ product.category.name | default: '' | escape }}"
@@ -47,12 +48,15 @@
                 </li>
               {%- endfor -%}
             </ul>
+            <p class="collection-page__empty" data-collection-search-empty hidden>No products found.</p>
           {%- else -%}
             <p class="collection-page__empty">{{ 'collections.general.no_matches' | t }}</p>
           {%- endif -%}
 
           {%- if paginate.pages > 1 -%}
-            {% render 'pagination', paginate: paginate %}
+            <div data-collection-pagination>
+              {% render 'pagination', paginate: paginate %}
+            </div>
           {%- endif -%}
         {%- endpaginate -%}
       </div>

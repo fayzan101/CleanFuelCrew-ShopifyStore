@@ -1,42 +1,48 @@
-<div class="section search" {{ section.shopify_attributes }}>
+<div class="section search-page" {{ section.shopify_attributes }}>
   {% render 'page-banner',
     banner_title: 'Search',
     banner_subtitle: section.settings.banner_subtitle | default: 'Home / Search',
     banner_image: section.settings.banner_image
   %}
 
-  <div class="page-width">
-    <h1>{{ 'general.search.search' | t }}</h1>
-
-    <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
-      <div class="field">
-        <label for="SearchInput-{{ section.id }}" class="visually-hidden">{{ 'general.search.search' | t }}</label>
-        <input
-          type="search"
-          name="q"
-          id="SearchInput-{{ section.id }}"
-          value="{{ search.terms | escape }}"
-          placeholder="{{ 'general.search.search' | t }}"
-        >
-      </div>
-      <button type="submit" class="button">{{ 'general.search.search' | t }}</button>
+  <div class="page-width-larger search-page__inner">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-page__form">
+      <label class="visually-hidden" for="SearchInput-{{ section.id }}">{{ 'general.search.search' | t }}</label>
+      <input
+        type="search"
+        name="q"
+        id="SearchInput-{{ section.id }}"
+        class="search-page__input"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'general.search.search' | t }}"
+      >
+      <button type="submit" class="button search-page__submit">{{ 'general.search.search' | t }}</button>
     </form>
 
     {%- if search.performed -%}
-      {%- if search.results_count > 0 -%}
-        <p>
-          {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
-        </p>
-        <ul class="product-grid" role="list">
-          {%- for item in search.results -%}
-            {%- if item.object_type == 'product' -%}
-              <li>{% render 'card-product', card_product: item %}</li>
-            {%- endif -%}
-          {%- endfor -%}
-        </ul>
-      {%- else -%}
-        <p>{{ 'general.search.no_results' | t: terms: search.terms }}</p>
-      {%- endif -%}
+      {%- paginate search.results by 12 -%}
+        {%- if search.results_count > 0 -%}
+          <p class="search-page__count">
+            {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+          </p>
+
+          <ul class="product-grid product-grid--shop" role="list">
+            {%- for item in search.results -%}
+              {%- if item.object_type == 'product' -%}
+                <li class="product-grid__item">
+                  {% render 'card-product-shop', card_product: item %}
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+
+          {%- if paginate.pages > 1 -%}
+            {% render 'pagination', paginate: paginate %}
+          {%- endif -%}
+        {%- else -%}
+          <p class="search-page__empty">{{ 'general.search.no_results' | t: terms: search.terms }}</p>
+        {%- endif -%}
+      {%- endpaginate -%}
     {%- endif -%}
   </div>
 </div>

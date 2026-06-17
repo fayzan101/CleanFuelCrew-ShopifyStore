@@ -31,12 +31,14 @@
 -%}
 
 <aside class="collection-sidebar" data-collection-sidebar>
-  <form action="{{ routes.search_url }}" method="get" role="search" class="collection-sidebar__search">
+  <form action="{{ shop_collection_url }}" method="get" role="search" class="collection-sidebar__search" data-collection-search>
     <label class="visually-hidden" for="CollectionSidebarSearch">Search entire store</label>
     <input
       type="search"
       name="q"
       id="CollectionSidebarSearch"
+      class="collection-sidebar__search-input"
+      data-collection-search-input
       placeholder="Search entire store..."
       value=""
     >
@@ -163,6 +165,7 @@
       <h2 class="collection-sidebar__heading">Price Filter</h2>
       <div class="collection-price-filter">
         <div class="collection-price-filter__track">
+          <div class="collection-price-filter__fill" data-price-fill></div>
           <input
             type="range"
             class="collection-price-filter__range"

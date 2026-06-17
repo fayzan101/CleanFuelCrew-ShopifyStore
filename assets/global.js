@@ -194,38 +194,45 @@
     window.location.href = url.toString();
   });
 
-  function initCollectionCategoryFilter() {
+  function initCollectionPage() {
     const grid = document.querySelector('[data-collection-grid]');
-    const sidebar = document.querySelector('[data-collection-sidebar]');
     if (!grid) return;
 
-    function readFilters() {
+    const countEl = document.querySelector('[data-collection-count]');
+    const emptyEl = document.querySelector('[data-collection-search-empty]');
+    const paginationEl = document.querySelector('[data-collection-pagination]');
+    const searchForm = document.querySelector('[data-collection-search]');
+    const searchInput = document.querySelector('[data-collection-search-input]');
+    const sidebar = document.querySelector('[data-collection-sidebar]');
+    const defaultCount = countEl?.dataset.defaultCount || countEl?.textContent || '';
+    const originalGridHtml = grid.innerHTML;
+
+    function readUrlState() {
       const url = new URL(window.location.href);
-      const productType =
-        url.searchParams.get('product_type') ||
-        url.searchParams.get('filter.p.product_type');
-      const categoryId =
-        url.searchParams.get('product_category_id') ||
-        url.searchParams.get('filter.p.t.category');
-      return { productType, categoryId };
+      return {
+        q: (url.searchParams.get('q') || '').trim(),
+        productType:
+          url.searchParams.get('product_type') ||
+          url.searchParams.get('filter.p.product_type'),
+        categoryId:
+          url.searchParams.get('product_category_id') ||
+          url.searchParams.get('filter.p.t.category')
+      };
     }
 
-    function applyCategoryFilter(options) {
-      const filters = options || readFilters();
-      const { productType, categoryId } = filters;
-      const hasFilter = Boolean(productType || categoryId);
+    function applyCategoryFilter(state) {
       let visibleCount = 0;
 
       grid.querySelectorAll('[data-product-item]').forEach((item) => {
         let visible = true;
 
-        if (productType) {
+        if (state.productType) {
           const itemType = (item.dataset.productType || '').trim().toLowerCase();
-          visible = itemType === productType.trim().toLowerCase();
+          visible = itemType === state.productType.trim().toLowerCase();
         }
 
-        if (visible && categoryId) {
-          visible = (item.dataset.productCategoryId || '') === categoryId;
+        if (visible && state.categoryId) {
+          visible = (item.dataset.productCategoryId || '') === state.categoryId;
         }
 
         item.hidden = !visible;
@@ -233,40 +240,129 @@
         if (visible) visibleCount += 1;
       });
 
-      const countEl = document.querySelector('[data-collection-count]');
-      if (countEl && hasFilter) {
-        countEl.textContent =
-          'Showing ' + visibleCount + ' result' + (visibleCount === 1 ? '' : 's');
-      }
-
-      if (sidebar) {
-        sidebar.querySelectorAll('[data-category-link]').forEach((link) => {
-          const mode = link.dataset.filterMode;
-          const value = link.dataset.filterValue || '';
-          let isActive = false;
-
-          if (mode === 'all') {
-            isActive = !productType && !categoryId;
-          } else if (mode === 'type') {
-            isActive = Boolean(productType) && value.toLowerCase() === productType.toLowerCase();
-          } else if (mode === 'category') {
-            isActive = Boolean(categoryId) && value === categoryId;
-          }
-
-          if (isActive) {
-            link.setAttribute('aria-current', 'page');
-          } else {
-            link.removeAttribute('aria-current');
-          }
-        });
-      }
-
       return visibleCount;
     }
 
-    function navigateWithFilters(nextUrl) {
-      window.history.pushState({}, '', nextUrl);
-      applyCategoryFilter();
+    function updateSidebarActive(state) {
+      if (!sidebar) return;
+
+      sidebar.querySelectorAll('[data-category-link]').forEach((link) => {
+        const mode = link.dataset.filterMode;
+        const value = link.dataset.filterValue || '';
+        let isActive = false;
+
+        if (mode === 'all') {
+          isActive = !state.productType && !state.categoryId && !state.q;
+        } else if (mode === 'type') {
+          isActive =
+            Boolean(state.productType) &&
+            value.toLowerCase() === state.productType.toLowerCase();
+        } else if (mode === 'category') {
+          isActive = Boolean(state.categoryId) && value === state.categoryId;
+        }
+
+        if (isActive) {
+          link.setAttribute('aria-current', 'page');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    }
+
+    function updateCount(visibleCount, state) {
+      if (!countEl) return;
+
+      if (state.q) {
+        countEl.textContent =
+          visibleCount === 0
+            ? 'No results for "' + state.q + '"'
+            : 'Showing ' +
+              visibleCount +
+              ' result' +
+              (visibleCount === 1 ? '' : 's') +
+              ' for "' +
+              state.q +
+              '"';
+        return;
+      }
+
+      if (state.productType || state.categoryId) {
+        countEl.textContent =
+          'Showing ' +
+          visibleCount +
+          ' result' +
+          (visibleCount === 1 ? '' : 's');
+        return;
+      }
+
+      countEl.textContent = defaultCount;
+    }
+
+    async function renderCollectionView() {
+      const state = readUrlState();
+
+      if (searchInput) {
+        searchInput.value = state.q;
+      }
+
+      if (state.q) {
+        if (paginationEl) paginationEl.hidden = true;
+
+        try {
+          const response = await fetch(
+            '/search?sections=collection-search-grid&q=' +
+              encodeURIComponent(state.q) +
+              '&type=product'
+          );
+          const data = await response.json();
+          const sectionHtml = data['collection-search-grid'] || '';
+          const parser = document.createElement('div');
+          parser.innerHTML = sectionHtml;
+          const items = parser.querySelectorAll('[data-product-item]');
+
+          grid.innerHTML = '';
+          items.forEach((item) => {
+            grid.appendChild(item);
+          });
+        } catch {
+          grid.innerHTML = '';
+        }
+      } else {
+        grid.innerHTML = originalGridHtml;
+        if (paginationEl) paginationEl.hidden = false;
+      }
+
+      const visibleCount = applyCategoryFilter(state);
+      const showEmpty = visibleCount === 0;
+
+      if (emptyEl) {
+        emptyEl.hidden = !showEmpty;
+      }
+
+      grid.hidden = showEmpty;
+      updateCount(visibleCount, state);
+      updateSidebarActive(state);
+    }
+
+    function navigateCollection(url) {
+      window.history.pushState({}, '', url);
+      renderCollectionView();
+    }
+
+    if (searchForm) {
+      searchForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const url = new URL(window.location.href);
+        const q = (searchInput?.value || '').trim();
+
+        if (q) {
+          url.searchParams.set('q', q);
+        } else {
+          url.searchParams.delete('q');
+        }
+
+        navigateCollection(url.toString());
+      });
     }
 
     if (sidebar) {
@@ -275,21 +371,34 @@
         if (!link) return;
 
         event.preventDefault();
-        navigateWithFilters(link.href);
+        const url = new URL(link.href, window.location.origin);
+        const currentUrl = new URL(window.location.href);
+        const currentQ = (currentUrl.searchParams.get('q') || '').trim();
+
+        if (link.dataset.filterMode === 'all') {
+          url.searchParams.delete('q');
+          url.searchParams.delete('product_type');
+          url.searchParams.delete('product_category_id');
+        } else if (currentQ) {
+          url.searchParams.set('q', currentQ);
+        }
+
+        navigateCollection(url.toString());
       });
     }
 
     window.addEventListener('popstate', () => {
-      applyCategoryFilter();
+      renderCollectionView();
     });
 
-    applyCategoryFilter();
+    renderCollectionView();
   }
 
   function initCollectionPriceFilter() {
     document.querySelectorAll('[data-price-filter]').forEach((filterRoot) => {
       const minRange = filterRoot.querySelector('[data-price-range="min"]');
       const maxRange = filterRoot.querySelector('[data-price-range="max"]');
+      const fill = filterRoot.querySelector('[data-price-fill]');
       const label = filterRoot.querySelector('[data-price-label]');
       if (!minRange || !maxRange || !label) return;
 
@@ -300,20 +409,37 @@
         return (Number(cents) / 100).toFixed(2);
       }
 
-      function updateLabel() {
+      function updatePriceSlider() {
         let minVal = Number(minRange.value);
         let maxVal = Number(maxRange.value);
+
         if (minVal > maxVal) {
-          const swap = minVal;
-          minVal = maxVal;
-          maxVal = swap;
+          if (document.activeElement === minRange) {
+            maxRange.value = String(minVal);
+            maxVal = minVal;
+          } else {
+            minRange.value = String(maxVal);
+            minVal = maxVal;
+          }
         }
+
+        const min = Number(minRange.min);
+        const max = Number(maxRange.max);
+        const span = max - min || 1;
+        const left = ((minVal - min) / span) * 100;
+        const right = ((maxVal - min) / span) * 100;
+
+        if (fill) {
+          fill.style.left = left + '%';
+          fill.style.width = Math.max(0, right - left) + '%';
+        }
+
         label.textContent = 'Price: ' + formatMoney(minVal) + ' — ' + formatMoney(maxVal);
       }
 
-      minRange.addEventListener('input', updateLabel);
-      maxRange.addEventListener('input', updateLabel);
-      updateLabel();
+      minRange.addEventListener('input', updatePriceSlider);
+      maxRange.addEventListener('input', updatePriceSlider);
+      updatePriceSlider();
     });
   }
 
@@ -404,7 +530,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     initProductZoom();
     initStickyHeader();
-    initCollectionCategoryFilter();
+    initCollectionPage();
     initCollectionPriceFilter();
   });
 })();

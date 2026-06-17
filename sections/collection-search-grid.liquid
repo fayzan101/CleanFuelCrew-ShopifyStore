@@ -1,0 +1,25 @@
+{%- paginate search.results by 48 -%}
+  {%- for item in search.results -%}
+    {%- if item.object_type == 'product' -%}
+      <li
+        class="product-grid__item"
+        data-product-item
+        data-product-title="{{ item.title | escape }}"
+        data-product-type="{{ item.type | escape }}"
+        data-product-category-id="{{ item.category.id | default: '' | escape }}"
+        data-product-category-name="{{ item.category.name | default: '' | escape }}"
+      >
+        {% render 'card-product-shop', card_product: item %}
+      </li>
+    {%- endif -%}
+  {%- endfor -%}
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection search grid",
+  "tag": "section",
+  "class": "section-collection-search-grid",
+  "settings": []
+}
+{% endschema %}
