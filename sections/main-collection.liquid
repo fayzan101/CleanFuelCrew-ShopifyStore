@@ -5,7 +5,7 @@
     banner_image: section.settings.banner_image | default: collection.featured_image
   %}
 
-  <div class="page-width collection-page__inner">
+  <div class="page-width-larger collection-page__inner">
     <div class="collection-page__layout">
       <div class="collection-page__main">
         {%- paginate collection.products by section.settings.products_per_page -%}
@@ -104,13 +104,8 @@
       "type": "checkbox",
       "id": "show_categories",
       "label": "Show categories",
-      "default": true
-    },
-    {
-      "type": "link_list",
-      "id": "categories_menu",
-      "label": "Categories menu",
-      "info": "Optional. Uses all collections if empty."
+      "default": true,
+      "info": "Lists all product types used across your store (Product type field in admin)."
     },
     {
       "type": "checkbox",

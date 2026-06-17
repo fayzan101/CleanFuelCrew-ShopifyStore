@@ -31,13 +31,20 @@
           class="card-product-shop__action"
           data-action="quick-view"
           data-product-handle="{{ card_product.handle }}"
+          data-tooltip="Quick view"
           aria-label="Quick view {{ card_product.title | escape }}"
         >
           <span class="header__icon-img" style="--icon-url: url('{{ 'search.svg' | asset_url }}');"></span>
         </button>
         {%- form 'product', card_product, class: 'card-product-shop__cart-form' -%}
           <input type="hidden" name="id" value="{{ card_variant.id }}">
-          <button type="submit" class="card-product-shop__action" aria-label="Add {{ card_product.title | escape }} to cart"{% unless card_variant.available %} disabled{% endunless %}>
+          <button
+            type="submit"
+            class="card-product-shop__action"
+            data-tooltip="Add to cart"
+            aria-label="Add {{ card_product.title | escape }} to cart"
+            {% unless card_variant.available %}disabled{% endunless %}
+          >
             <span class="header__icon-img" style="--icon-url: url('{{ 'cart.svg' | asset_url }}');"></span>
           </button>
         {%- endform -%}
@@ -51,10 +58,11 @@
           data-product-url="{{ card_product.url }}"
           data-product-image="{{ card_image | image_url: width: 600 }}"
           data-product-price="{{ card_variant.price | money }}"
+          data-tooltip="Add to wishlist"
           aria-label="Add to wishlist"
           aria-pressed="false"
         >
-          {% render 'icon-heart' %}
+          <span class="header__icon-img" style="--icon-url: url('{{ 'heart.svg' | asset_url }}');"></span>
         </button>
       </div>
     </div>

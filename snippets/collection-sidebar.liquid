@@ -1,9 +1,4 @@
 {%- liquid
-  assign sidebar_collection = collection
-  if sidebar_collection == blank
-    assign sidebar_collection = collections.all
-  endif
-
   assign popular_collection = collections[section.settings.popular_collection]
   if popular_collection == blank
     assign popular_collection = collections.all
@@ -11,6 +6,19 @@
 
   assign filter_min = section.settings.price_filter_min | times: 100
   assign filter_max = section.settings.price_filter_max | times: 100
+
+  assign active_product_type = ''
+  if collection.filters != empty
+    for filter in collection.filters
+      if filter.param_name == 'filter.p.product_type'
+        for active_value in filter.active_values
+          assign active_product_type = active_value.label
+        endfor
+      endif
+    endfor
+  endif
+
+  assign store_types = shop.types | sort
 -%}
 
 <aside class="collection-sidebar" data-collection-sidebar>
@@ -32,23 +40,26 @@
     <div class="collection-sidebar__block">
       <h2 class="collection-sidebar__heading">Categories</h2>
       <ul class="collection-sidebar__list" role="list">
-        {%- if section.settings.categories_menu != blank -%}
-          {%- for link in section.settings.categories_menu.links -%}
+        <li>
+          <a
+            href="{{ collections.all.url }}"
+            {% if active_product_type == blank and collection.handle == 'all' %}aria-current="page"{% endif %}
+          >
+            All products
+          </a>
+        </li>
+        {%- for product_type in store_types -%}
+          {%- if product_type != blank -%}
             <li>
-              <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+              <a
+                href="{{ collections.all.url }}?filter.p.product_type={{ product_type | url_param_encode }}"
+                {% if product_type == active_product_type %}aria-current="page"{% endif %}
+              >
+                {{ product_type | escape }}
+              </a>
             </li>
-          {%- endfor -%}
-        {%- else -%}
-          {%- for col in collections -%}
-            {%- if col.all_products_count > 0 and col.handle != 'frontpage' -%}
-              <li>
-                <a href="{{ col.url }}"{% if col.handle == sidebar_collection.handle %} aria-current="page"{% endif %}>
-                  {{ col.title | escape }}
-                </a>
-              </li>
-            {%- endif -%}
-          {%- endfor -%}
-        {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
       </ul>
     </div>
   {%- endif -%}
