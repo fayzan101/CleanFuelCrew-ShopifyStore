@@ -1,0 +1,116 @@
+{%- liquid
+  assign sidebar_collection = collection
+  if sidebar_collection == blank
+    assign sidebar_collection = collections.all
+  endif
+
+  assign popular_collection = collections[section.settings.popular_collection]
+  if popular_collection == blank
+    assign popular_collection = collections.all
+  endif
+
+  assign filter_min = section.settings.price_filter_min | times: 100
+  assign filter_max = section.settings.price_filter_max | times: 100
+-%}
+
+<aside class="collection-sidebar" data-collection-sidebar>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="collection-sidebar__search">
+    <label class="visually-hidden" for="CollectionSidebarSearch">Search entire store</label>
+    <input
+      type="search"
+      name="q"
+      id="CollectionSidebarSearch"
+      placeholder="Search entire store..."
+      value=""
+    >
+    <button type="submit" class="collection-sidebar__search-btn" aria-label="Search">
+      <span class="header__icon-img" style="--icon-url: url('{{ 'search.svg' | asset_url }}');"></span>
+    </button>
+  </form>
+
+  {%- if section.settings.show_categories -%}
+    <div class="collection-sidebar__block">
+      <h2 class="collection-sidebar__heading">Categories</h2>
+      <ul class="collection-sidebar__list" role="list">
+        {%- if section.settings.categories_menu != blank -%}
+          {%- for link in section.settings.categories_menu.links -%}
+            <li>
+              <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a>
+            </li>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for col in collections -%}
+            {%- if col.all_products_count > 0 and col.handle != 'frontpage' -%}
+              <li>
+                <a href="{{ col.url }}"{% if col.handle == sidebar_collection.handle %} aria-current="page"{% endif %}>
+                  {{ col.title | escape }}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_price_filter -%}
+    <div class="collection-sidebar__block collection-sidebar__block--price" data-price-filter>
+      <h2 class="collection-sidebar__heading">Price Filter</h2>
+      <div class="collection-price-filter">
+        <div class="collection-price-filter__track">
+          <input
+            type="range"
+            class="collection-price-filter__range"
+            data-price-range="min"
+            min="{{ filter_min }}"
+            max="{{ filter_max }}"
+            value="{{ filter_min }}"
+            aria-label="Minimum price"
+          >
+          <input
+            type="range"
+            class="collection-price-filter__range"
+            data-price-range="max"
+            min="{{ filter_min }}"
+            max="{{ filter_max }}"
+            value="{{ filter_max }}"
+            aria-label="Maximum price"
+          >
+        </div>
+        <div class="collection-price-filter__footer">
+          <button type="button" class="collection-price-filter__btn" data-action="price-filter">Filter</button>
+          <p class="collection-price-filter__label" data-price-label>
+            Price: {{ filter_min | money }} — {{ filter_max | money }}
+          </p>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.show_popular -%}
+    <div class="collection-sidebar__block">
+      <h2 class="collection-sidebar__heading">{{ section.settings.popular_heading }}</h2>
+      <ul class="collection-sidebar__popular" role="list">
+        {%- for product in popular_collection.products limit: section.settings.popular_count -%}
+          <li class="collection-sidebar__popular-item">
+            <a href="{{ product.url }}" class="collection-sidebar__popular-link">
+              <span class="collection-sidebar__popular-media">
+                {%- if product.featured_media -%}
+                  {{
+                    product.featured_media
+                    | image_url: width: 120
+                    | image_tag: loading: 'lazy', widths: '60, 120', sizes: '60px', alt: product.title
+                  }}
+                {%- endif -%}
+              </span>
+              <span class="collection-sidebar__popular-text">
+                <span class="collection-sidebar__popular-title">{{ product.title | escape }}</span>
+                <span class="collection-sidebar__popular-price">{{ product.price | money }}</span>
+              </span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+</aside>

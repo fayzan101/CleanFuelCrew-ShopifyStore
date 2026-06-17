@@ -33,7 +33,9 @@
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
     <script src="{{ 'wishlist.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    <script>window.themeMoneyFormat = {{ shop.money_format | json }};</script>
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
@@ -49,5 +51,7 @@
     </main>
 
     {% sections 'footer-group' %}
+
+    {% render 'product-quick-view-modal' %}
   </body>
 </html>

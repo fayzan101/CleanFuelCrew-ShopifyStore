@@ -159,8 +159,69 @@
         star.classList.toggle('is-active', starValue <= value);
         star.textContent = starValue <= value ? '\u2605' : '\u2606';
       });
+      return;
+    }
+
+    if (action === 'price-filter') {
+      const filterRoot = target.closest('[data-price-filter]');
+      const grid = document.querySelector('[data-collection-grid]');
+      if (!filterRoot || !grid) return;
+
+      const minRange = filterRoot.querySelector('[data-price-range="min"]');
+      const maxRange = filterRoot.querySelector('[data-price-range="max"]');
+      if (!minRange || !maxRange) return;
+
+      const minVal = Math.min(Number(minRange.value), Number(maxRange.value));
+      const maxVal = Math.max(Number(minRange.value), Number(maxRange.value));
+
+      grid.querySelectorAll('[data-product-item]').forEach((item) => {
+        const card = item.querySelector('[data-product-price]');
+        const price = Number(card?.dataset.productPrice || 0);
+        const visible = price >= minVal && price <= maxVal;
+        item.hidden = !visible;
+      });
     }
   });
+
+  document.addEventListener('change', (event) => {
+    const sortSelect = event.target.closest('[data-action="collection-sort"]');
+    if (!sortSelect) return;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort_by', sortSelect.value);
+    window.location.href = url.toString();
+  });
+
+  function initCollectionPriceFilter() {
+    document.querySelectorAll('[data-price-filter]').forEach((filterRoot) => {
+      const minRange = filterRoot.querySelector('[data-price-range="min"]');
+      const maxRange = filterRoot.querySelector('[data-price-range="max"]');
+      const label = filterRoot.querySelector('[data-price-label]');
+      if (!minRange || !maxRange || !label) return;
+
+      function formatMoney(cents) {
+        if (window.Shopify && typeof Shopify.formatMoney === 'function') {
+          return Shopify.formatMoney(cents, window.themeMoneyFormat || '${{amount}}');
+        }
+        return (Number(cents) / 100).toFixed(2);
+      }
+
+      function updateLabel() {
+        let minVal = Number(minRange.value);
+        let maxVal = Number(maxRange.value);
+        if (minVal > maxVal) {
+          const swap = minVal;
+          minVal = maxVal;
+          maxVal = swap;
+        }
+        label.textContent = 'Price: ' + formatMoney(minVal) + ' — ' + formatMoney(maxVal);
+      }
+
+      minRange.addEventListener('input', updateLabel);
+      maxRange.addEventListener('input', updateLabel);
+      updateLabel();
+    });
+  }
 
   if (headerNav) {
     headerNav.querySelectorAll('a').forEach((link) => {
@@ -249,5 +310,6 @@
   document.addEventListener('DOMContentLoaded', () => {
     initProductZoom();
     initStickyHeader();
+    initCollectionPriceFilter();
   });
 })();

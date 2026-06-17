@@ -1,0 +1,70 @@
+{%- liquid
+  assign card_variant = card_product.selected_or_first_available_variant
+  assign card_image = card_product.featured_media
+-%}
+
+<article class="card-product-shop" data-product-price="{{ card_product.price }}">
+  <div class="card-product-shop__media-wrap">
+    <a href="{{ card_product.url }}" class="card-product-shop__hit-area" aria-label="View {{ card_product.title | escape }}"></a>
+
+    <div class="card-product-shop__media">
+      {%- if card_image -%}
+        {{
+          card_image
+          | image_url: width: 600
+          | image_tag:
+            class: 'card-product-shop__image',
+            loading: 'lazy',
+            widths: '200, 400, 600',
+            sizes: '(min-width: 990px) 30vw, 50vw',
+            alt: card_image.alt | escape
+        }}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'card-product-shop__image placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="card-product-shop__overlay">
+      <div class="card-product-shop__actions">
+        <button
+          type="button"
+          class="card-product-shop__action"
+          data-action="quick-view"
+          data-product-handle="{{ card_product.handle }}"
+          aria-label="Quick view {{ card_product.title | escape }}"
+        >
+          <span class="header__icon-img" style="--icon-url: url('{{ 'search.svg' | asset_url }}');"></span>
+        </button>
+        {%- form 'product', card_product, class: 'card-product-shop__cart-form' -%}
+          <input type="hidden" name="id" value="{{ card_variant.id }}">
+          <button type="submit" class="card-product-shop__action" aria-label="Add {{ card_product.title | escape }} to cart"{% unless card_variant.available %} disabled{% endunless %}>
+            <span class="header__icon-img" style="--icon-url: url('{{ 'cart.svg' | asset_url }}');"></span>
+          </button>
+        {%- endform -%}
+        <button
+          type="button"
+          class="card-product-shop__action product-wishlist"
+          data-action="wishlist-toggle"
+          data-product-id="{{ card_product.id }}"
+          data-product-handle="{{ card_product.handle }}"
+          data-product-title="{{ card_product.title | escape }}"
+          data-product-url="{{ card_product.url }}"
+          data-product-image="{{ card_image | image_url: width: 600 }}"
+          data-product-price="{{ card_variant.price | money }}"
+          aria-label="Add to wishlist"
+          aria-pressed="false"
+        >
+          {% render 'icon-heart' %}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <a href="{{ card_product.url }}" class="card-product-shop__info-link">
+    <h3 class="card-product-shop__title">{{ card_product.title | escape }}</h3>
+    <div class="card-product-shop__price">
+      {% render 'price', product: card_product, show_badges: false %}
+    </div>
+    <span class="card-product-shop__arrow" aria-hidden="true">&#8250;</span>
+  </a>
+</article>

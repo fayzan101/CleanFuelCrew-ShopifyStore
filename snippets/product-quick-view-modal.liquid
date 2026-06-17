@@ -1,0 +1,22 @@
+<div
+  id="QuickView"
+  class="quick-view"
+  hidden
+  data-shipping-url="{{ pages['shipping-returns'].url | default: '/pages/shipping-returns' }}"
+  data-shop-url="{{ shop.url }}"
+  data-icon-search="{{ 'search.svg' | asset_url }}"
+  data-icon-cart="{{ 'cart.svg' | asset_url }}"
+  data-icon-facebook="{{ 'facebook-svgrepo-com.svg' | asset_url }}"
+  data-icon-whatsapp="{{ 'whatsapp-svgrepo-com.svg' | asset_url }}"
+  data-icon-linkedin="{{ 'linkedin-svgrepo-com.svg' | asset_url }}"
+  data-icon-pinterest="{{ 'pinterest-svgrepo-com.svg' | asset_url }}"
+>
+  <button type="button" class="quick-view__backdrop" data-action="close-quick-view" aria-label="Close quick view" tabindex="-1"></button>
+
+  <div class="quick-view__dialog" role="dialog" aria-modal="true" aria-labelledby="QuickViewTitle">
+    <button type="button" class="quick-view__close" data-action="close-quick-view" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="quick-view__content" data-quick-view-content></div>
+  </div>
+</div>
