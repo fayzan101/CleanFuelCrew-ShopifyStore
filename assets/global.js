@@ -175,6 +175,8 @@
       const maxVal = Math.max(Number(minRange.value), Number(maxRange.value));
 
       grid.querySelectorAll('[data-product-item]').forEach((item) => {
+        if (item.dataset.hiddenByCategory === 'true') return;
+
         const card = item.querySelector('[data-product-price]');
         const price = Number(card?.dataset.productPrice || 0);
         const visible = price >= minVal && price <= maxVal;
@@ -191,6 +193,98 @@
     url.searchParams.set('sort_by', sortSelect.value);
     window.location.href = url.toString();
   });
+
+  function initCollectionCategoryFilter() {
+    const grid = document.querySelector('[data-collection-grid]');
+    const sidebar = document.querySelector('[data-collection-sidebar]');
+    if (!grid) return;
+
+    function readFilters() {
+      const url = new URL(window.location.href);
+      const productType =
+        url.searchParams.get('product_type') ||
+        url.searchParams.get('filter.p.product_type');
+      const categoryId =
+        url.searchParams.get('product_category_id') ||
+        url.searchParams.get('filter.p.t.category');
+      return { productType, categoryId };
+    }
+
+    function applyCategoryFilter(options) {
+      const filters = options || readFilters();
+      const { productType, categoryId } = filters;
+      const hasFilter = Boolean(productType || categoryId);
+      let visibleCount = 0;
+
+      grid.querySelectorAll('[data-product-item]').forEach((item) => {
+        let visible = true;
+
+        if (productType) {
+          const itemType = (item.dataset.productType || '').trim().toLowerCase();
+          visible = itemType === productType.trim().toLowerCase();
+        }
+
+        if (visible && categoryId) {
+          visible = (item.dataset.productCategoryId || '') === categoryId;
+        }
+
+        item.hidden = !visible;
+        item.dataset.hiddenByCategory = visible ? 'false' : 'true';
+        if (visible) visibleCount += 1;
+      });
+
+      const countEl = document.querySelector('[data-collection-count]');
+      if (countEl && hasFilter) {
+        countEl.textContent =
+          'Showing ' + visibleCount + ' result' + (visibleCount === 1 ? '' : 's');
+      }
+
+      if (sidebar) {
+        sidebar.querySelectorAll('[data-category-link]').forEach((link) => {
+          const mode = link.dataset.filterMode;
+          const value = link.dataset.filterValue || '';
+          let isActive = false;
+
+          if (mode === 'all') {
+            isActive = !productType && !categoryId;
+          } else if (mode === 'type') {
+            isActive = Boolean(productType) && value.toLowerCase() === productType.toLowerCase();
+          } else if (mode === 'category') {
+            isActive = Boolean(categoryId) && value === categoryId;
+          }
+
+          if (isActive) {
+            link.setAttribute('aria-current', 'page');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+      }
+
+      return visibleCount;
+    }
+
+    function navigateWithFilters(nextUrl) {
+      window.history.pushState({}, '', nextUrl);
+      applyCategoryFilter();
+    }
+
+    if (sidebar) {
+      sidebar.addEventListener('click', (event) => {
+        const link = event.target.closest('[data-category-link]');
+        if (!link) return;
+
+        event.preventDefault();
+        navigateWithFilters(link.href);
+      });
+    }
+
+    window.addEventListener('popstate', () => {
+      applyCategoryFilter();
+    });
+
+    applyCategoryFilter();
+  }
 
   function initCollectionPriceFilter() {
     document.querySelectorAll('[data-price-filter]').forEach((filterRoot) => {
@@ -310,6 +404,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     initProductZoom();
     initStickyHeader();
+    initCollectionCategoryFilter();
     initCollectionPriceFilter();
   });
 })();

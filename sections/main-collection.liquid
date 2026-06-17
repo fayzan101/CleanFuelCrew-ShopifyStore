@@ -10,7 +10,7 @@
       <div class="collection-page__main">
         {%- paginate collection.products by section.settings.products_per_page -%}
           <div class="collection-toolbar">
-            <p class="collection-toolbar__count">
+            <p class="collection-toolbar__count" data-collection-count>
               Showing all {{ collection.products_count }} result{% if collection.products_count != 1 %}s{% endif %}
             </p>
 
@@ -36,7 +36,13 @@
           {%- if collection.products.size > 0 -%}
             <ul class="product-grid product-grid--shop" role="list" data-collection-grid>
               {%- for product in collection.products -%}
-                <li class="product-grid__item" data-product-item>
+                <li
+                  class="product-grid__item"
+                  data-product-item
+                  data-product-type="{{ product.type | escape }}"
+                  data-product-category-id="{{ product.category.id | default: '' | escape }}"
+                  data-product-category-name="{{ product.category.name | default: '' | escape }}"
+                >
                   {% render 'card-product-shop', card_product: product %}
                 </li>
               {%- endfor -%}
@@ -105,7 +111,7 @@
       "id": "show_categories",
       "label": "Show categories",
       "default": true,
-      "info": "Lists all product types used across your store (Product type field in admin)."
+      "info": "Shows Product type and Product category from your store. Enable both filters in Search & Discovery for the full list."
     },
     {
       "type": "checkbox",

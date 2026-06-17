@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 :root{
   --color-primary: #FDF6EE;
@@ -2137,14 +2137,13 @@ body.menu-open .header__menu-icon::after {
 
 .collection-sidebar__popular-link {
   display: flex;
-  align-items: center;
   gap: 1.5rem;
   text-decoration: none;
 }
 
 .collection-sidebar__popular-media {
   width: 6rem;
-  height: 6rem;
+  height: 8rem;
   flex-shrink: 0;
   overflow: hidden;
   background: #fff;
