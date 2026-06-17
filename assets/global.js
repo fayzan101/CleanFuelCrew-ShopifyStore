@@ -139,13 +139,34 @@
 
     if (action === 'qty-minus' || action === 'qty-plus') {
       const stepper = target.closest('[data-quantity-stepper]');
-      const input = stepper?.querySelector('input[name="quantity"]');
+      const input = stepper?.querySelector('input[type="number"]');
       if (!input) return;
 
-      const current = Number(input.value) || 1;
-      const min = Number(input.min) || 1;
+      const cartItem = target.closest('[data-cart-item]');
+      const min = Number(input.min) || (cartItem ? 0 : 1);
+      const current = Number(input.value) || min;
       const next = action === 'qty-plus' ? current + 1 : Math.max(min, current - 1);
       input.value = String(next);
+
+      if (cartItem) {
+        const line = cartItem.querySelector('[data-action="cart-remove"]')?.dataset.line;
+        if (line) changeCartLine(line, next);
+      }
+      return;
+    }
+
+    if (action === 'cart-remove') {
+      const line = target.dataset.line;
+      if (line) changeCartLine(line, 0);
+      return;
+    }
+
+    if (action === 'cart-apply-discount') {
+      const input = document.querySelector('[data-cart-discount-input]');
+      const code = input?.value?.trim();
+      if (!code) return;
+
+      window.location.href = '/discount/' + encodeURIComponent(code) + '?redirect=' + encodeURIComponent(window.location.pathname);
       return;
     }
 
@@ -527,10 +548,50 @@
     updateStickyHeader();
   }
 
+  function changeCartLine(line, quantity) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ line: Number(line), quantity: Number(quantity) }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error('Cart update failed');
+        return response.json();
+      })
+      .then(() => {
+        window.location.reload();
+      })
+      .catch(() => {
+        window.location.reload();
+      });
+  }
+
+  function initCartPage() {
+    const cartForm = document.querySelector('[data-cart-form]');
+    if (!cartForm) return;
+
+    cartForm.querySelectorAll('[data-cart-qty-input]').forEach((input) => {
+      input.addEventListener('change', () => {
+        const cartItem = input.closest('[data-cart-item]');
+        const line = cartItem?.querySelector('[data-action="cart-remove"]')?.dataset.line;
+        if (!line) return;
+
+        const min = Number(input.min) || 0;
+        const quantity = Math.max(min, Number(input.value) || min);
+        input.value = String(quantity);
+        changeCartLine(line, quantity);
+      });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     initProductZoom();
     initStickyHeader();
     initCollectionPage();
     initCollectionPriceFilter();
+    initCartPage();
   });
 })();

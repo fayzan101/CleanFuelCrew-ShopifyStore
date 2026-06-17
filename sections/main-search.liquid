@@ -1,6 +1,13 @@
 <div class="section search-page" {{ section.shopify_attributes }}>
+  {%- liquid
+    assign search_banner_title = 'Search'
+    if search.performed and search.terms != blank
+      assign search_banner_title = 'Search results for "' | append: search.terms | append: '"'
+    endif
+  -%}
+
   {% render 'page-banner',
-    banner_title: 'Search',
+    banner_title: search_banner_title,
     banner_subtitle: section.settings.banner_subtitle | default: 'Home / Search',
     banner_image: section.settings.banner_image
   %}

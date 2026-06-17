@@ -24,86 +24,45 @@
     return div.innerHTML;
   }
 
-  function getSelectedVariant(product) {
-    const root = content.querySelector('[data-quick-view-form]');
-    if (!root) return product.variants[0];
-
-    const selectedOptions = [];
-    root.querySelectorAll('[data-option-index]').forEach((select) => {
-      selectedOptions[Number(select.dataset.optionIndex)] = select.value;
-    });
-
-    return product.variants.find((variant) => {
-      return product.options.every((option, index) => {
-        const key = 'option' + (index + 1);
-        return !selectedOptions[index] || variant[key] === selectedOptions[index];
-      });
-    }) || product.variants[0];
+  function decodeHtmlEntities(html) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = html;
+    return textarea.value;
   }
 
-  function updateVariantUI(product) {
-    const variant = getSelectedVariant(product);
-    const priceEl = content.querySelector('[data-quick-view-price]');
-    const imageEl = content.querySelector('[data-quick-view-image]');
-    const idInput = content.querySelector('[name="id"]');
-    const submitBtn = content.querySelector('[data-quick-view-submit]');
-    const wishlistBtn = content.querySelector('[data-action="wishlist-toggle"]');
+  function getDescriptionHtml(product) {
+    let html = (product.body_html || '').trim();
 
-    if (priceEl) {
-      priceEl.textContent = formatMoney(variant.price);
-    }
-
-    if (imageEl) {
-      const imageSrc = variant.featured_image?.src || product.featured_image;
-      if (imageSrc) {
-        imageEl.src = imageSrc;
-        imageEl.alt = product.title;
+    if (html) {
+      if (html.includes('&lt;') || html.includes('&gt;')) {
+        html = decodeHtmlEntities(html);
       }
+      return '<div class="product__description rte quick-view__description">' + html + '</div>';
     }
 
-    if (idInput) {
-      idInput.value = variant.id;
+    const text = (product.description || '').trim();
+    if (!text) return '';
+
+    if (/<[a-z][\s\S]*>/i.test(text)) {
+      return '<div class="product__description rte quick-view__description">' + text + '</div>';
     }
 
-    if (submitBtn) {
-      submitBtn.disabled = !variant.available;
-      submitBtn.textContent = variant.available ? 'Add to cart' : 'Sold out';
-    }
+    return (
+      '<div class="product__description rte quick-view__description"><p>' +
+      escapeHtml(text) +
+      '</p></div>'
+    );
+  }
 
-    if (wishlistBtn) {
-      wishlistBtn.dataset.productPrice = formatMoney(variant.price);
-      if (window.AmadalWishlist) {
-        const active = window.AmadalWishlist.isInWishlist(product.handle);
-        wishlistBtn.classList.toggle('is-active', active);
-        wishlistBtn.setAttribute('aria-pressed', active ? 'true' : 'false');
-      }
-    }
+  function getDefaultVariant(product) {
+    return product.variants.find((variant) => variant.available) || product.variants[0];
   }
 
   function buildProductHtml(product) {
-    const variant = product.variants[0];
+    const variant = getDefaultVariant(product);
     const imageSrc = variant.featured_image?.src || product.featured_image || '';
     const shareUrl = shopUrl + product.url;
     const category = product.type ? escapeHtml(product.type) : '';
-    const hasOptions = product.options.length > 1 ||
-      (product.options.length === 1 && product.options[0] !== 'Title');
-
-    let optionsHtml = '';
-    if (hasOptions) {
-      optionsHtml = product.options.map((option, index) => {
-        const values = [...new Set(product.variants.map((v) => v['option' + (index + 1)]))];
-        const optionsList = values.map((value) => {
-          const selected = variant['option' + (index + 1)] === value ? ' selected' : '';
-          return '<option value="' + escapeHtml(value) + '"' + selected + '>' + escapeHtml(value) + '</option>';
-        }).join('');
-        return (
-          '<div class="field product-form__option">' +
-            '<label for="QuickViewOption' + index + '">' + escapeHtml(option) + '</label>' +
-            '<select id="QuickViewOption' + index + '" data-option-index="' + index + '">' + optionsList + '</select>' +
-          '</div>'
-        );
-      }).join('');
-    }
 
     const categoryHtml = category
       ? '<p class="product__category"><span class="product__meta-label">Category:</span> ' + category + '</p>'
@@ -129,6 +88,8 @@
         'Pinterest'
       );
 
+    const descriptionHtml = getDescriptionHtml(product);
+
     return (
       '<div class="quick-view__layout">' +
         '<div class="quick-view__media">' +
@@ -141,12 +102,9 @@
           '<div class="product__price-wrap">' +
             '<p class="quick-view__price" data-quick-view-price>' + formatMoney(variant.price) + '</p>' +
           '</div>' +
-          (product.body_html
-            ? '<div class="product__description rte">' + product.body_html + '</div>'
-            : '') +
+          descriptionHtml +
           '<form class="product-form" data-quick-view-form action="/cart/add" method="post">' +
             '<input type="hidden" name="id" value="' + variant.id + '">' +
-            optionsHtml +
             '<div class="product-form__actions">' +
               '<div class="quantity-stepper" data-quantity-stepper>' +
                 '<button type="button" class="quantity-stepper__btn" data-action="qty-minus" aria-label="Decrease quantity">&#8722;</button>' +
@@ -184,11 +142,7 @@
     );
   }
 
-  function bindQuickViewForm(product) {
-    content.querySelectorAll('[data-option-index]').forEach((select) => {
-      select.addEventListener('change', () => updateVariantUI(product));
-    });
-
+  function bindQuickViewForm() {
     const form = content.querySelector('[data-quick-view-form]');
     if (!form) return;
 
@@ -242,7 +196,7 @@
       const product = await response.json();
 
       content.innerHTML = buildProductHtml(product);
-      bindQuickViewForm(product);
+      bindQuickViewForm();
 
       if (window.AmadalWishlist) {
         const wishlistBtn = content.querySelector('[data-action="wishlist-toggle"]');

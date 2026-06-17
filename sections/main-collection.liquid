@@ -26,7 +26,7 @@
                     value="{{ option.value }}"
                     {% if option.value == collection.sort_by %}selected{% endif %}
                   >
-                    Sort by {{ option.name }}
+                    {{ option.name }}
                   </option>
                 {%- endfor -%}
               </select>
@@ -127,13 +127,13 @@
       "type": "number",
       "id": "price_filter_min",
       "label": "Price filter minimum",
-      "default": 30
+      "default": 10
     },
     {
       "type": "number",
       "id": "price_filter_max",
       "label": "Price filter maximum",
-      "default": 70
+      "default": 5000
     },
     {
       "type": "checkbox",

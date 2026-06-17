@@ -1,66 +1,158 @@
-<div class="section cart" {{ section.shopify_attributes }}>
+<div class="section cart-page" {{ section.shopify_attributes }}>
   {% render 'page-banner',
     banner_title: 'Cart',
     banner_subtitle: section.settings.banner_subtitle | default: 'Home / Cart',
     banner_image: section.settings.banner_image
   %}
 
-  <div class="page-width">
-    <h1>{{ 'cart.general.title' | t }}</h1>
-
+  <div class="page-width-larger cart-page__inner">
     {%- if cart != empty -%}
-      <form action="{{ routes.cart_url }}" method="post" id="cart">
-        <table class="cart-table">
-          <thead>
-            <tr>
-              <th scope="col">Product</th>
-              <th scope="col">{{ 'products.product.quantity' | t }}</th>
-              <th scope="col">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {%- for item in cart.items -%}
-              <tr>
-                <td>
-                  <a href="{{ item.url }}">{{ item.product.title | escape }}</a>
-                  {%- unless item.product.has_only_default_variant -%}
-                    <p>{{ item.variant.title }}</p>
-                  {%- endunless -%}
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    name="updates[]"
-                    value="{{ item.quantity }}"
-                    min="0"
-                    data-index="{{ forloop.index }}"
-                    aria-label="{{ 'products.product.quantity' | t }}"
-                  >
-                </td>
-                <td>{{ item.final_line_price | money }}</td>
-              </tr>
-            {%- endfor -%}
-          </tbody>
-        </table>
+      <form action="{{ routes.cart_url }}" method="post" id="cart" class="cart-page__form" data-cart-form>
+        <div class="cart-page__layout">
+          <div class="cart-page__items">
+            <div class="cart-page__head" aria-hidden="true">
+              <span class="cart-page__head-label">Product</span>
+              <span class="cart-page__head-label cart-page__head-label--total">Total</span>
+            </div>
 
-        <p class="cart__subtotal">
-          {{ 'cart.general.subtotal' | t }}: {{ cart.total_price | money }}
-        </p>
+            <ul class="cart-page__list" role="list">
+              {%- for item in cart.items -%}
+                {%- liquid
+                  assign item_description = item.product.description | strip_html | truncate: 140
+                  if item_description == blank
+                    assign item_description = item.product.title
+                  endif
+                -%}
+                <li class="cart-page__item" data-cart-item>
+                  <div class="cart-page__item-media">
+                    <a href="{{ item.url }}" class="cart-page__item-image-link">
+                      {%- if item.image -%}
+                        {{
+                          item.image
+                          | image_url: width: 240
+                          | image_tag:
+                            class: 'cart-page__item-image',
+                            loading: 'lazy',
+                            widths: '120, 240',
+                            sizes: '120px',
+                            alt: item.product.title
+                        }}
+                      {%- else -%}
+                        {{ 'product-1' | placeholder_svg_tag: 'cart-page__item-image placeholder' }}
+                      {%- endif -%}
+                    </a>
+                  </div>
 
-        <div class="cart__actions">
-          <button type="submit" name="update" class="button button--secondary">
-            {{ 'cart.general.update' | t }}
-          </button>
-          <button type="submit" name="checkout" class="button">
-            {{ 'cart.general.checkout' | t }}
-          </button>
+                  <div class="cart-page__item-body">
+                    <div class="cart-page__item-top">
+                      <div class="cart-page__item-info">
+                        <a href="{{ item.url }}" class="cart-page__item-title">{{ item.product.title | escape }}</a>
+                        <p class="cart-page__item-price">{{ item.final_price | money }}</p>
+                        <p class="cart-page__item-description">{{ item_description | escape }}</p>
+                        {%- unless item.product.has_only_default_variant -%}
+                          <p class="cart-page__item-variant">{{ item.variant.title | escape }}</p>
+                        {%- endunless -%}
+                      </div>
+                      <p class="cart-page__item-total">{{ item.final_line_price | money }}</p>
+                    </div>
+
+                    <div class="cart-page__item-actions">
+                      <div class="quantity-stepper quantity-stepper--cart" data-quantity-stepper>
+                        <button type="button" class="quantity-stepper__btn" data-action="qty-minus" aria-label="Decrease quantity">&#8722;</button>
+                        <input
+                          type="number"
+                          name="updates[]"
+                          class="quantity-stepper__input"
+                          value="{{ item.quantity }}"
+                          min="0"
+                          aria-label="{{ 'products.product.quantity' | t }}"
+                          data-cart-qty-input
+                        >
+                        <button type="button" class="quantity-stepper__btn" data-action="qty-plus" aria-label="Increase quantity">&#43;</button>
+                      </div>
+
+                      <button
+                        type="button"
+                        class="cart-page__remove"
+                        data-action="cart-remove"
+                        data-line="{{ forloop.index }}"
+                        aria-label="Remove {{ item.product.title | escape }}"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                          <line x1="10" y1="11" x2="10" y2="17"></line>
+                          <line x1="14" y1="11" x2="14" y2="17"></line>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              {%- endfor -%}
+            </ul>
+
+            <button type="submit" name="update" class="visually-hidden" data-cart-update>Update cart</button>
+          </div>
+
+          <aside class="cart-page__totals" data-cart-totals>
+            <h2 class="cart-page__totals-title">Cart totals</h2>
+
+            <details class="cart-page__coupons">
+              <summary class="cart-page__coupons-summary">
+                <span>Add coupons</span>
+                <span class="cart-page__coupons-chevron" aria-hidden="true">&#8250;</span>
+              </summary>
+              <div class="cart-page__coupons-body">
+                <label class="visually-hidden" for="CartDiscount-{{ section.id }}">Discount code</label>
+                <input
+                  type="text"
+                  id="CartDiscount-{{ section.id }}"
+                  class="cart-page__coupons-input"
+                  placeholder="Coupon code"
+                  data-cart-discount-input
+                >
+                <button type="button" class="button cart-page__coupons-btn" data-action="cart-apply-discount">Apply</button>
+              </div>
+            </details>
+
+            <dl class="cart-page__summary">
+              {%- if section.settings.show_free_shipping -%}
+                <div class="cart-page__summary-row">
+                  <dt>{{ section.settings.free_shipping_label }}</dt>
+                  <dd>{{ section.settings.free_shipping_value }}</dd>
+                </div>
+              {%- endif -%}
+
+              <div class="cart-page__summary-row">
+                <dt>{{ section.settings.taxes_label }}</dt>
+                <dd>
+                  {%- if cart.taxes_included -%}
+                    {{ 'cart.general.taxes_included' | t | default: 'Included' }}
+                  {%- else -%}
+                    {{ section.settings.taxes_value }}
+                  {%- endif -%}
+                </dd>
+              </div>
+            </dl>
+
+            <div class="cart-page__estimated">
+              <span class="cart-page__estimated-label">Estimated total</span>
+              <span class="cart-page__estimated-value" data-cart-total>{{ cart.total_price | money }}</span>
+            </div>
+
+            <button type="submit" name="checkout" class="button cart-page__checkout">
+              Proceed to Checkout
+            </button>
+          </aside>
         </div>
       </form>
     {%- else -%}
-      <p>{{ 'cart.general.empty' | t }}</p>
-      <a href="{{ routes.all_products_collection_url }}" class="button">
-        {{ 'general.continue_shopping' | t }}
-      </a>
+      <div class="cart-page__empty">
+        <p>{{ 'cart.general.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="button cart-page__checkout">
+          {{ 'general.continue_shopping' | t }}
+        </a>
+      </div>
     {%- endif -%}
   </div>
 </div>
@@ -81,6 +173,41 @@
       "type": "image_picker",
       "id": "banner_image",
       "label": "Banner image"
+    },
+    {
+      "type": "header",
+      "content": "Cart totals"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_free_shipping",
+      "label": "Show free shipping row",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "free_shipping_label",
+      "label": "Free shipping label",
+      "default": "Free shipping"
+    },
+    {
+      "type": "text",
+      "id": "free_shipping_value",
+      "label": "Free shipping value",
+      "default": "FREE"
+    },
+    {
+      "type": "text",
+      "id": "taxes_label",
+      "label": "Taxes label",
+      "default": "Taxes"
+    },
+    {
+      "type": "text",
+      "id": "taxes_value",
+      "label": "Taxes value (when not included in prices)",
+      "default": "Calculated at checkout",
+      "info": "Shown when taxes are not included in product prices."
     }
   ]
 }
