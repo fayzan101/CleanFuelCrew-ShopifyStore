@@ -138,6 +138,63 @@
     return currency ? amount + ' ' + currency : amount;
   }
 
+  const TRASH_ICON =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">' +
+      '<polyline points="3 6 5 6 21 6"></polyline>' +
+      '<path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>' +
+      '<line x1="10" y1="11" x2="10" y2="17"></line>' +
+      '<line x1="14" y1="11" x2="14" y2="17"></line>' +
+    '</svg>';
+
+  function escapeHtml(text) {
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function getDefaultVariant(product) {
+    if (!product?.variants?.length) return null;
+    return product.variants.find((variant) => variant.available) || product.variants[0];
+  }
+
+  async function addToCart(variantId, button) {
+    if (!variantId || !button || button.disabled) return;
+
+    button.disabled = true;
+    const originalText = button.textContent;
+
+    try {
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({ id: variantId, quantity: 1 })
+      });
+
+      if (!response.ok) throw new Error('Add to cart failed');
+
+      const cartResponse = await fetch('/cart.js');
+      const cart = await cartResponse.json();
+      document.querySelectorAll('.cart-count').forEach((el) => {
+        el.textContent = cart.item_count;
+        el.hidden = cart.item_count === 0;
+      });
+
+      button.textContent = 'Added!';
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.disabled = false;
+      }, 1500);
+    } catch {
+      button.textContent = originalText;
+      button.disabled = false;
+    }
+  }
+
   async function fetchProduct(handle) {
     const response = await fetch('/products/' + handle + '.js');
     if (!response.ok) return null;
@@ -149,6 +206,7 @@
     if (!root) return;
 
     const grid = root.querySelector('[data-wishlist-grid]');
+    const table = root.querySelector('[data-wishlist-table]');
     const empty = root.querySelector('[data-wishlist-empty]');
     const list = readWishlist();
 
@@ -159,19 +217,20 @@
 
     if (list.length === 0) {
       empty.hidden = false;
-      grid.hidden = true;
+      if (table) table.hidden = true;
       return;
     }
 
     empty.hidden = true;
-    grid.hidden = false;
+    if (table) table.hidden = false;
 
     const products = await Promise.all(list.map((item) => fetchProduct(item.handle)));
 
     list.forEach((item, index) => {
       const product = products[index];
-      const card = document.createElement('article');
-      card.className = 'wishlist-card';
+      const variant = product ? getDefaultVariant(product) : null;
+      const row = document.createElement('article');
+      row.className = 'wishlist-row';
 
       const image = product?.featured_image || item.image;
       const title = product?.title || item.title;
@@ -179,20 +238,26 @@
       const price = product
         ? formatMoney(product.price, window.Shopify?.currency?.active)
         : item.price;
+      const available = Boolean(variant?.available);
+      const variantId = variant?.id || '';
 
-      card.innerHTML =
-        '<a href="' + url + '" class="wishlist-card__media">' +
+      row.innerHTML =
+        '<a href="' + escapeHtml(url) + '" class="wishlist-row__media">' +
           (image
-            ? '<img src="' + image + '" alt="' + title.replace(/"/g, '&quot;') + '" loading="lazy">'
+            ? '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(title) + '" loading="lazy">'
             : '') +
         '</a>' +
-        '<div class="wishlist-card__info">' +
-          '<a href="' + url + '" class="wishlist-card__title">' + title + '</a>' +
-          '<p class="wishlist-card__price">' + price + '</p>' +
-          '<button type="button" class="wishlist-card__remove" data-action="wishlist-remove" data-product-handle="' + item.handle + '">Remove</button>' +
-        '</div>';
+        '<a href="' + escapeHtml(url) + '" class="wishlist-row__title">' + escapeHtml(title) + '</a>' +
+        '<p class="wishlist-row__price">' + price + '</p>' +
+        '<button type="button" class="button wishlist-row__add" data-action="wishlist-add-to-cart" data-variant-id="' + variantId + '"' +
+          (available ? '' : ' disabled') + '>' +
+          (available ? 'Add to cart' : 'Sold out') +
+        '</button>' +
+        '<button type="button" class="wishlist-row__remove" data-action="wishlist-remove" data-product-handle="' + escapeHtml(item.handle) + '" aria-label="Remove ' + escapeHtml(title) + '">' +
+          TRASH_ICON +
+        '</button>';
 
-      grid.appendChild(card);
+      grid.appendChild(row);
     });
   }
 
@@ -234,6 +299,14 @@
       if (!handle) return;
       removeFromWishlist(handle);
       renderWishlistPage();
+      return;
+    }
+
+    const addBtn = event.target.closest('[data-action="wishlist-add-to-cart"]');
+    if (addBtn) {
+      event.preventDefault();
+      const variantId = Number(addBtn.dataset.variantId);
+      addToCart(variantId, addBtn);
     }
   });
 

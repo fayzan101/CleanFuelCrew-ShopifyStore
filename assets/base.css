@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 :root{
   --color-primary: #FDF6EE;
@@ -1939,6 +1939,10 @@ body.menu-open .header__menu-icon::after {
   color: var(--color-secondary);
 }
 
+.card-product-shop:hover .card-product-shop__arrow{
+  left: 15px;
+}
+
 .card-product-shop__arrow {
   display: inline-flex;
   align-items: center;
@@ -1949,7 +1953,8 @@ body.menu-open .header__menu-icon::after {
   font-size: 2.4rem;
   line-height: 1;
   position: relative;
-  left: 25px;
+  left: 5px;
+  transition: all 0.3s ease;
 }
 
 .card-product-shop__arrow::before{
@@ -1966,7 +1971,7 @@ body.menu-open .header__menu-icon::after {
 /* Collection sidebar */
 .collection-sidebar {
   background: var(--color-primary);
-  padding: 70px 30px 60px 30px;
+  padding: 70px 40px 70px 40px;
   border-radius: 0.4rem;
   position: relative;
   height: 100%;
@@ -2451,18 +2456,26 @@ body.menu-open .header__menu-icon::after {
 
 /* Wishlist page */
 .wishlist-page__inner {
-  padding: 4rem 0 6rem;
+  padding: 4rem 4rem 6rem;
+}
+
+.wishlist-page__empty:not([hidden]) {
+  display: flex;
+  flex-direction: column;
 }
 
 .wishlist-page__empty {
   text-align: center;
   font-size: 1.6rem;
   color: var(--color-quaternary);
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
   width: 400px;
   margin: 0 auto;
+  gap: 2rem;
+}
+
+.wishlist-page__empty[hidden],
+.wishlist-page__table[hidden] {
+  display: none !important;
 }
 
 .wishlist-page__empty a {
@@ -2477,62 +2490,159 @@ body.menu-open .header__menu-icon::after {
   transition: all 0.3s ease;
 }
 
-.wishlist-page__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2rem;
+.wishlist-page__head {
+  display: none;
 }
 
 @media screen and (min-width: 750px) {
-  .wishlist-page__grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  .wishlist-page__head {
+    display: grid;
+    grid-template-columns: 11rem minmax(0, 1fr) 12rem 14rem 10rem;
+    gap: 2rem;
+    align-items: center;
+    padding-bottom: 1.6rem;
+    border-bottom: 1px solid rgba(92, 61, 46, 0.12);
+    margin-bottom: 0.4rem;
   }
 }
 
-.wishlist-card {
+.wishlist-page__head-label {
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  color: #555555;
+}
+
+.wishlist-page__head-label--price,
+.wishlist-page__head-label--cart,
+.wishlist-page__head-label--remove {
+  text-align: center;
+}
+
+.wishlist-page__list {
   display: flex;
   flex-direction: column;
 }
 
-.wishlist-card__media {
+.wishlist-row {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: 1.5rem 2rem;
+  align-items: center;
+  padding: 2rem 0;
+  border-bottom: 1px solid rgba(92, 61, 46, 0.1);
+}
+
+@media screen and (min-width: 750px) {
+  .wishlist-row {
+    grid-template-columns: 11rem minmax(0, 1fr) 12rem 14rem 10rem;
+    gap: 2rem;
+    padding: 2.4rem 0;
+  }
+}
+
+.wishlist-row__media {
   display: block;
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 0.4rem;
   background: rgba(92, 61, 46, 0.04);
-  margin-bottom: 1rem;
+  grid-row: span 2;
 }
 
-.wishlist-card__media img {
+@media screen and (min-width: 750px) {
+  .wishlist-row__media {
+    grid-row: auto;
+  }
+}
+
+.wishlist-row__media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.wishlist-card__title {
+.wishlist-row__title {
   font-family: "Playfair Display", serif;
-  font-size: 1.6rem;
+  font-size: clamp(1.6rem, 2vw, 2rem);
+  line-height: 1.25;
   color: var(--color-secondary);
   text-decoration: none;
-  margin-bottom: 0.4rem;
+  align-self: end;
 }
 
-.wishlist-card__price {
-  margin: 0 0 1rem;
-  font-size: 1.4rem;
+@media screen and (min-width: 750px) {
+  .wishlist-row__title {
+    align-self: center;
+  }
+}
+
+.wishlist-row__title:hover {
+  color: var(--color-ternary);
+}
+
+.wishlist-row__price {
+  margin: 0;
+  font-size: 1.5rem;
   color: var(--color-quaternary);
+  align-self: start;
 }
 
-.wishlist-card__remove {
-  align-self: flex-start;
-  border: none;
-  background: none;
-  padding: 0;
-  font: inherit;
+@media screen and (min-width: 750px) {
+  .wishlist-row__price {
+    text-align: center;
+    align-self: center;
+  }
+}
+
+.wishlist-row__add {
+  min-height: 4.2rem;
+  padding: 0 1.6rem;
   font-size: 1.3rem;
+  grid-column: 1 / -1;
+  width: 100%;
+  background-color: var(--color-ternary);
+  transition: all 0.3s ease;
+}
+
+.wishlist-row__add:hover {
+  background-color: var(--color-secondary);
+}
+
+@media screen and (min-width: 750px) {
+  .wishlist-row__add {
+    grid-column: auto;
+    width: auto;
+    justify-self: center;
+  }
+}
+
+.wishlist-row__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.2rem;
+  height: 4.2rem;
+  padding: 0;
+  border: 1px solid rgba(92, 61, 46, 0.18);
+  background: #fff;
   color: var(--color-secondary);
-  text-decoration: underline;
   cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+@media screen and (min-width: 750px) {
+  .wishlist-row__remove {
+    grid-column: auto;
+    justify-self: center;
+  }
+}
+
+.wishlist-row__remove:hover {
+  color: #fff;
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
 }
 
 /* Shipping & Returns page */
@@ -3278,7 +3388,7 @@ body.quick-view-open {
 }
 
 .contact-page__icon:hover svg {
-  fill: #fff;
+  stroke: #fff;
 }
 
 .contact-page__icon svg {
@@ -3300,6 +3410,9 @@ body.quick-view-open {
   mask-size: contain;
 }
 
+.contact-page__icon:hover .contact-page__icon-img {
+  background-color: white;
+}
 .contact-page__detail-text {
   display: flex;
   flex-direction: column;
