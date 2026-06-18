@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-about",
+      "settings": {
+        "banner_title": "About Us",
+        "banner_subtitle": "Clean, nourishing spreads crafted with thoughtfully sourced, real ingredients that you can trust. Loved by families who want better, healthier choices without compromising on taste."
+      }
+    }
+  },
+  "order": ["main"]
+}

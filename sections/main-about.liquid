@@ -1,0 +1,48 @@
+{% render 'page-about',
+  shopify_attributes: section.shopify_attributes,
+  section_id: section.id,
+  banner_title: section.settings.banner_title,
+  banner_subtitle: section.settings.banner_subtitle,
+  banner_image: section.settings.banner_image,
+  instagram_url: section.settings.instagram_url
+%}
+
+{% schema %}
+{
+  "name": "About page",
+  "tag": "section",
+  "class": "section-main-about",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner"
+    },
+    {
+      "type": "text",
+      "id": "banner_title",
+      "label": "Banner title",
+      "default": "About Us"
+    },
+    {
+      "type": "textarea",
+      "id": "banner_subtitle",
+      "label": "Banner subtitle",
+      "default": "Clean, nourishing spreads crafted with thoughtfully sourced, real ingredients that you can trust. Loved by families who want better, healthier choices without compromising on taste."
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    },
+    {
+      "type": "header",
+      "content": "Mission section"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    }
+  ]
+}
+{% endschema %}

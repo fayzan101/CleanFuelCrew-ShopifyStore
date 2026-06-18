@@ -1,45 +1,359 @@
-<div class="section about-page"{% if shopify_attributes != blank %} {{ shopify_attributes }}{% endif %}>
-  {% render 'page-banner',
-    banner_title: page.title,
-    banner_subtitle: 'Home / About',
-    banner_image: blank
-  %}
-
-  <div class="page-width about-page__inner">
-    <div class="about-page__intro">
-      <p class="about-page__lead">
-        The Clean Spread delivers natural, high-quality products you can trust every day.
-        We keep it simple, pure, and honest.
-      </p>
-    </div>
-
-    <div class="about-page__grid">
-      <div class="about-page__card">
-        <h2 class="about-page__card-title">Our Story</h2>
-        <p>
-          We started with a simple idea: food should be clean, honest, and made with ingredients
-          you can actually pronounce. Every jar we make is crafted in small batches so quality
-          never gets lost along the way.
-        </p>
-      </div>
-
-      <div class="about-page__card">
-        <h2 class="about-page__card-title">What We Believe</h2>
-        <ul class="about-page__list">
-          <li>100% natural ingredients — no shortcuts</li>
-          <li>Small-batch quality you can taste</li>
-          <li>Transparent sourcing from trusted suppliers</li>
-          <li>Honest labeling, always</li>
-        </ul>
-      </div>
-
-      <div class="about-page__card about-page__card--highlight">
-        <h2 class="about-page__card-title">Made in Dubai</h2>
-        <p>
-          Proudly Dubai based, we serve families who care about what goes on their table.
-          From our kitchen to yours — spread the good stuff.
-        </p>
-      </div>
+{%- liquid
+  assign banner_title = banner_title | default: 'About Us'
+  assign banner_subtitle = banner_subtitle | default: ''
+  assign instagram_url = instagram_url | default: 'https://www.instagram.com/the_clean_spread/'
+-%}
+<div
+  {% if shopify_attributes != blank %}
+    {{ shopify_attributes -}}
+  {% endif %}
+>
+  <div class="about-banner-wrap">
+    <div class="about-banner__bg" style="background-image: url('{{ 'about-banner.png' | asset_url }}')"></div>
+    <div class="about-banner__overlay" aria-hidden="true"></div>
+    <div class="page-width about-banner__content">
+      <h1 class="about-banner__title">{{ banner_title }}</h1>
+      {%- if banner_subtitle != blank -%}
+        <p class="about-banner__description">{{ banner_subtitle }}</p>
+      {%- endif -%}
     </div>
   </div>
+  <section class="about-story">
+    <div class="about-story__inner">
+      <div class="about-story__text">
+        <p class="about-story__eyebrow">OUR STORY</p>
+        <h2 class="about-story__heading">Made with <span class="about-story__highlight">love,</span> eaten with joy</h2>
+        <p class="about-story__body">
+          Born in a Dubai kitchen from a mother's desire to feed her family better — The Clean Spread is wholesome food
+          made honest, minimal, and truly delicious.
+        </p>
+        <p class="about-story__body">
+          What began as Aishwarya's personal mission in Dubai to find clean and safe foods for her family evolved into
+          The Clean Spread, a brand focused on providing wholesome foods. Disappointed by the lack of clean options
+          available, she started making her own products in her kitchen. The Clean Spread emphasizes simplicity, with
+          each product containing only 4 to 5 clearly identifiable ingredients, primarily composed of whole, natural
+          ingredients like nuts and seeds, sweetened solely with dates and free from refined sugars, preservatives, and
+          artificial additives. The brand's mission is to promote mindful eating and assist families in establishing a
+          healthy and joyful lifestyle together. We want to bridge the gap between healthy and tasty food.
+        </p>
+      </div>
+      <div class="about-story__image-wrap">
+        <img
+          src="{{ 'about-story.png' | asset_url }}"
+          alt="The Clean Spread products"
+          class="about-story__image"
+          loading="lazy"
+          width="808"
+          height="650"
+        >
+      </div>
+    </div>
+  </section>
+
+  <div class="about-mission" style="--banner-img: url('{{ 'about-mission.png' | asset_url }}')">
+    <div class="about-mission__overlay" aria-hidden="true"></div>
+    <div class="about-mission__inner">
+      <p class="about-mission__eyebrow">OUR MISSION</p>
+      <blockquote class="about-mission__quote">
+        "To inspire mindful eating and support families in building a lifestyle rooted in health, taste, and
+        togetherness."
+      </blockquote>
+      <a
+        href="{{ instagram_url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="about-mission__cta"
+      >
+        Go to Instagram →
+      </a>
+    </div>
+  </div>
+
+  <section class="about-person">
+    <div class="about-person__inner">
+      <div class="about-person__image-wrap">
+        <img
+          src="{{ 'about-aishwarya.png' | asset_url }}"
+          alt="Aishwarya, Founder of The Clean Spread"
+          class="about-person__image"
+          loading="lazy"
+          width="814"
+          height="550"
+        >
+      </div>
+      <div class="about-person__text">
+        <p class="about-person__eyebrow">THE PERSON BEHIND THE SPREAD</p>
+        <h2 class="about-person__heading">Aishwarya</h2>
+        <p class="about-person__body">
+          A mother first, Aishwarya's philosophy of mindful, nourishing living infuses every product she creates. As a
+          certified yoga therapist and calisthenics practitioner, she understands deeply how food fuels the body and
+          mind.
+          <br>
+          The Clean Spread is her way of sharing that understanding with every family who wants to eat better — without
+          sacrificing flavour, convenience, or trust in what's on the label.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .about-story__eyebrow,
+    .about-person__eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-ternary);
+      margin: 0 0 1.2rem;
+    }
+
+    /* Our Story */
+    .about-banner-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30rem;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .about-banner__bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 0;
+    }
+
+    .about-banner__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(92, 61, 46, 0.52);
+      z-index: 1;
+    }
+
+    .about-banner__content {
+      position: relative;
+      z-index: 2;
+      padding: 4rem var(--page-margin);
+    }
+
+    .about-banner__title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 1.4vw, 5.4rem);
+      color: #fff;
+      margin: 0 0 1.6rem;
+      font-weight: 700;
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .about-banner__description {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1.3rem, 1.6vw, 1.6rem);
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.65;
+      max-width: 65rem;
+      margin: 0 auto;
+    }
+    .about-story {
+      padding: clamp(5rem, 8vw, 9rem) 0;
+      background: var(--color-primary);
+      overflow: hidden;
+    }
+
+    .about-story__inner {
+      display: grid;
+      gap: 0;
+      align-items: center;
+    }
+
+    @media screen and (min-width: 990px) {
+      .about-story__inner {
+        grid-template-columns: 1fr 48%;
+      }
+    }
+
+    .about-story__text {
+      padding: 4rem clamp(3rem, 5vw, 8rem) 4rem clamp(2rem, 5vw, 8rem);
+    }
+
+    .about-story__heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 4.1vw, 4.6rem);
+      color: var(--color-secondary);
+      line-height: 1.15;
+      text-transform: capitalize;
+      margin: 0 0 2rem;
+    }
+
+    .about-story__highlight {
+      color: var(--color-ternary);
+      font-style: italic;
+      font-size: clamp(3.2rem, 3.8vw, 4.3rem);
+    }
+
+    .about-story__body {
+      font-size: 1.3rem;
+      line-height: 1.75;
+      color: var(--color-secondary);
+      margin: 0 0 1.6rem;
+      font-weight: 400;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .about-story__body:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-story__image-wrap {
+      overflow: hidden;
+      align-self: stretch;
+    }
+
+    .about-story__image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      min-height: 40rem;
+    }
+
+    /* Our Mission */
+    .about-mission {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: var(--banner-img);
+      background-size: cover;
+      background-position: center;
+      padding: clamp(5rem, 8vw, 9rem) var(--page-margin);
+      color: #fff;
+    }
+
+    .about-mission__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(92, 61, 46, 0.52);
+    }
+
+    .about-mission__inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 85rem;
+      margin: 0 auto;
+    }
+
+    .about-mission__eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.75);
+      margin: 0 0 2rem;
+    }
+
+    .about-mission__quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 2.8vw, 2.8rem);
+      line-height: 1.45;
+      color: #fff;
+      margin: 0 0 3rem;
+      padding: 0;
+      border: none;
+    }
+
+    .about-mission__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 4rem;
+      padding: 0 2rem;
+      background: var(--color-ternary);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+
+    .about-mission__cta:hover {
+      background: var(--color-secondary);
+    }
+
+    /* The Person */
+    .about-person {
+      padding: clamp(5rem, 8vw, 9rem) 0;
+      background: var(--color-primary);
+      overflow: hidden;
+    }
+
+    .about-person__inner {
+      display: grid;
+      gap: 0;
+      align-items: center;
+    }
+
+    @media screen and (min-width: 990px) {
+      .about-person__inner {
+        grid-template-columns: 48% 1fr;
+      }
+    }
+
+    .about-person__image-wrap {
+      overflow: hidden;
+      align-self: stretch;
+    }
+
+    .about-person__image {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .about-person__text {
+      padding: 4rem clamp(2rem, 5vw, 8rem) 4rem clamp(1rem, 3vw, 6rem);
+    }
+
+    .about-person__body {
+      font-size: 1.3rem;
+      color: rgba(0, 0, 0, 0.6);
+      font-weight: 400;
+      line-height: 1.75;
+      font-family: 'DM Sans', sans-serif;
+      margin: 0 0 1.6rem;
+    }
+
+    .about-person__eyebrow {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-ternary);
+      margin: 0 0 1.2rem;
+    }
+
+    .about-person__heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 3.5vw, 4rem);
+      color: var(--color-secondary);
+      font-weight: 500;
+      margin: 0 0 2rem;
+    }
+
+    .about-person__body:last-child {
+      margin-bottom: 0;
+    }
+  </style>
 </div>
