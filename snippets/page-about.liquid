@@ -1,6 +1,6 @@
 {%- liquid
   assign banner_title = banner_title | default: 'About Us'
-  assign banner_subtitle = banner_subtitle | default: ''
+  assign banner_subtitle = banner_subtitle | default: 'Clean, nourishing spreads crafted with thoughtfully sourced, real ingredients that you can trust. Loved by families who want better, healthier choices without compromising on taste.'
   assign instagram_url = instagram_url | default: 'https://www.instagram.com/the_clean_spread/'
 -%}
 <div
@@ -108,13 +108,13 @@
       margin: 0 0 1.2rem;
     }
 
-    /* Our Story */
+    /* Banner */
     .about-banner-wrap {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 30rem;
+      min-height: 35rem;
       overflow: hidden;
       text-align: center;
     }
@@ -130,7 +130,6 @@
     .about-banner__overlay {
       position: absolute;
       inset: 0;
-      background: rgba(92, 61, 46, 0.52);
       z-index: 1;
     }
 
@@ -142,21 +141,23 @@
 
     .about-banner__title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 1.4vw, 5.4rem);
+      font-size: clamp(4rem, 3vw, 7rem);
       color: #fff;
       margin: 0 0 1.6rem;
-      font-weight: 700;
+      font-weight: 500;
       text-shadow: 0 2px 16px rgba(0, 0, 0, 0.25);
     }
 
     .about-banner__description {
       font-family: 'DM Sans', sans-serif;
-      font-size: clamp(1.3rem, 1.6vw, 1.6rem);
-      color: rgba(255, 255, 255, 0.88);
+      font-size: clamp(1rem, 1.3vw, 1.3rem);
+      color: var(--color-primary);
       line-height: 1.65;
       max-width: 65rem;
       margin: 0 auto;
     }
+
+    /* Our Story */
     .about-story {
       padding: clamp(5rem, 8vw, 9rem) 0;
       background: var(--color-primary);
