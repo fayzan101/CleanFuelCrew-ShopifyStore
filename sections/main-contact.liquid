@@ -1,0 +1,122 @@
+{% render 'page-contact',
+  shopify_attributes: section.shopify_attributes,
+  section_id: section.id,
+  banner_page_title: section.settings.banner_title | default: 'Contact',
+  banner_subtitle: section.settings.banner_subtitle | default: 'Home / Contact',
+  banner_image: section.settings.banner_image,
+  info_heading: section.settings.info_heading,
+  info_text: section.settings.info_text,
+  location_label: section.settings.location_label,
+  phone_label: section.settings.phone_label,
+  phone_number: section.settings.phone_number,
+  email_address: section.settings.email_address,
+  instagram_label: section.settings.instagram_label,
+  instagram_handle: section.settings.instagram_handle,
+  instagram_url: section.settings.instagram_url,
+  form_heading: section.settings.form_heading,
+  submit_label: section.settings.submit_label
+%}
+
+{% schema %}
+{
+  "name": "Contact page",
+  "tag": "section",
+  "class": "section-main-contact",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner"
+    },
+    {
+      "type": "text",
+      "id": "banner_title",
+      "label": "Banner title",
+      "default": "Contact"
+    },
+    {
+      "type": "text",
+      "id": "banner_subtitle",
+      "label": "Banner subtitle",
+      "default": "Home / Contact"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
+    },
+    {
+      "type": "header",
+      "content": "Information column"
+    },
+    {
+      "type": "text",
+      "id": "info_heading",
+      "label": "Heading",
+      "default": "Information"
+    },
+    {
+      "type": "textarea",
+      "id": "info_text",
+      "label": "Intro text",
+      "default": "Have questions? Feel free to reach out—we're here to help. Contact us anytime and we'll get back to you soon."
+    },
+    {
+      "type": "text",
+      "id": "location_label",
+      "label": "Location",
+      "default": "Dubai Based"
+    },
+    {
+      "type": "text",
+      "id": "phone_label",
+      "label": "Phone label",
+      "default": "Phone Number"
+    },
+    {
+      "type": "text",
+      "id": "phone_number",
+      "label": "Phone number",
+      "default": "+971 564381651"
+    },
+    {
+      "type": "text",
+      "id": "email_address",
+      "label": "Email address",
+      "default": "thecleanspread@gmail.com"
+    },
+    {
+      "type": "text",
+      "id": "instagram_label",
+      "label": "Instagram label",
+      "default": "Instagram"
+    },
+    {
+      "type": "text",
+      "id": "instagram_handle",
+      "label": "Instagram handle",
+      "default": "@thecleanspread"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "header",
+      "content": "Contact form"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Say Something..."
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button label",
+      "default": "Send message"
+    }
+  ]
+}
+{% endschema %}

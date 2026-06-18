@@ -15,6 +15,15 @@
   {%- when 'shipping-returns' -%}
     {% render 'page-shipping-returns', shopify_attributes: section.shopify_attributes %}
 
+  {%- when 'contact' -%}
+    {% render 'page-contact',
+      shopify_attributes: section.shopify_attributes,
+      section_id: section.id,
+      banner_page_title: page.title | default: 'Contact',
+      banner_subtitle: section.settings.banner_subtitle | default: 'Home / Contact',
+      banner_image: section.settings.banner_image
+    %}
+
   {%- else -%}
     {% render 'page-default', section: section, shopify_attributes: section.shopify_attributes %}
 {%- endcase -%}
@@ -27,7 +36,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Banner settings below apply to generic pages only. About, Recipes, Wishlist, and Shipping & Returns control their own layout in snippets."
+      "content": "Banner settings below apply to generic pages only. About, Recipes, Wishlist, Shipping & Returns, and Contact control their own layout in snippets."
     },
     {
       "type": "checkbox",

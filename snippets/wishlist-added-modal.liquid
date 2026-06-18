@@ -1,0 +1,42 @@
+<div
+  id="WishlistAdded"
+  class="wishlist-modal"
+  hidden
+  data-wishlist-url="{{ pages.wishlist.url | default: '/pages/wishlist' }}"
+>
+  <button type="button" class="wishlist-modal__backdrop" data-action="close-wishlist-modal" aria-label="Close" tabindex="-1"></button>
+
+  <div class="wishlist-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="WishlistModalTitle">
+    <button type="button" class="wishlist-modal__close" data-action="close-wishlist-modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <div class="wishlist-modal__content">
+      <div class="wishlist-modal__media">
+        <img
+          class="wishlist-modal__image"
+          data-wishlist-modal-image
+          src=""
+          alt=""
+          width="280"
+          height="280"
+          loading="lazy"
+        >
+      </div>
+
+      <p class="wishlist-modal__message" id="WishlistModalTitle">
+        <strong class="wishlist-modal__product-name" data-wishlist-modal-title></strong>
+        <span class="wishlist-modal__message-suffix"> has been added to your wishlist.</span>
+      </p>
+
+      <div class="wishlist-modal__actions">
+        <a href="{{ pages.wishlist.url | default: '/pages/wishlist' }}" class="wishlist-modal__btn" data-wishlist-modal-link>
+          View List Wishlist
+        </a>
+        <button type="button" class="wishlist-modal__btn" data-action="close-wishlist-modal">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

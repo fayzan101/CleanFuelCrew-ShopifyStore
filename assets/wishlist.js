@@ -72,6 +72,54 @@
     );
   }
 
+  function getWishlistModal() {
+    return document.getElementById('WishlistAdded');
+  }
+
+  function openWishlistModal(item) {
+    const modal = getWishlistModal();
+    if (!modal || !item) return;
+
+    const image = modal.querySelector('[data-wishlist-modal-image]');
+    const title = modal.querySelector('[data-wishlist-modal-title]');
+
+    if (image) {
+      if (item.image) {
+        image.src = item.image;
+        image.alt = item.title || '';
+        image.hidden = false;
+      } else {
+        image.removeAttribute('src');
+        image.alt = '';
+        image.hidden = true;
+      }
+    }
+
+    if (title) {
+      title.textContent = item.title || '';
+    }
+
+    modal.hidden = false;
+    document.body.classList.add('wishlist-modal-open');
+
+    const continueBtn = modal.querySelector('[data-action="close-wishlist-modal"].wishlist-modal__btn');
+    if (continueBtn) {
+      continueBtn.focus();
+    }
+  }
+
+  function closeWishlistModal() {
+    const modal = getWishlistModal();
+    if (!modal) return;
+
+    modal.hidden = true;
+    document.body.classList.remove('wishlist-modal-open');
+  }
+
+  function shouldShowAddedModal(button) {
+    return Boolean(button.closest('.card-product-shop'));
+  }
+
   function initProductButtons() {
     document.querySelectorAll('[data-action="wishlist-toggle"]').forEach((button) => {
       const handle = button.dataset.productHandle;
@@ -151,6 +199,9 @@
   document.addEventListener('click', (event) => {
     const toggleBtn = event.target.closest('[data-action="wishlist-toggle"]');
     if (toggleBtn) {
+      event.preventDefault();
+      event.stopPropagation();
+
       const item = getItemFromButton(toggleBtn);
       if (!item.handle) return;
 
@@ -164,6 +215,16 @@
           setButtonState(button, added);
         }
       });
+
+      if (added && shouldShowAddedModal(toggleBtn)) {
+        openWishlistModal(item);
+      }
+      return;
+    }
+
+    if (event.target.closest('[data-action="close-wishlist-modal"]')) {
+      event.preventDefault();
+      closeWishlistModal();
       return;
     }
 
@@ -180,6 +241,13 @@
     initProductButtons();
   });
 
+  document.addEventListener('keydown', (event) => {
+    const modal = getWishlistModal();
+    if (event.key === 'Escape' && modal && !modal.hidden) {
+      closeWishlistModal();
+    }
+  });
+
   document.addEventListener('DOMContentLoaded', () => {
     updateHeaderCount();
     initProductButtons();
@@ -190,6 +258,8 @@
     read: readWishlist,
     toggle: toggleWishlist,
     remove: removeFromWishlist,
-    isInWishlist
+    isInWishlist,
+    openModal: openWishlistModal,
+    closeModal: closeWishlistModal
   };
 })();

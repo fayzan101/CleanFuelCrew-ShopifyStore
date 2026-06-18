@@ -1,0 +1,188 @@
+{%- liquid
+  assign info_heading = info_heading | default: 'Information'
+  assign info_text = info_text | default: "Have questions? Feel free to reach out—we're here to help. Contact us anytime and we'll get back to you soon."
+  assign location_label = location_label | default: 'Dubai Based'
+  assign phone_label = phone_label | default: 'Phone Number'
+  assign phone_number = phone_number | default: '+971 564381651'
+  assign email_address = email_address | default: 'cleanfuelcrew@gmail.com'
+  assign instagram_label = instagram_label | default: 'Instagram'
+  assign instagram_handle = instagram_handle | default: '@cleanfuelcrew'
+  if instagram_url == blank
+    assign instagram_url = 'https://www.instagram.com/cleanfuelcrew/'
+  endif
+  assign form_heading = form_heading | default: 'Say Something...'
+  assign submit_label = submit_label | default: 'Send message'
+  assign banner_page_title = banner_page_title | default: 'Contact'
+  assign banner_subtitle = banner_subtitle | default: 'Home / Contact'
+  assign phone_href = phone_number | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', ''
+-%}
+
+<div class="section contact-page"{% if shopify_attributes != blank %} {{ shopify_attributes }}{% endif %}>
+  {% render 'page-banner',
+    banner_title: banner_page_title,
+    banner_subtitle: banner_subtitle,
+    banner_image: banner_image
+  %}
+
+  <div class="page-width-larger contact-page__inner">
+    <div class="contact-page__layout">
+      <div class="contact-page__info">
+        <h1 class="contact-page__info-title">{{ info_heading | escape }}</h1>
+        <p class="contact-page__info-text">{{ info_text | escape }}</p>
+
+        <ul class="contact-page__details" role="list">
+          <li class="contact-page__detail">
+            <span class="contact-page__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z"></path>
+                <circle cx="12" cy="10" r="2.5"></circle>
+              </svg>
+            </span>
+            <span class="contact-page__detail-text">{{ location_label | escape }}</span>
+          </li>
+
+          <li class="contact-page__detail">
+            <span class="contact-page__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"></path>
+              </svg>
+            </span>
+            <span class="contact-page__detail-text">
+              <span class="contact-page__detail-label">{{ phone_label | escape }}</span>
+              <a href="tel:{{ phone_href }}" class="contact-page__detail-value">{{ phone_number | escape }}</a>
+            </span>
+          </li>
+
+          <li class="contact-page__detail">
+            <span class="contact-page__icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="5" width="18" height="14" rx="1"></rect>
+                <path d="M3 7l9 6 9-6"></path>
+              </svg>
+            </span>
+            <span class="contact-page__detail-text">
+              <a href="mailto:{{ email_address }}" class="contact-page__detail-value">{{ email_address | escape }}</a>
+            </span>
+          </li>
+
+          <li class="contact-page__detail">
+            <span class="contact-page__icon" aria-hidden="true">
+              <span class="contact-page__icon-img" style="--icon-url: url('{{ 'insta.svg' | asset_url }}');"></span>
+            </span>
+            <span class="contact-page__detail-text">
+              <span class="contact-page__detail-label">{{ instagram_label | escape }}</span>
+              <a href="{{ instagram_url }}" class="contact-page__detail-value" target="_blank" rel="noopener noreferrer">{{ instagram_handle | escape }}</a>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="contact-page__form-wrap">
+        <h2 class="contact-page__form-title">{{ form_heading | escape }}</h2>
+
+        {%- form 'contact', id: 'ContactForm', class: 'contact-page__form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="contact-page__success" tabindex="-1" autofocus>
+              <p>{{ 'templates.contact.form.post_success' | t | default: "Thanks for contacting us. We'll get back to you soon." }}</p>
+            </div>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <div class="contact-page__errors" role="alert">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="contact-page__fields">
+            <div class="contact-page__row">
+              <div class="contact-page__field">
+                <label class="contact-page__label" for="ContactFirstName-{{ section_id }}">
+                  First Name<span class="contact-page__required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="ContactFirstName-{{ section_id }}"
+                  class="contact-page__input"
+                  name="contact[first_name]"
+                  autocomplete="given-name"
+                  value="{% if form.first_name %}{{ form.first_name }}{% elsif customer %}{{ customer.first_name }}{% endif %}"
+                  required
+                >
+              </div>
+
+              <div class="contact-page__field">
+                <label class="contact-page__label" for="ContactLastName-{{ section_id }}">
+                  Last Name<span class="contact-page__required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="ContactLastName-{{ section_id }}"
+                  class="contact-page__input"
+                  name="contact[last_name]"
+                  autocomplete="family-name"
+                  value="{% if form.last_name %}{{ form.last_name }}{% elsif customer %}{{ customer.last_name }}{% endif %}"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="contact-page__row">
+              <div class="contact-page__field">
+                <label class="contact-page__label" for="ContactEmail-{{ section_id }}">
+                  Email Address<span class="contact-page__required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="email"
+                  id="ContactEmail-{{ section_id }}"
+                  class="contact-page__input"
+                  name="contact[email]"
+                  autocomplete="email"
+                  spellcheck="false"
+                  autocapitalize="off"
+                  value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                  required
+                >
+              </div>
+
+              <div class="contact-page__field">
+                <label class="contact-page__label" for="ContactPhone-{{ section_id }}">
+                  Phone Number<span class="contact-page__required" aria-hidden="true">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="ContactPhone-{{ section_id }}"
+                  class="contact-page__input"
+                  name="contact[phone]"
+                  autocomplete="tel"
+                  value="{% if form.phone %}{{ form.phone }}{% elsif customer %}{{ customer.phone }}{% endif %}"
+                  required
+                >
+              </div>
+            </div>
+
+            <div class="contact-page__field contact-page__field--full">
+              <label class="contact-page__label" for="ContactMessage-{{ section_id }}">
+                Message<span class="contact-page__required" aria-hidden="true">*</span>
+              </label>
+              <textarea
+                id="ContactMessage-{{ section_id }}"
+                class="contact-page__textarea"
+                name="contact[body]"
+                rows="6"
+                required
+              >{{- form.body -}}</textarea>
+            </div>
+          </div>
+
+          {%- if form.captcha -%}
+            <div class="contact-page__captcha">{{ form.captcha }}</div>
+          {%- endif -%}
+
+          <button type="submit" class="button contact-page__submit">
+            {{ submit_label | escape }}
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</div>

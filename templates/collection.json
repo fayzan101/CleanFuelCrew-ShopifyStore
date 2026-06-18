@@ -3,6 +3,8 @@
     "main": {
       "type": "main-collection",
       "settings": {
+        "banner_title": "Shop",
+        "banner_subtitle": "Home / Shop",
         "products_per_page": 9,
         "price_filter_min": 10,
         "price_filter_max": 5000

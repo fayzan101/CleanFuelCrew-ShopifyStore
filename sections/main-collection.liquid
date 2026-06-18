@@ -1,6 +1,18 @@
 <div class="section collection-page" {{ section.shopify_attributes }}>
+  {%- liquid
+    assign collection_banner_title = section.settings.banner_title
+    if collection_banner_title == blank
+      if collection.handle == 'all'
+        assign collection_banner_title = 'Shop'
+      elsif collection.title != blank
+        assign collection_banner_title = collection.title
+      else
+        assign collection_banner_title = 'Shop'
+      endif
+    endif
+  -%}
   {% render 'page-banner',
-    banner_title: section.settings.banner_title | default: collection.title,
+    banner_title: collection_banner_title,
     banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
     banner_image: section.settings.banner_image | default: collection.featured_image
   %}
@@ -84,7 +96,8 @@
       "type": "text",
       "id": "banner_title",
       "label": "Banner title",
-      "info": "Leave blank to use collection title"
+      "default": "Shop",
+      "info": "Leave blank to use “Shop” on the all-products collection, or the collection title on other collections"
     },
     {
       "type": "text",
