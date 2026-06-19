@@ -1,306 +1,161 @@
-{%- comment -%} Banner image — reuse the same pattern as contact {%- endcomment -%}
-<div class="auth-banner">
-  <div class="auth-banner__content">
-    <h1 class="auth-banner__title">My Account</h1>
-    <p class="auth-banner__subtitle">
-      <a href="{{ routes.root_url }}">Home</a> / Login
-    </p>
-  </div>
-</div>
+{%- liquid
+  assign section_id = section_id | default: 'auth'
+  assign show_banner = show_banner | default: true, allow_false: true
+  assign compact = compact | default: false, allow_false: true
+  assign forms_only = forms_only | default: false, allow_false: true
+  assign initial_view = initial_view | default: 'login'
+  assign use_shopify_account = false
+  if shop.customer_accounts_enabled
+    assign use_shopify_account = true
+  endif
+  if routes.storefront_login_url != blank
+    assign use_shopify_account = true
+  endif
+-%}
 
-<div class="auth-page">
-  <div class="auth-page__inner">
-
-    {%- comment -%} ===== LOGIN FORM ===== {%- endcomment -%}
-    <div class="auth-card" id="login-section">
-      <h2 class="auth-card__title">Welcome Back</h2>
-      <p class="auth-card__subtitle">Sign in to your account</p>
-
-      {%- form 'customer_login' -%}
-
-        {%- if form.errors -%}
-          <div class="auth-errors" role="alert">
-            {{ form.errors | default_errors }}
-          </div>
-        {%- endif -%}
-
-        <div class="auth-field">
-          <label class="auth-label" for="CustomerEmail">Email address</label>
-          <input
-            class="auth-input"
-            type="email"
-            name="customer[email]"
-            id="CustomerEmail"
-            autocomplete="email"
-            autocorrect="off"
-            autocapitalize="off"
-            placeholder="you@example.com"
-            required
-          >
-        </div>
-
-        <div class="auth-field">
-          <label class="auth-label" for="CustomerPassword">Password</label>
-          <input
-            class="auth-input"
-            type="password"
-            name="customer[password]"
-            id="CustomerPassword"
-            autocomplete="current-password"
-            placeholder="••••••••"
-            required
-          >
-        </div>
-
-        <button type="submit" class="auth-btn">Sign In</button>
-
-      {%- endform -%}
-
-      <div class="auth-links">
-        <a href="{{ routes.account_register_url }}" class="auth-link">
-          Create an account
-        </a>
-        <span class="auth-links__divider">·</span>
-        <button type="button" class="auth-link auth-link--btn" id="forgot-trigger">
-          Forgot password?
-        </button>
+{%- unless forms_only -%}
+  {%- if show_banner -%}
+    <div class="auth-banner">
+      <div class="auth-banner__content">
+        <h1 class="auth-banner__title">My Account</h1>
+        <p class="auth-banner__subtitle">
+          <a href="{{ routes.root_url }}">Home</a> / Login
+        </p>
       </div>
     </div>
+  {%- endif -%}
 
-    {%- comment -%} ===== FORGOT PASSWORD FORM ===== {%- endcomment -%}
-    <div class="auth-card" id="recover-section" hidden>
-      <h2 class="auth-card__title">Reset Password</h2>
-      <p class="auth-card__subtitle">We'll send a reset link to your email</p>
+  <div class="auth-page{% if compact %} auth-page--compact{% endif %}" data-auth-root="{{ section_id }}"{% if initial_view != 'login' %} data-initial-view="{{ initial_view }}"{% endif %}>
+    <div class="auth-page__inner">
+{%- endunless -%}
 
-      {%- form 'recover_customer_password' -%}
+{%- if use_shopify_account -%}
+  <div class="auth-card" id="{{ section_id }}-login-section" data-auth-panel="login"{% unless initial_view == 'login' %} hidden{% endunless %}>
+    <h2 class="auth-card__title">Welcome Back</h2>
+    <p class="auth-card__subtitle">Enter your email to receive a verification code</p>
 
-        {%- if form.errors -%}
-          <div class="auth-errors" role="alert">
-            {{ form.errors | default_errors }}
-          </div>
-        {%- endif -%}
-
-        {%- if form.posted_successfully? -%}
-          <div class="auth-success" role="status">
-            If that email is registered, you'll receive a reset link shortly.
-          </div>
-        {%- endif -%}
-
-        <div class="auth-field">
-          <label class="auth-label" for="RecoverEmail">Email address</label>
-          <input
-            class="auth-input"
-            type="email"
-            name="email"
-            id="RecoverEmail"
-            autocomplete="email"
-            autocorrect="off"
-            autocapitalize="off"
-            placeholder="you@example.com"
-            required
-          >
-        </div>
-
-        <button type="submit" class="auth-btn">Send Reset Link</button>
-
-      {%- endform -%}
-
-      <div class="auth-links">
-        <button type="button" class="auth-link auth-link--btn" id="back-to-login">
-          ← Back to login
-        </button>
+    <form class="auth-email-form" data-auth-email-form novalidate>
+      <div class="auth-field">
+        <label class="auth-label" for="{{ section_id }}-CustomerEmail">{{ 'customer.login.email' | t }}</label>
+        <input
+          class="auth-input"
+          type="email"
+          id="{{ section_id }}-CustomerEmail"
+          name="email"
+          autocomplete="email"
+          autocorrect="off"
+          autocapitalize="off"
+          placeholder="you@example.com"
+          required
+        >
       </div>
+
+      <button type="submit" class="auth-btn">{{ 'customer.login.sign_in' | t }}</button>
+    </form>
+
+    <div class="auth-links">
+      <button type="button" class="auth-link auth-link--btn" data-auth-show="register">
+        {{ 'customer.login.create_account' | t }}
+      </button>
     </div>
-
   </div>
-</div>
 
-{%- comment -%} ===== STYLES ===== {%- endcomment -%}
-<style>
-  .auth-banner {
-    background: var(--color-primary);
-    padding: 4rem var(--page-margin);
-    text-align: center;
-    border-bottom: 1px solid rgba(92, 61, 46, 0.08);
-  }
+{%- else -%}
+  <div class="auth-card" id="{{ section_id }}-login-section" data-auth-panel="login"{% unless initial_view == 'login' %} hidden{% endunless %}>
+    <h2 class="auth-card__title">Welcome Back</h2>
+    <p class="auth-card__subtitle">Sign in to your account</p>
 
-  .auth-banner__title {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(2.8rem, 4vw, 4rem);
-    color: var(--color-secondary);
-    margin: 0 0 0.6rem;
-  }
+    {%- form 'customer_login' -%}
+      {%- if form.errors -%}
+        <div class="auth-errors" role="alert">
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
 
-  .auth-banner__subtitle {
-    font-size: 1.4rem;
-    color: rgba(92, 61, 46, 0.55);
-    margin: 0;
-  }
+      <div class="auth-field">
+        <label class="auth-label" for="{{ section_id }}-CustomerEmail">Email address</label>
+        <input
+          class="auth-input"
+          type="email"
+          name="customer[email]"
+          id="{{ section_id }}-CustomerEmail"
+          autocomplete="email"
+          placeholder="you@example.com"
+          required
+        >
+      </div>
 
-  .auth-banner__subtitle a {
-    color: inherit;
-    text-decoration: none;
-  }
+      <div class="auth-field">
+        <label class="auth-label" for="{{ section_id }}-CustomerPassword">{{ 'customer.login.password' | t }}</label>
+        <input
+          class="auth-input"
+          type="password"
+          name="customer[password]"
+          id="{{ section_id }}-CustomerPassword"
+          autocomplete="current-password"
+          placeholder="••••••••"
+          required
+        >
+      </div>
 
-  .auth-banner__subtitle a:hover {
-    color: var(--color-ternary);
-  }
+      <button type="submit" class="auth-btn">{{ 'customer.login.sign_in' | t }}</button>
+    {%- endform -%}
 
-  .auth-page {
-    background: #fff;
-    padding: clamp(4rem, 8vw, 8rem) var(--page-margin);
-  }
+    <div class="auth-links">
+      <button type="button" class="auth-link auth-link--btn" data-auth-show="register">
+        {{ 'customer.login.create_account' | t }}
+      </button>
+      <span class="auth-links__divider">·</span>
+      <button type="button" class="auth-link auth-link--btn" data-auth-show="recover">
+        {{ 'customer.login.forgot_password' | t }}
+      </button>
+    </div>
+  </div>
 
-  .auth-page__inner {
-    max-width: 48rem;
-    margin: 0 auto;
-  }
+  <div class="auth-card" id="{{ section_id }}-recover-section" data-auth-panel="recover" hidden>
+    <h2 class="auth-card__title">Reset Password</h2>
+    <p class="auth-card__subtitle">We'll send a reset link to your email</p>
 
-  .auth-card {
-    background: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.08);
-    padding: clamp(2.4rem, 5vw, 4rem);
-  }
+    {%- form 'recover_customer_password' -%}
+      {%- if form.errors -%}
+        <div class="auth-errors" role="alert">
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
 
-  .auth-card__title {
-    font-family: "Playfair Display", serif;
-    font-size: clamp(2.2rem, 3vw, 2.8rem);
-    color: var(--color-secondary);
-    margin: 0 0 0.4rem;
-  }
+      {%- if form.posted_successfully? -%}
+        <div class="auth-success" role="status">
+          If that email is registered, you'll receive a reset link shortly.
+        </div>
+      {%- endif -%}
 
-  .auth-card__subtitle {
-    font-size: 1.4rem;
-    color: rgba(0, 0, 0, 0.45);
-    margin: 0 0 2.8rem;
-  }
+      <div class="auth-field">
+        <label class="auth-label" for="{{ section_id }}-RecoverEmail">Email address</label>
+        <input
+          class="auth-input"
+          type="email"
+          name="email"
+          id="{{ section_id }}-RecoverEmail"
+          autocomplete="email"
+          placeholder="you@example.com"
+          required
+        >
+      </div>
 
-  .auth-field {
-    display: grid;
-    gap: 0.8rem;
-    margin-bottom: 2rem;
-  }
+      <button type="submit" class="auth-btn">Send Reset Link</button>
+    {%- endform -%}
 
-  .auth-label {
-    font-size: 1.3rem;
-    color: rgba(0, 0, 0, 0.55);
-    font-family: "DM Sans", sans-serif;
-  }
+    <div class="auth-links">
+      <button type="button" class="auth-link auth-link--btn" data-auth-show="login">
+        ← Back to login
+      </button>
+    </div>
+  </div>
+{%- endif -%}
 
-  .auth-input {
-    width: 100%;
-    min-height: 4.8rem;
-    padding: 1.2rem 1.4rem;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: #fff;
-    font: inherit;
-    font-size: 1.4rem;
-    color: #111;
-    transition: border-color 0.2s ease;
-    outline: none;
-  }
+{%- render 'page-register', section_id: section_id, forms_only: true -%}
 
-  .auth-input:focus {
-    border-color: var(--color-ternary);
-  }
-
-  .auth-btn {
-    display: block;
-    width: 100%;
-    min-height: 4.8rem;
-    padding: 0 2rem;
-    margin-top: 0.8rem;
-    background: var(--color-ternary);
-    color: #fff;
-    font: inherit;
-    font-size: 1.3rem;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-
-  .auth-btn:hover {
-    background: var(--color-secondary);
-  }
-
-  .auth-errors {
-    padding: 1.2rem 1.6rem;
-    margin-bottom: 2rem;
-    background: rgba(180, 40, 40, 0.06);
-    border: 1px solid rgba(180, 40, 40, 0.2);
-    color: #8b2020;
-    font-size: 1.4rem;
-  }
-
-  .auth-success {
-    padding: 1.2rem 1.6rem;
-    margin-bottom: 2rem;
-    background: rgba(200, 145, 95, 0.12);
-    border: 1px solid rgba(200, 145, 95, 0.35);
-    color: var(--color-secondary);
-    font-size: 1.4rem;
-  }
-
-  .auth-links {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2rem;
-    font-size: 1.4rem;
-  }
-
-  .auth-links__divider {
-    color: rgba(0, 0, 0, 0.25);
-  }
-
-  .auth-link {
-    color: var(--color-ternary);
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-
-  .auth-link:hover {
-    color: var(--color-secondary);
-  }
-
-  .auth-link--btn {
-    background: none;
-    border: none;
-    padding: 0;
-    font: inherit;
-    font-size: 1.4rem;
-    cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
-  }
-</style>
-
-{%- comment -%} ===== JAVASCRIPT ===== {%- endcomment -%}
-<script>
-  (function () {
-    const loginSection  = document.getElementById('login-section');
-    const recoverSection = document.getElementById('recover-section');
-    const forgotTrigger = document.getElementById('forgot-trigger');
-    const backToLogin   = document.getElementById('back-to-login');
-
-    function showRecover() {
-      loginSection.hidden  = true;
-      recoverSection.hidden = false;
-    }
-
-    function showLogin() {
-      recoverSection.hidden = true;
-      loginSection.hidden   = false;
-    }
-
-    if (forgotTrigger) forgotTrigger.addEventListener('click', showRecover);
-    if (backToLogin)   backToLogin.addEventListener('click', showLogin);
-
-    // If the recover form was just submitted, stay on recover panel
-    if (window.location.hash === '#recover') showRecover();
-  })();
-</script>
+{%- unless forms_only -%}
+    </div>
+  </div>
+{%- endunless -%}

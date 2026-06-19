@@ -30,12 +30,32 @@
 
     {{ content_for_header }}
 
+    {%- liquid
+      assign use_shopify_account = false
+      if shop.customer_accounts_enabled
+        assign use_shopify_account = true
+      endif
+      if routes.storefront_login_url != blank
+        assign use_shopify_account = true
+      endif
+    -%}
+    {%- if use_shopify_account -%}
+      <link rel="modulepreload" href="https://cdn.shopify.com/storefront/web-components/login-form.js" crossorigin="anonymous">
+      <script src="https://cdn.shopify.com/storefront/web-components/account.js" type="module" crossorigin="anonymous"></script>
+    {%- endif -%}
+
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
     <script src="{{ 'wishlist.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'global.js' | asset_url }}" defer="defer"></script>
+    <script src="{{ 'auth-page.js' | asset_url }}" defer="defer"></script>
     <script>window.themeMoneyFormat = {{ shop.money_format | json }};</script>
+    <script>
+      window.themeAuth = {
+        useShopifyAccount: {{ use_shopify_account | json }}
+      };
+    </script>
     <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
   </head>
 
@@ -54,5 +74,30 @@
 
     {% render 'product-quick-view-modal' %}
     {% render 'wishlist-added-modal' %}
+
+    {%- unless customer -%}
+      {%- if use_shopify_account -%}
+        {% render 'shopify-account-host' %}
+      {%- endif -%}
+
+      <div id="AuthModal" class="auth-modal" hidden>
+        <button type="button" class="auth-modal__backdrop" data-action="close-auth-modal" aria-label="Close" tabindex="-1"></button>
+
+        <div class="auth-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="AuthModalTitle">
+          <button type="button" class="auth-modal__close" data-action="close-auth-modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+          <div class="auth-modal__content">
+            <h2 id="AuthModalTitle" class="visually-hidden">{{ 'customer.login.title' | t }}</h2>
+            <div class="auth-page auth-page--compact" data-auth-root="auth-modal">
+              <div class="auth-page__inner">
+                {% render 'page-login', section_id: 'auth-modal', show_banner: false, compact: true, forms_only: true %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {%- endunless -%}
   </body>
 </html>

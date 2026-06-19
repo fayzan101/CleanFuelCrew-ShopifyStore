@@ -1,0 +1,15 @@
+{%- liquid
+  assign customer_account_menu = customer_account_menu | default: 'customer-account-main-menu'
+-%}
+
+<div class="shopify-account-host" data-shopify-account-host aria-hidden="true">
+  <shopify-account menu="{{ customer_account_menu }}">
+    <button
+      type="button"
+      slot="signed-out-avatar"
+      class="shopify-account-host__trigger"
+      data-auth-account-trigger
+      tabindex="-1"
+    ></button>
+  </shopify-account>
+</div>

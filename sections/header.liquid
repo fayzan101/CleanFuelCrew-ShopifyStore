@@ -53,9 +53,7 @@
           <span class="header__icon-img" style="--icon-url: url('{{ 'cart.svg' | asset_url }}');"></span>
           <span class="cart-count">{{ cart.item_count }}</span>
         </a>
-        <a href="{{ routes.account_url }}" class="header__icon-link" aria-label="Account">
-          <span class="header__icon-img" style="--icon-url: url('{{ 'profile.svg' | asset_url }}');"></span>
-        </a>
+        {% render 'auth-account-widget', customer_account_menu: section.settings.customer_account_menu %}
       </div>
     </div>
   </div>
@@ -74,6 +72,12 @@
       "id": "menu",
       "label": "Menu",
       "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_account_menu",
+      "label": "Customer account menu",
+      "default": "customer-account-main-menu"
     }
   ]
 }

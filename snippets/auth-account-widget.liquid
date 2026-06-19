@@ -1,0 +1,39 @@
+{%- liquid
+  assign customer_account_menu = customer_account_menu | default: 'customer-account-main-menu'
+  assign use_shopify_account = false
+  if shop.customer_accounts_enabled
+    assign use_shopify_account = true
+  endif
+  if routes.storefront_login_url != blank
+    assign use_shopify_account = true
+  endif
+-%}
+
+<div class="header__account" data-auth-widget data-use-shopify-account="{{ use_shopify_account }}">
+  {%- if customer -%}
+    <a href="{{ routes.account_url }}" class="header__icon-link" aria-label="{{ 'customer.account.title' | t }}">
+      <span class="header__icon-img" style="--icon-url: url('{{ 'profile.svg' | asset_url }}');"></span>
+    </a>
+  {%- else -%}
+    <button
+      type="button"
+      class="header__icon-link header__account-trigger"
+      data-action="toggle-account-menu"
+      aria-label="{{ 'customer.account.title' | t }}"
+      aria-expanded="false"
+      aria-haspopup="true"
+      aria-controls="HeaderAccountMenu"
+    >
+      <span class="header__icon-img" style="--icon-url: url('{{ 'profile.svg' | asset_url }}');"></span>
+    </button>
+
+    <div class="header__account-dropdown" id="HeaderAccountMenu" hidden>
+      <button type="button" class="header__account-dropdown-item" data-action="open-auth" data-auth-view="login">
+        {{ 'customer.login.sign_in' | t }}
+      </button>
+      <button type="button" class="header__account-dropdown-item" data-action="open-auth" data-auth-view="register">
+        {{ 'customer.login.create_account' | t }}
+      </button>
+    </div>
+  {%- endif -%}
+</div>
