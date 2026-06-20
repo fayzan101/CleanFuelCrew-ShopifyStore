@@ -15,8 +15,11 @@
       {%- assign col = collections[section.settings.collection] -%}
       <ul class="featured-products__grid" role="list">
         {%- for product in col.products limit: section.settings.products_to_show -%}
-          <li class="product-card">
+          <li class="product-card{% unless product.available %} product-card--sold-out{% endunless %}">
             <div class="product-card__image-wrap">
+              {%- unless product.available -%}
+                <span class="product-badge product-badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
+              {%- endunless -%}
               <a href="{{ product.url }}" class="product-card__image-link">
                 {%- if product.featured_image != blank -%}
                   <img
@@ -67,8 +70,10 @@
                   <input type="hidden" name="quantity" value="1">
                   <button
                     type="submit"
-                    class="product-card__action-btn"
-                    aria-label="Add {{ product.title | escape }} to cart"
+                    class="product-card__action-btn{% unless product.available %} is-sold-out{% endunless %}"
+                    data-product-available="{{ product.available }}"
+                    data-product-title="{{ product.title | escape }}"
+                    aria-label="{% if product.available %}Add {{ product.title | escape }} to cart{% else %}{{ product.title | escape }} is sold out{% endif %}"
                   >
                     <svg
                       width="18"
@@ -200,6 +205,19 @@
     position: relative;
     overflow: hidden;
     aspect-ratio: 1 / 1;
+  }
+
+  .product-card--sold-out .product-card__img {
+    opacity: 0.55;
+  }
+
+  .product-card__image-wrap .product-badge {
+    top: 1rem;
+    left: 1rem;
+  }
+
+  .product-card__action-btn.is-sold-out {
+    opacity: 0.65;
   }
 
   .product-card__image-link {

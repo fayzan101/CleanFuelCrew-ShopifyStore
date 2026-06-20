@@ -1,0 +1,15 @@
+<div id="StockAlert" class="stock-alert" hidden>
+  <button type="button" class="stock-alert__backdrop" data-action="close-stock-alert" aria-label="Close" tabindex="-1"></button>
+
+  <div class="stock-alert__dialog" role="alertdialog" aria-modal="true" aria-labelledby="StockAlertTitle" aria-describedby="StockAlertMessage">
+    <button type="button" class="stock-alert__close" data-action="close-stock-alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+
+    <div class="stock-alert__content">
+      <h2 id="StockAlertTitle" class="stock-alert__title">Out of stock</h2>
+      <p id="StockAlertMessage" class="stock-alert__message" data-stock-alert-message></p>
+      <button type="button" class="stock-alert__btn" data-action="close-stock-alert">OK</button>
+    </div>
+  </div>
+</div>

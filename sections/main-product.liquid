@@ -61,6 +61,9 @@
             {%- endif -%}
 
             <div class="product__main-wrap">
+              {%- unless current_variant.available -%}
+                <span class="product-badge product-badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
+              {%- endunless -%}
               <div class="product__main-media" data-product-zoom>
                 {{
                   featured_media
@@ -92,9 +95,9 @@
           <h1 class="product__title">{{ product.title | escape }}</h1>
         {%- endif -%}
 
-        <div class="product__price-wrap">
-          {% render 'price', product: product, use_variant: true, show_badges: false %}
-        </div>
+    <div class="product__price-wrap">
+      {% render 'price', product: product, use_variant: true, show_badges: true %}
+    </div>
 
         {%- if product.description != blank -%}
           <div class="product__description rte">
@@ -141,8 +144,9 @@
             <button
               type="submit"
               name="add"
-              class="button product-form__submit"
-              {% unless current_variant.available %}disabled{% endunless %}
+              class="button product-form__submit{% unless current_variant.available %} is-sold-out{% endunless %}"
+              data-product-available="{{ current_variant.available }}"
+              data-product-title="{{ product.title | escape }}"
             >
               {%- if current_variant.available -%}
                 Add to cart

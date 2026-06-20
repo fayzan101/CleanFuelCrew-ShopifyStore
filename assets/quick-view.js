@@ -111,7 +111,9 @@
                 '<input type="number" name="quantity" class="quantity-stepper__input" min="1" value="1" aria-label="Quantity">' +
                 '<button type="button" class="quantity-stepper__btn" data-action="qty-plus" aria-label="Increase quantity">&#43;</button>' +
               '</div>' +
-              '<button type="submit" class="button product-form__submit" data-quick-view-submit' + (variant.available ? '' : ' disabled') + '>' +
+              '<button type="submit" class="button product-form__submit' + (variant.available ? '' : ' is-sold-out') + '" data-quick-view-submit' +
+                ' data-product-available="' + variant.available + '"' +
+                ' data-product-title="' + escapeHtml(product.title) + '">' +
                 (variant.available ? 'Add to cart' : 'Sold out') +
               '</button>' +
               '<button type="button" class="product-wishlist" data-action="wishlist-toggle"' +
@@ -149,12 +151,19 @@
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const submitBtn = form.querySelector('[data-quick-view-submit]');
+      const productTitle = document.getElementById('QuickViewTitle')?.textContent?.trim() || '';
+
+      if (window.AmadalStock && submitBtn && !window.AmadalStock.isAvailable(submitBtn)) {
+        window.AmadalStock.show({ productTitle });
+        return;
+      }
+
       if (submitBtn) submitBtn.disabled = true;
 
       const formData = new FormData(form);
       try {
         if (window.AmadalCart) {
-          await window.AmadalCart.add(formData);
+          await window.AmadalCart.add(formData, { productTitle });
         } else {
           const response = await fetch('/cart/add.js', {
             method: 'POST',

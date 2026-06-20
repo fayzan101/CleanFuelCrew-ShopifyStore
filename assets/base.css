@@ -844,6 +844,37 @@ shopify-account:not(:defined) {
   background: rgba(0, 0, 0, 0.08);
 }
 
+.badge--sold-out,
+.product-badge--sold-out {
+  background: var(--color-secondary);
+  color: #fff;
+}
+
+.product-badge {
+  position: absolute;
+  top: 1.2rem;
+  left: 1.2rem;
+  z-index: 3;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.product-badge--sold-out {
+  margin: 0;
+}
+
+.product-form__submit.is-sold-out,
+.wishlist-row__add.is-sold-out {
+  opacity: 0.75;
+  cursor: pointer;
+}
+
 /* Announcement */
 .announcement-bar {
   text-align: center;
@@ -1826,6 +1857,14 @@ shopify-account:not(:defined) {
 }
 
 /* Shop product card */
+.card-product-shop--sold-out .card-product-shop__image {
+  opacity: 0.55;
+}
+
+.card-product-shop__action.is-sold-out {
+  opacity: 0.65;
+}
+
 .card-product-shop {
   position: relative;
   border: 2px solid rgb(230, 230, 230);
@@ -4148,4 +4187,97 @@ body.cart-drawer-open {
 .cart-drawer__btn:hover {
   background: #111;
   color: #fff;
+}
+
+/* Stock alert dialog */
+body.stock-alert-open {
+  overflow: hidden;
+}
+
+.stock-alert {
+  position: fixed;
+  inset: 0;
+  z-index: 10003;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.stock-alert[hidden] {
+  display: none !important;
+}
+
+.stock-alert__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+}
+
+.stock-alert__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 40rem);
+  background: #fff;
+  border-radius: 0.4rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.stock-alert__close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 2;
+  width: 3.6rem;
+  height: 3.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: #fff;
+  font-size: 2.8rem;
+  line-height: 1;
+  color: var(--color-secondary);
+  cursor: pointer;
+}
+
+.stock-alert__content {
+  padding: 3rem 2.4rem 2.4rem;
+  text-align: center;
+}
+
+.stock-alert__title {
+  margin: 0 0 1.2rem;
+  font-family: "Playfair Display", serif;
+  font-size: 2.4rem;
+  color: var(--color-secondary);
+}
+
+.stock-alert__message {
+  margin: 0 0 2rem;
+  font-size: 1.5rem;
+  line-height: 1.6;
+  color: var(--color-quaternary);
+}
+
+.stock-alert__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 12rem;
+  min-height: 4.4rem;
+  padding: 0 2.4rem;
+  border: none;
+  background: var(--color-secondary);
+  color: #fff;
+  font: inherit;
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.stock-alert__btn:hover {
+  background: var(--color-ternary);
 }

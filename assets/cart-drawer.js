@@ -115,7 +115,7 @@
     return cart;
   }
 
-  async function addToCart(payload) {
+  async function addToCart(payload, options) {
     let response;
 
     if (payload instanceof FormData) {
@@ -135,7 +135,14 @@
       });
     }
 
-    if (!response.ok) throw new Error('Add to cart failed');
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      window.AmadalStock?.show({
+        productTitle: options?.productTitle,
+        message: error.description || 'This product is out of stock and cannot be added to your cart.'
+      });
+      throw new Error('Add to cart failed');
+    }
 
     const cart = await fetchCart();
     openDrawer(cart);
@@ -161,13 +168,29 @@
     return cart;
   }
 
+  function getProductTitleFromForm(form) {
+    return (
+      form.dataset.productTitle ||
+      form.closest('.card-product-shop')?.querySelector('.card-product-shop__title')?.textContent?.trim() ||
+      form.closest('.product-card')?.querySelector('.product-card__title')?.textContent?.trim() ||
+      document.querySelector('.product__title')?.textContent?.trim() ||
+      ''
+    );
+  }
+
   function isAddToCartForm(form) {
     if (!(form instanceof HTMLFormElement)) return false;
     if (form.matches('[data-quick-view-form]')) return false;
 
     const action = form.getAttribute('action') || '';
     const hasVariant = Boolean(form.querySelector('[name="id"]'));
-    return hasVariant && (action.includes('/cart/add') || form.classList.contains('product-form') || form.classList.contains('card-product-shop__cart-form'));
+    return (
+      hasVariant &&
+      (action.includes('/cart/add') ||
+        form.classList.contains('product-form') ||
+        form.classList.contains('card-product-shop__cart-form') ||
+        form.classList.contains('product-card__atc-form'))
+    );
   }
 
   document.addEventListener('submit', async (event) => {
@@ -177,12 +200,19 @@
     event.preventDefault();
 
     const submitBtn = form.querySelector('[type="submit"]');
+    const productTitle = getProductTitleFromForm(form);
+
+    if (window.AmadalStock && !window.AmadalStock.isAvailable(submitBtn || form)) {
+      window.AmadalStock.show({ productTitle });
+      return;
+    }
+
     const originalText = submitBtn?.textContent || '';
 
     if (submitBtn) submitBtn.disabled = true;
 
     try {
-      await addToCart(new FormData(form));
+      await addToCart(new FormData(form), { productTitle });
 
       if (submitBtn) {
         submitBtn.textContent = 'Added!';

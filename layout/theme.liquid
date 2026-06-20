@@ -46,6 +46,7 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
+    <script src="{{ 'product-stock.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'wishlist.js' | asset_url }}" defer="defer"></script>
     <script src="{{ 'quick-view.js' | asset_url }}" defer="defer"></script>
@@ -76,6 +77,7 @@
     {% render 'product-quick-view-modal' %}
     {% render 'wishlist-added-modal' %}
     {% render 'cart-drawer' %}
+    {% render 'stock-alert-modal' %}
 
     {%- unless customer -%}
       {%- if use_shopify_account -%}

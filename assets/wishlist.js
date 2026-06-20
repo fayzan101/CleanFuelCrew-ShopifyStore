@@ -160,14 +160,19 @@
   }
 
   async function addToCart(variantId, button) {
-    if (!variantId || !button || button.disabled) return;
+    if (!variantId || !button) return;
+
+    if (window.AmadalStock && !window.AmadalStock.isAvailable(button)) {
+      window.AmadalStock.show({ productTitle: button.dataset.productTitle });
+      return;
+    }
 
     button.disabled = true;
     const originalText = button.textContent;
 
     try {
       if (window.AmadalCart) {
-        await window.AmadalCart.add({ id: variantId, quantity: 1 });
+        await window.AmadalCart.add({ id: variantId, quantity: 1 }, { productTitle: button.dataset.productTitle });
       } else {
         const response = await fetch('/cart/add.js', {
           method: 'POST',
@@ -246,8 +251,9 @@
         '</a>' +
         '<a href="' + escapeHtml(url) + '" class="wishlist-row__title">' + escapeHtml(title) + '</a>' +
         '<p class="wishlist-row__price">' + price + '</p>' +
-        '<button type="button" class="button wishlist-row__add" data-action="wishlist-add-to-cart" data-variant-id="' + variantId + '"' +
-          (available ? '' : ' disabled') + '>' +
+        '<button type="button" class="button wishlist-row__add' + (available ? '' : ' is-sold-out') + '" data-action="wishlist-add-to-cart" data-variant-id="' + variantId + '"' +
+          ' data-product-available="' + available + '"' +
+          ' data-product-title="' + escapeHtml(title) + '">' +
           (available ? 'Add to cart' : 'Sold out') +
         '</button>' +
         '<button type="button" class="wishlist-row__remove" data-action="wishlist-remove" data-product-handle="' + escapeHtml(item.handle) + '" aria-label="Remove ' + escapeHtml(title) + '">' +
