@@ -1,121 +1,135 @@
 <section class="testimonials" {{ section.shopify_attributes }}>
   <div class="testimonials__inner">
-    <div class="testimonials__header">
+    <div class="testimonials__left">
       {%- if section.settings.eyebrow != blank -%}
         <p class="testimonials__eyebrow">{{ section.settings.eyebrow }}</p>
       {%- endif -%}
       {%- if section.settings.heading != blank -%}
-        <h2 class="testimonials__heading">{{ section.settings.heading }}</h2>
+        <h2 class="testimonials__heading">{{ section.settings.heading }}<em>{{ section.settings.heading_italic }}</em></h2>
       {%- endif -%}
-    </div>
-
-    <div class="testimonials__carousel-wrap">
-      <div class="testimonials__track" id="testimonials-track-{{ section.id }}">
-        {%- for block in section.blocks -%}
-          <div class="testimonials__card" {{ block.shopify_attributes }}>
-            <div class="testimonials__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
-              {%- assign rating = block.settings.rating | times: 1 -%}
-              {%- for i in (1..5) -%}
-                <svg
-                  class="testimonials__star{% if i > rating %} testimonials__star--empty{% endif %}"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                </svg>
-              {%- endfor -%}
-            </div>
-            <p class="testimonials__quote">{{ block.settings.quote }}</p>
-            <div class="testimonials__author">
-              {%- if block.settings.avatar != blank -%}
-                <img
-                  src="{{ block.settings.avatar | image_url: width: 80 }}"
-                  alt="{{ block.settings.name | escape }}"
-                  class="testimonials__avatar"
-                  loading="lazy"
-                  width="40"
-                  height="40"
-                >
-              {%- else -%}
-                <div class="testimonials__avatar-placeholder">
-                  {{ block.settings.name | slice: 0 | upcase }}
-                </div>
-              {%- endif -%}
-              <div class="testimonials__author-meta">
-                <span class="testimonials__name">{{ block.settings.name }}</span>
-                {%- if block.settings.date != blank -%}
-                  <span class="testimonials__date">{{ block.settings.date }}</span>
-                {%- endif -%}
-              </div>
-            </div>
-          </div>
-        {%- endfor -%}
+      <div class="testimonials__nav">
+        <button
+          class="testimonials__nav-btn testimonials__nav-btn--prev"
+          id="testimonials-prev-{{ section.id }}"
+          aria-label="Previous reviews"
+        >
+          <svg
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+        </button>
+        <button
+          class="testimonials__nav-btn testimonials__nav-btn--next"
+          id="testimonials-next-{{ section.id }}"
+          aria-label="Next reviews"
+        >
+          <svg
+            width="26"
+            height="26"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
       </div>
-
-      <button
-        class="testimonials__nav testimonials__nav--prev"
-        id="testimonials-prev-{{ section.id }}"
-        aria-label="Previous review"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <polyline points="15 18 9 12 15 6"/>
-        </svg>
-      </button>
-      <button
-        class="testimonials__nav testimonials__nav--next"
-        id="testimonials-next-{{ section.id }}"
-        aria-label="Next review"
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <polyline points="9 18 15 12 9 6"/>
-        </svg>
-      </button>
     </div>
 
-    <div class="testimonials__dots" id="testimonials-dots-{{ section.id }}"></div>
+    <div class="testimonials__right">
+      <div class="testimonials__viewport" id="testimonials-viewport-{{ section.id }}">
+        <div class="testimonials__track" id="testimonials-track-{{ section.id }}">
+          {%- for block in section.blocks -%}
+            {%- assign rating = block.settings.rating | times: 1 -%}
+            <div class="testimonials__card" {{ block.shopify_attributes }}>
+              <div class="testimonials__author">
+                {%- if block.settings.avatar != blank -%}
+                  <img
+                    src="{{ block.settings.avatar | image_url: width: 80 }}"
+                    alt="{{ block.settings.name | escape }}"
+                    class="testimonials__avatar"
+                    loading="lazy"
+                    width="40"
+                    height="40"
+                  >
+                {%- else -%}
+                  <span class="testimonials__avatar-placeholder" aria-hidden="true">
+                    <svg
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="12" cy="8" r="4"/>
+                      <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+                    </svg>
+                  </span>
+                {%- endif -%}
+                <span class="testimonials__name">{{ block.settings.name }}</span>
+              </div>
+
+              <div class="testimonials__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+                {%- for i in (1..5) -%}
+                  <svg
+                    class="testimonials__star{% if i > rating %} testimonials__star--empty{% endif %}"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                {%- endfor -%}
+              </div>
+
+              <p class="testimonials__quote-text">{{ block.settings.quote }}</p>
+              <button class="testimonials__toggle" type="button" hidden>Read more</button>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
   .testimonials {
-    background: #f5ede4;
-    padding: 96px 60px;
+    background-image: url('{{ "Index-testimonials-bg.png" | asset_url }}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 96px 0 96px 60px;
   }
 
   .testimonials__inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .testimonials__header {
-    text-align: center;
-    margin-bottom: 56px;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 10em;
+    align-items: center;
   }
 
   .testimonials__eyebrow {
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-ternary);
@@ -124,58 +138,99 @@
 
   .testimonials__heading {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(30px, 3.5vw, 44px);
-    font-weight: 700;
+    font-size: clamp(30px, 3.6vw, 50px);
+    font-weight: 500;
     color: var(--color-secondary);
-    margin: 0;
+    margin: 0 0 32px 0;
+    line-height: 1.2;
+  }
+  .testimonials__heading em {
+    font-style: italic;
+    font-weight: 600;
+    color: var(--color-ternary);
   }
 
-  .testimonials__carousel-wrap {
-    position: relative;
-  }
-
-  .testimonials__track {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-  }
-
-  .testimonials__card {
-    background: #fff;
-    padding: 32px;
+  .testimonials__nav {
     display: flex;
-    flex-direction: column;
     gap: 20px;
   }
 
-  .testimonials__stars {
+  .testimonials__nav-btn {
+    background: none;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
+    padding: 4px;
     display: flex;
-    gap: 3px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-secondary);
+    transition: transform 0.2s ease;
+    padding: 0;
   }
 
-  .testimonials__star {
-    color: #f4b740;
+  .testimonials__nav-btn:hover {
+    transform: scale(1.25);
+  }
+  .testimonials__nav-btn.is-hidden {
+    visibility: hidden;
+    pointer-events: none;
   }
 
-  .testimonials__star--empty {
-    color: #ddd;
+  /* Right side - carousel */
+  .testimonials__right {
+    min-width: 0;
+    padding-right: 20px;
+    box-sizing: border-box;
   }
 
-  .testimonials__quote {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.75;
-    color: #4a3525;
-    margin: 0;
-    flex: 1;
+  .testimonials__viewport {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+  }
+
+  .testimonials__track {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    padding-top: 12px;
+    transition: transform 0.45s ease;
+    will-change: transform;
+  }
+
+  .testimonials__card {
+    flex: 0 0 334px;
+    width: 322px;
+    height: 220px;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 4px 18px rgba(74, 53, 37, 0.08);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, height 0.25s ease;
+    overflow: hidden;
+  }
+
+  .testimonials__card.is-expanded {
+    height: auto;
+  }
+
+  .testimonials__card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(74, 53, 37, 0.14);
   }
 
   .testimonials__author {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding-top: 16px;
-    border-top: 1px solid #f0e4d8;
   }
 
   .testimonials__avatar {
@@ -190,125 +245,96 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: var(--color-ternary);
-    color: var(--color-primary);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
+    background: #fff;
+    border: 1.5px solid black;
+    color: black;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
 
-  .testimonials__author-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
   .testimonials__name {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
     font-weight: 700;
-    color: var(--color-secondary);
+    color: black;
   }
 
-  .testimonials__date {
+  .testimonials__stars {
+    display: flex;
+  }
+
+  .testimonials__star {
+    color: #feb42f;
+  }
+
+  .testimonials__star--empty {
+    color: #ddd;
+  }
+
+  .testimonials__quote-text {
     font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    color: #999;
+    font-size: 16px;
+    line-height: 1.4em;
+    color: black;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .testimonials__nav {
-    display: none;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #fff;
+  .testimonials__card.is-expanded .testimonials__quote-text {
+    -webkit-line-clamp: unset;
+    display: block;
+    overflow: visible;
+  }
+
+  .testimonials__toggle {
+    align-self: flex-start;
+    background: none;
     border: none;
-    width: 44px;
-    height: 44px;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--color-secondary);
-    z-index: 2;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
-
-  .testimonials__nav:hover {
-    background: var(--color-secondary);
-    color: var(--color-primary);
-  }
-
-  .testimonials__nav--prev {
-    left: -22px;
-  }
-  .testimonials__nav--next {
-    right: -22px;
-  }
-
-  .testimonials__dots {
-    display: none;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 28px;
-  }
-
-  .testimonials__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #ccc;
-    border: none;
-    cursor: pointer;
     padding: 0;
-    transition: background 0.2s ease;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #999;
+    text-decoration: underline;
+    cursor: pointer;
   }
 
-  .testimonials__dot--active {
-    background: var(--color-secondary);
+  .testimonials__toggle:hover {
+    color: var(--color-secondary);
   }
 
   @media (max-width: 1024px) {
-    .testimonials__track {
-      grid-template-columns: repeat(2, 1fr);
+    .testimonials__inner {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+
+    .testimonials__viewport {
+      width: 100%;
+    }
+
+    .testimonials__card {
+      flex: 0 0 calc((100% - 24px) / 2);
+      width: auto;
+    }
+    .testimonials__right {
+      padding-right: 0;
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 640px) {
     .testimonials {
       padding: 64px 24px;
     }
 
-    .testimonials__track {
-      grid-template-columns: 1fr;
-      gap: 0;
-      overflow: hidden;
-    }
-
     .testimonials__card {
-      display: none;
-    }
-
-    .testimonials__card.is-active {
-      display: flex;
-    }
-
-    .testimonials__nav {
-      display: flex;
-    }
-
-    .testimonials__nav--prev {
-      left: -8px;
-    }
-    .testimonials__nav--next {
-      right: -8px;
-    }
-
-    .testimonials__dots {
-      display: flex;
+      flex: 0 0 100%;
     }
   }
 </style>
@@ -316,62 +342,119 @@
 <script>
   (function() {
     var sectionId = {{ section.id | json }};
+    var viewport = document.getElementById('testimonials-viewport-' + sectionId);
     var track = document.getElementById('testimonials-track-' + sectionId);
-    var dotsWrap = document.getElementById('testimonials-dots-' + sectionId);
     var prevBtn = document.getElementById('testimonials-prev-' + sectionId);
     var nextBtn = document.getElementById('testimonials-next-' + sectionId);
 
     if (!track) return;
 
     var cards = Array.from(track.querySelectorAll('.testimonials__card'));
-    var current = 0;
+    if (!cards.length) return;
 
-    function isMobile() {
-      return window.innerWidth <= 768;
+    var index = 0;
+    var autoplayTimer = null;
+    var AUTOPLAY_MS = 4500;
+
+    function visibleCount() {
+      var trackWidth = track.parentElement.clientWidth;
+      var cardWidth = cards[0].getBoundingClientRect().width;
+      var gap = parseFloat(getComputedStyle(track).gap) || 0;
+      var count = Math.floor((trackWidth + gap) / (cardWidth + gap));
+      return Math.max(1, count);
     }
 
-    function buildDots() {
-      dotsWrap.innerHTML = '';
-      cards.forEach(function(_, i) {
-        var dot = document.createElement('button');
-        dot.className = 'testimonials__dot' + (i === current ? ' testimonials__dot--active' : '');
-        dot.setAttribute('aria-label', 'Go to review ' + (i + 1));
-        dot.addEventListener('click', function() { goTo(i); });
-        dotsWrap.appendChild(dot);
-      });
+    function maxIndex() {
+      return Math.max(0, cards.length - visibleCount());
     }
 
-    function goTo(index) {
-      if (!isMobile()) return;
-      cards[current].classList.remove('is-active');
-      current = (index + cards.length) % cards.length;
-      cards[current].classList.add('is-active');
-      var dots = dotsWrap.querySelectorAll('.testimonials__dot');
-      dots.forEach(function(d, i) {
-        d.classList.toggle('testimonials__dot--active', i === current);
-      });
+    function step() {
+      var card = cards[0];
+      var gap = parseFloat(getComputedStyle(track).gap) || 0;
+      return card.getBoundingClientRect().width + gap;
     }
 
-    function init() {
-      if (isMobile()) {
-        cards[current].classList.add('is-active');
-        buildDots();
-      }
+    function update() {
+      var max = maxIndex();
+      if (index > max) index = max;
+      if (index < 0) index = 0;
+
+      track.style.transform = 'translateX(-' + (step() * index) + 'px)';
+
+      prevBtn.classList.toggle('is-hidden', index <= 0);
+      nextBtn.classList.toggle('is-hidden', index >= max);
     }
 
-    prevBtn.addEventListener('click', function() { goTo(current - 1); });
-    nextBtn.addEventListener('click', function() { goTo(current + 1); });
+    function goTo(newIndex) {
+      index = newIndex;
+      update();
+    }
 
-    window.addEventListener('resize', function() {
-      if (!isMobile()) {
-        cards.forEach(function(c) { c.classList.remove('is-active'); });
+    function next() {
+      var max = maxIndex();
+      if (index >= max) {
+        goTo(0);
       } else {
-        cards[current].classList.add('is-active');
-        buildDots();
+        goTo(index + 1);
       }
+    }
+
+    function prev() {
+      goTo(index - 1);
+    }
+
+    function startAutoplay() {
+      stopAutoplay();
+      autoplayTimer = setInterval(next, AUTOPLAY_MS);
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer) clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+
+    prevBtn.addEventListener('click', function() {
+      prev();
+      startAutoplay();
     });
 
-    init();
+    nextBtn.addEventListener('click', function() {
+      next();
+      startAutoplay();
+    });
+
+    viewport.addEventListener('mouseenter', stopAutoplay);
+    viewport.addEventListener('mouseleave', startAutoplay);
+
+    window.addEventListener('resize', function() {
+      update();
+    });
+
+    cards.forEach(function(card) {
+      var quote = card.querySelector('.testimonials__quote-text');
+      var toggle = card.querySelector('.testimonials__toggle');
+
+      function checkOverflow() {
+        var isOverflowing = quote.scrollHeight > quote.clientHeight + 1;
+        if (isOverflowing || card.classList.contains('is-expanded')) {
+          toggle.hidden = false;
+        } else {
+          toggle.hidden = true;
+        }
+      }
+
+      toggle.addEventListener('click', function() {
+        var expanded = card.classList.toggle('is-expanded');
+        toggle.textContent = expanded ? 'Hide' : 'Read more';
+        update();
+      });
+
+      window.requestAnimationFrame(checkOverflow);
+      window.addEventListener('resize', checkOverflow);
+    });
+
+    update();
+    startAutoplay();
   })();
 </script>
 
@@ -391,7 +474,13 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Client's Success Stories"
+      "default": "Client's Success "
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading italic text",
+      "default": "Stories"
     }
   ],
   "blocks": [
@@ -402,19 +491,14 @@
         {
           "type": "image_picker",
           "id": "avatar",
-          "label": "Avatar image"
+          "label": "Avatar image",
+          "info": "Leave blank to use the default person icon"
         },
         {
           "type": "text",
           "id": "name",
           "label": "Reviewer name",
           "default": "Patricia Raphael"
-        },
-        {
-          "type": "text",
-          "id": "date",
-          "label": "Date",
-          "default": "March 2026"
         },
         {
           "type": "range",
@@ -442,7 +526,6 @@
           "type": "review",
           "settings": {
             "name": "Patricia Raphael",
-            "date": "March 2026",
             "rating": 5,
             "quote": "I just tried the spread this morning. It was really nice — not sweet at all! I had both the pistachio and choco hazelnut mixed in a sandwich and it was amazing."
           }
@@ -450,17 +533,15 @@
         {
           "type": "review",
           "settings": {
-            "name": "Sukriti",
-            "date": "March 2026",
+            "name": "Aabgina",
             "rating": 5,
-            "quote": "I lovedddddd it. It's so good — I love the date powder one more but honestly the stevia one is great too. The granola one is insane. My mom loves them too."
+            "quote": "We met at the Ripe market. Messaging you to tell you that my kids loved loved loved the chocolate hazelnut spread Thank god I have tried so may things to get them OFF NUTELLA. At last I heard her say this is better than Nutella.. Alhamdallah."
           }
         },
         {
           "type": "review",
           "settings": {
             "name": "Kylie-Anne Pacheco",
-            "date": "March 2026",
             "rating": 5,
             "quote": "Thank you so much! I absolutely love your spreads, really they are so good. I think I'd like to try the no-tella chocolate one next. I regret not buying it."
           }
@@ -469,7 +550,6 @@
           "type": "review",
           "settings": {
             "name": "Anna",
-            "date": "March 2026",
             "rating": 5,
             "quote": "Hey!! They're soooo delicious thank you! I'm particularly obsessed with the pistachio one! I will definitely be a regular customer!"
           }
@@ -478,7 +558,6 @@
           "type": "review",
           "settings": {
             "name": "Natalie",
-            "date": "March 2026",
             "rating": 5,
             "quote": "I should have bought 3 of your almond cinnamon spread. The girls are already halfway through the jar! They LOVE it. You're onto a winner there."
           }
@@ -487,7 +566,6 @@
           "type": "review",
           "settings": {
             "name": "Lauren",
-            "date": "March 2026",
             "rating": 5,
             "quote": "Absolutely in love with the almond cinnamon spread."
           }
