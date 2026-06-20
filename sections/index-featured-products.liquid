@@ -121,16 +121,17 @@
           </li>
         {%- endfor -%}
       </ul>
-      {%- if section.settings.cta_label != blank -%}
-        <div class="featured-products__footer">
-          <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="featured-products__cta">
-            {{ section.settings.cta_label }}
-          </a>
-        </div>
-      {%- endif -%}
 
     {%- else -%}
       <p class="featured-products__empty">No Featured Products Selected.</p>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank -%}
+      <div class="featured-products__footer">
+        <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="featured-products__cta">
+          {{ section.settings.cta_label }} <em class="featured-products__cta-arrow" aria-hidden="true">→</em>
+        </a>
+      </div>
     {%- endif -%}
   </div>
 </section>
@@ -337,19 +338,25 @@
 
   .featured-products__cta {
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     text-decoration: none;
     color: var(--color-secondary);
-    border-bottom: 2px solid var(--color-ternary);
-    padding-bottom: 4px;
+    border: 1px solid var(--color-secondary);
+    padding: 20px;
     transition: color 0.2s ease;
+    background: #ffffff;
   }
 
   .featured-products__cta:hover {
-    color: #bc8157;
+    background-color: #bc8157;
+    color: #fff;
+  }
+
+  .featured-products__cta-arrow {
+    font-size: 24px;
   }
 
   .featured-products__empty {
