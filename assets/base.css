@@ -1722,21 +1722,94 @@ shopify-account:not(:defined) {
   background: var(--color-ternary);
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+  padding: 1rem 0 2rem;
+}
+
 .pagination__list {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
   list-style: none;
-  margin: 2rem 0 0;
+  margin: 0;
   padding: 0;
 }
 
+.pagination__item-wrap {
+  display: flex;
+}
+
 .pagination__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 4.4rem;
+  height: 4.4rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(92, 61, 46, 0.18);
+  background: #fff;
+  color: var(--color-secondary);
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1;
   text-decoration: none;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.pagination__item--nav {
+  padding: 0;
+}
+
+.pagination__item--page:hover,
+.pagination__item--nav:not(.pagination__item--disabled):hover {
+  color: #fff;
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
 }
 
 .pagination__item--current {
-  font-weight: bold;
+  color: #fff;
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  font-weight: 600;
+  cursor: default;
+}
+
+.pagination__item--ellipsis {
+  min-width: 3.2rem;
+  padding: 0 0.4rem;
+  border-color: transparent;
+  background: transparent;
+  color: var(--color-quaternary);
+  pointer-events: none;
+}
+
+.pagination__item--disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+[data-collection-pagination] .pagination {
+  margin-top: 3rem;
+}
+
+@media screen and (max-width: 549px) {
+  .pagination__item {
+    min-width: 4rem;
+    height: 4rem;
+    font-size: 1.3rem;
+  }
+
+  .pagination__list {
+    gap: 0.6rem;
+  }
 }
 
 .collection-list {

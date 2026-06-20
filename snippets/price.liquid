@@ -24,9 +24,9 @@
     <s class="price__compare">{{ compare_at_price | money }}</s>
   {%- endif -%}
 
-  {%- if show_badges -%}
+  {% comment %} {%- if show_badges -%}
     {%- unless available -%}
       <span class="badge badge--sold-out">{{ 'products.product.sold_out' | t }}</span>
     {%- endunless -%}
-  {%- endif -%}
+  {%- endif -%} {% endcomment %}
 </div>

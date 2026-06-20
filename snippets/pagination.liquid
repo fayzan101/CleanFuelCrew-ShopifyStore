@@ -1,29 +1,53 @@
 <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.page' | t: current: paginate.current_page, total: paginate.pages }}">
   <ul class="pagination__list" role="list">
-    {%- if paginate.previous -%}
-      <li>
-        <a href="{{ paginate.previous.url }}" class="pagination__item">
-          {{ 'general.pagination.previous' | t }}
+    <li class="pagination__item-wrap">
+      {%- if paginate.previous -%}
+        <a href="{{ paginate.previous.url }}" class="pagination__item pagination__item--nav" aria-label="{{ 'general.pagination.previous' | t }}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
         </a>
-      </li>
-    {%- endif -%}
+      {%- else -%}
+        <span class="pagination__item pagination__item--nav pagination__item--disabled" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </span>
+      {%- endif -%}
+    </li>
 
     {%- for part in paginate.parts -%}
-      <li>
+      <li class="pagination__item-wrap">
         {%- if part.is_link -%}
-          <a href="{{ part.url }}" class="pagination__item">{{ part.title }}</a>
+          <a href="{{ part.url }}" class="pagination__item pagination__item--page" aria-label="{{ 'general.pagination.page' | t: current: part.title, total: paginate.pages }}">
+            {{ part.title }}
+          </a>
+        {%- elsif part.title == paginate.current_page -%}
+          <span class="pagination__item pagination__item--page pagination__item--current" aria-current="page">
+            {{ part.title }}
+          </span>
         {%- else -%}
-          <span class="pagination__item pagination__item--current" aria-current="page">{{ part.title }}</span>
+          <span class="pagination__item pagination__item--page pagination__item--ellipsis" aria-hidden="true">
+            {{ part.title }}
+          </span>
         {%- endif -%}
       </li>
     {%- endfor -%}
 
-    {%- if paginate.next -%}
-      <li>
-        <a href="{{ paginate.next.url }}" class="pagination__item">
-          {{ 'general.pagination.next' | t }}
+    <li class="pagination__item-wrap">
+      {%- if paginate.next -%}
+        <a href="{{ paginate.next.url }}" class="pagination__item pagination__item--nav" aria-label="{{ 'general.pagination.next' | t }}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </a>
-      </li>
-    {%- endif -%}
+      {%- else -%}
+        <span class="pagination__item pagination__item--nav pagination__item--disabled" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </span>
+      {%- endif -%}
+    </li>
   </ul>
 </nav>
