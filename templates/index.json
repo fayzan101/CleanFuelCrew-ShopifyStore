@@ -1,13 +1,79 @@
 {
   "sections": {
-    "main": {
-      "type": "main-index",
+    "hero": {
+      "type": "index-hero",
       "settings": {
-        "show_banner": false,
-        "heading": "Featured products",
-        "products_to_show": 4
+        "eyebrow": "Handcrafted in small batches",
+        "heading": "Spread the Good.",
+        "subtext": "Nut & seed spreads sweetened only with whole dates. Zero refined sugar. Zero preservatives. Just pure, lick-the-spoon deliciousness.",
+        "primary_label": "Shop Now",
+        "secondary_label": "Our Story "
+      }
+    },
+    "marquee_hero": {
+      "type": "index-marquee",
+      "settings": {}
+    },
+    "featured_products": {
+      "type": "index-featured-products",
+      "settings": {}
+    },
+    "why_dates": {
+      "type": "index-why-dates",
+      "settings": {}
+    },
+    "why_different": {
+      "type": "index-why-different",
+      "settings": {}
+    },
+    "real_talk": {
+  "type": "index-real-talk",
+  "blocks": {
+    "card1": {
+      "type": "card",
+      "settings": {
+        "heading": "Oil on Top? That's Nature at Work.",
+        "body": "That layer of oil is just the natural separation of pure nut oils — a beautiful reminder that we never use artificial stabilizers. A quick stir is all it takes.",
+        "default_asset": "Index-oil-on-top.png"
+      }
+    },
+    "card2": {
+      "type": "card",
+      "settings": {
+        "heading": "Only the Good Calories.",
+        "body": "Packed with feel-good fuel from real nuts, seeds, dates, and coconut oil. Rich in omega-3s, vitamins, and protein — no empty calories here.",
+        "default_asset": "Index-Good-calories.png"
+      }
+    },
+    "card3": {
+      "type": "card",
+      "settings": {
+        "heading": "Short Shelf Life? That's a Good Thing.",
+        "body": "Real food doesn't last forever, and neither do our spreads. No preservatives means every spoonful is as fresh and alive as nature intended.",
+        "default_asset": "Index-Real-food.png"
       }
     }
   },
-  "order": ["main"]
+  "block_order": ["card1", "card2", "card3"],
+  "settings": {}
+},
+    "testimonials": {
+      "type": "index-testimonials",
+      "settings": {}
+    },
+    "cta_banner": {
+      "type": "index-cta-banner",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "marquee_hero",
+    "featured_products",
+    "why_dates",
+    "why_different",
+    "real_talk",
+    "testimonials",
+    "cta_banner"
+  ]
 }

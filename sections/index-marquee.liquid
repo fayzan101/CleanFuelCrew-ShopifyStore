@@ -1,0 +1,35 @@
+{%- assign marquee_items = section.settings.items
+  | default: '0% Refined Sugar,Date Sweetened,100% Plant Based,No Preservatives,Handcrafted'
+-%}
+
+{% render 'marquee-strip', items: marquee_items, speed: section.settings.speed, dark: false %}
+
+{% schema %}
+{
+  "name": "Marquee Strip",
+  "tag": "section",
+  "class": "section-index-marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "items",
+      "label": "Items (comma-separated)",
+      "default": "0% Refined Sugar,Date Sweetened,100% Plant Based,No Preservatives,Handcrafted"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "default": 30,
+      "label": "Scroll speed (lower = faster)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee Strip"
+    }
+  ]
+}
+{% endschema %}

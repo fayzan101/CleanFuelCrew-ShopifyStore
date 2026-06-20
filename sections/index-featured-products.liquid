@@ -1,0 +1,430 @@
+<section class="featured-products" {{ section.shopify_attributes }}>
+  <div class="featured-products__inner">
+    <div class="featured-products__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="featured-products__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="featured-products__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subtext != blank -%}
+        <p class="featured-products__subtext">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.collection != blank -%}
+      {%- assign col = collections[section.settings.collection] -%}
+      <ul class="featured-products__grid" role="list">
+        {%- for product in col.products limit: section.settings.products_to_show -%}
+          <li class="product-card">
+            <div class="product-card__image-wrap">
+              <a href="{{ product.url }}" class="product-card__image-link">
+                {%- if product.featured_image != blank -%}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    alt="{{ product.featured_image.alt | escape }}"
+                    class="product-card__img product-card__img--primary"
+                    loading="lazy"
+                    width="600"
+                    height="600"
+                  >
+                  {%- if product.images[1] != blank -%}
+                    <img
+                      src="{{ product.images[1] | image_url: width: 600 }}"
+                      alt="{{ product.images[1].alt | escape }}"
+                      class="product-card__img product-card__img--hover"
+                      loading="lazy"
+                      width="600"
+                      height="600"
+                    >
+                  {%- endif -%}
+                {%- endif -%}
+              </a>
+              <div class="product-card__actions">
+                <button
+                  class="product-card__action-btn"
+                  aria-label="Quick view {{ product.title | escape }}"
+                  data-quick-view="{{ product.url }}"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="8"/>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    <line x1="11" y1="8" x2="11" y2="14"/>
+                    <line x1="8" y1="11" x2="14" y2="11"/>
+                  </svg>
+                </button>
+
+                <form action="{{ routes.cart_add_url }}" method="post" class="product-card__atc-form">
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button
+                    type="submit"
+                    class="product-card__action-btn"
+                    aria-label="Add {{ product.title | escape }} to cart"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <circle cx="9" cy="21" r="1"/>
+                      <circle cx="20" cy="21" r="1"/>
+                      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                  </button>
+                </form>
+
+                <button
+                  class="product-card__action-btn"
+                  aria-label="Add {{ product.title | escape }} to wishlist"
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="product-card__body">
+              <div class="product-card__meta">
+                <h3 class="product-card__title">
+                  <a href="{{ product.url }}">{{ product.title }}</a>
+                </h3>
+                <div class="product-card__price-wrap">
+                  <p class="product-card__price">{{ product.price | money }}</p>
+                  <a href="{{ product.url }}" class="product-card__arrow" aria-hidden="true"> &rarr; </a>
+                </div>
+              </div>
+            </div>
+          </li>
+        {%- endfor -%}
+      </ul>
+      {%- if section.settings.cta_label != blank -%}
+        <div class="featured-products__footer">
+          <a href="{{ section.settings.cta_url | default: '/collections/all' }}" class="featured-products__cta">
+            {{ section.settings.cta_label }}
+          </a>
+        </div>
+      {%- endif -%}
+
+    {%- else -%}
+      <p class="featured-products__empty">No Featured Products Selected.</p>
+    {%- endif -%}
+  </div>
+</section>
+<style>
+  .featured-products {
+    background: var(--color-primary);
+    padding: 96px 60px;
+  }
+
+  .featured-products__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .featured-products__header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .featured-products__eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-ternary);
+    margin: 0 0 12px 0;
+  }
+
+  .featured-products__heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin: 0 0 16px 0;
+  }
+
+  .featured-products__subtext {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #7a5c48;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* Grid */
+  .featured-products__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Card */
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+
+  /* Image area */
+  .product-card__image-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+  }
+
+  .product-card__image-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .product-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .product-card__image-wrap:hover .product-card__img {
+    transform: scale(1.04);
+  }
+
+  /* Hover action buttons */
+  .product-card__actions {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(253, 246, 238, 0.18);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  .product-card__actions > * {
+    pointer-events: auto;
+  }
+
+  .product-card__image-wrap:hover .product-card__actions {
+    opacity: 1;
+  }
+
+  .product-card__action-btn {
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.92);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--color-secondary);
+    transition: background 0.2s ease, color 0.2s ease;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .product-card__action-btn:hover,
+  .product-card__action-btn:focus-visible {
+    background: #bc8157;
+    color: #fff;
+  }
+
+  .product-card__atc-form {
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Card body */
+  .product-card__body {
+    padding: 18px 20px 20px;
+  }
+
+  .product-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .product-card__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0;
+    line-height: 1.3;
+    transition: color 0.2s ease;
+  }
+
+  .product-card__title a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .product-card__title:hover {
+    color: #bc8157;
+  }
+
+  .product-card__price-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .product-card__price {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .product-card__arrow {
+    font-size: 18px;
+    color: var(--color-ternary);
+    text-decoration: none;
+    line-height: 1;
+    transition: transform 0.2s ease, color 0.2s ease;
+    display: inline-block;
+  }
+
+  .product-card__arrow:hover {
+    color: #bc8157;
+    transform: translateX(4px);
+  }
+
+  /* Footer CTA */
+  .featured-products__footer {
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  .featured-products__cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-secondary);
+    border-bottom: 2px solid var(--color-ternary);
+    padding-bottom: 4px;
+    transition: color 0.2s ease;
+  }
+
+  .featured-products__cta:hover {
+    color: #bc8157;
+  }
+
+  .featured-products__empty {
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    color: #999;
+    padding: 40px 0;
+  }
+
+  @media (max-width: 768px) {
+    .featured-products {
+      padding: 64px 24px;
+    }
+
+    .featured-products__grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "tag": "section",
+  "class": "section-index-featured-products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Our Collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Taste the Goodness"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Every jar is a love letter to real ingredients — nuts, seeds, and dates, slow-roasted and ground to creamy perfection."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "label": "Products to show"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button label",
+      "default": "View All Flavors"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "Button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
+}
+{% endschema %}

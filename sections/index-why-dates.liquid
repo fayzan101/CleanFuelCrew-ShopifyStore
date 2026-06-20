@@ -1,0 +1,401 @@
+<section class="why-dates" {{ section.shopify_attributes }}>
+  <div class="why-dates__inner">
+    <div class="why-dates__header">
+      <div class="why-dates__heading-group">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="why-dates__eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="why-dates__heading">
+            {{ section.settings.heading_main }}
+            <span class="why-dates__heading-accent">{{ section.settings.heading_accent }}</span>
+          </h2>
+        {%- endif -%}
+      </div>
+      <div class="why-dates__intro-block">
+        {%- if section.settings.subheading != blank -%}
+          <span class="why-dates__heading-sub">({{ section.settings.subheading }})</span>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <p class="why-dates__intro">{{ section.settings.intro }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="why-dates__stack">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign stack_top = section.settings.stack_offset | times: forloop.index0 | plus: section.settings.stack_base_offset
+          -%}
+          <div
+            class="why-dates__card"
+            style="top: {{ stack_top }}px; z-index: {{ forloop.index }};"
+            {{ block.shopify_attributes }}
+          >
+            <div class="why-dates__card-inner">
+              <div class="why-dates__item-text">
+                <span class="why-dates__number">{{ forloop.index | prepend: '0' }}</span>
+                <h3 class="why-dates__item-heading">{{ block.settings.heading }}</h3>
+                <div class="why-dates__item-body">{{ block.settings.body }}</div>
+              </div>
+              <div class="why-dates__item-image">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 1200
+                    | image_tag: loading: 'lazy', alt: block.settings.heading
+                  }}
+                {%- elsif block.settings.default_asset != blank -%}
+                  <img
+                    src="{{ block.settings.default_asset | asset_url }}"
+                    alt="{{ block.settings.heading | escape }}"
+                    loading="lazy"
+                    width="600"
+                    height="500"
+                  >
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Fallback content so the section is never empty by default {%- endcomment -%}
+        {%- assign fallback_reasons = '01|No Sugar Crash|Dates are packed with natural fiber. This slows down the absorption of sugar into your bloodstream, providing steady, sustained energy instead of a sudden spike and "bonk."|Index-NoSuagr.png###02|Sweetness With Benefits|Dates are a functional superfood. In every jar of Clean Spread, you’re getting antioxidants to fight inflammation, potassium for heart and muscle health, and magnesium to support energy metabolism.|Index-DatesSpread.png###03|Zero Refined Junk|When we say "Clean," we mean it. We use the entire fruit, not just a syrup or extract. This means you get 100% of the nutrients, 100% of the fiber, and 0% of the guilt.|Index-ZeroRefinedJunk.png###04|Nature’s Caramel, Not a Lab Chemical|Unlike Stevia or Erythritol, dates aren’t made in a factory. They offer a rich, caramel flavor without the weird bitter aftertaste found in "zero-sugar" alternatives.|Index-NaturesCaramel.png'
+          | split: '###'
+        -%}
+        {%- for reason in fallback_reasons -%}
+          {%- assign parts = reason | split: '|' -%}
+          {%- liquid
+            assign stack_top = section.settings.stack_offset | times: forloop.index0 | plus: section.settings.stack_base_offset
+          -%}
+          <div class="why-dates__card" style="top: {{ stack_top }}px; z-index: {{ forloop.index }};">
+            <div class="why-dates__card-inner">
+              <div class="why-dates__item-text">
+                <span class="why-dates__number">{{ parts[0] }}</span>
+                <h3 class="why-dates__item-heading">{{ parts[1] }}</h3>
+                <div class="why-dates__item-body">{{ parts[2] }}</div>
+              </div>
+              <div class="why-dates__item-image">
+                <img
+                  src="{{ parts[3] | asset_url }}"
+                  alt="{{ parts[1] | escape }}"
+                  loading="lazy"
+                  width="600"
+                  height="500"
+                >
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  #shopify-section-{{ section.id }},
+  .section-index-why-dates {
+    overflow: visible !important;
+  }
+    .why-dates {
+    background: var(--color-primary);
+    padding: {{ section.settings.padding_block }}px 60px;
+    overflow: visible !important;
+  }
+
+  .why-dates__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: visible !important;
+  }
+
+    .why-dates__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+    margin-bottom: {{ section.settings.header_spacing }}px;
+    flex-wrap: wrap;
+  }
+
+  .why-dates__heading-group {
+    flex-shrink: 0;
+  }
+  .why-dates__eyebrow {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ternary);
+    margin-bottom: 8px;
+  }
+
+  .why-dates__heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4.5vw, 56px);
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin: 0;
+    line-height: 1.1;
+  }
+    .why-dates__heading em,
+  .why-dates__heading-accent {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-ternary);
+  }
+
+  .why-dates__heading-sub {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--color-secondary);
+    opacity: 0.6;
+    text-align: right;
+    margin-bottom: 6px;
+  }
+  .why-dates__intro {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--color-secondary);
+    opacity: 0.75;
+    max-width: 480px;
+    text-align: right;
+    margin: 0;
+  }
+
+    /* ---- Stacking cards ---- */
+
+    .why-dates__stack {
+      position: relative;
+      display: flex;
+      width: 100%;
+      padding: 40px;
+      flex-direction: column;
+      overflow: visible !important;
+    }
+    .why-dates__card {
+      position: -webkit-sticky;
+    position: sticky;
+    margin-bottom: 64px;
+    }
+
+    .why-dates__card-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+    background: var(--color-primary);
+    border-radius: {{ section.settings.card_radius }}px;
+    box-shadow: 0 -15px 40px -10px rgba(0,0,0,0.12);
+    padding: 48px;
+  }
+
+  .why-dates__item-text {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+    .why-dates__number {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-secondary);
+    opacity: 0.45;
+    letter-spacing: 0.05em;
+  }
+
+  .why-dates__item-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 2.8vw, 36px);
+    font-weight: 500;
+    color: var(--color-secondary);
+    margin: 10px 0;
+  }
+
+    .why-dates__item-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #7a6a5f;
+    opacity: 0.7;
+  }
+
+  .why-dates__item-body p {
+    margin: 0;
+    mx-width: 400px;
+  }
+
+  .why-dates__item-image img {
+    width: 420px;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+  } 
+
+    @media (max-width: 768px) {
+    .why-dates {
+      padding: 64px 24px;
+    }
+
+    .why-dates__header {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .why-dates__heading-sub,
+    .why-dates__intro {
+      text-align: left;
+      max-width: none;
+    }
+
+    .why-dates__card-inner {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 24px 0;
+    }
+
+    .why-dates__item-image {
+      order: -1;
+    }
+
+    .why-dates__item-image img {
+      height: 260px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .why-dates__card {
+      position: static;
+      margin-bottom: 24px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Why Dates",
+  "tag": "section",
+  "class": "section-index-why-dates",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why |Dates|"
+    },
+    {
+      "type": "text",
+      "id": "heading_main",
+      "label": "Heading (normal style)",
+      "default": "Why"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Heading (italic accent style)",
+      "default": "Dates"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Heading suffix (shown in parentheses)",
+      "default": "The Ultimate Super-Sweetener"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro paragraph",
+      "default": "Most brands use \"empty\" sugars. We use whole dates. Here is why they are the undisputed gold standard for your body:"
+    },
+    {
+      "type": "header",
+      "content": "Layout & Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "label": "Section vertical padding (px)",
+      "min": 32,
+      "max": 160,
+      "step": 4,
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "header_spacing",
+      "label": "Space below header (px)",
+      "min": 24,
+      "max": 120,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius (px)",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "stack_base_offset",
+      "label": "First card sticky offset (px)",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "stack_offset",
+      "label": "Offset increment per card (px)",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reason",
+      "name": "Reason",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "richtext", "id": "body", "label": "Body text" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "default_asset", "label": "Fallback asset filename (used if no image picked)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Dates",
+      "blocks": [
+        { "type": "reason", "settings": { "heading": "No Sugar Crash", "default_asset": "Index-NoSuagr.png" } },
+        {
+          "type": "reason",
+          "settings": { "heading": "Sweetness With Benefits", "default_asset": "Index-DatesSpread.png" }
+        },
+        {
+          "type": "reason",
+          "settings": { "heading": "Zero Refined Junk", "default_asset": "Index-ZeroRefinedJunk.png" }
+        },
+        {
+          "type": "reason",
+          "settings": { "heading": "Nature's Caramel, Not a Lab Chemical", "default_asset": "Index-NaturesCaramel.png" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

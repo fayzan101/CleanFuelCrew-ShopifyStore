@@ -1,0 +1,73 @@
+{%- assign strip_items = items | split: ',' -%}
+{%- assign strip_speed = speed | default: 30 -%}
+
+<div class="marquee-strip">
+  <div class="marquee-strip__track" style="animation-duration: {{ strip_speed }}s;">
+    {%- for i in (1..2) -%}
+      <div class="marquee-strip__group" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+        {%- for item in strip_items -%}
+          <span class="marquee-strip__item">{{ item | strip }}</span>
+
+          <span class="marquee-strip__dot" aria-hidden="true">●</span>
+        {%- endfor -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+<style>
+  .marquee-strip {
+    overflow: hidden;
+    background: var(--color-secondary);
+    padding: 14px 0;
+    width: 100%;
+  }
+
+  .marquee-strip__track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll linear infinite;
+    will-change: transform;
+  }
+
+  .marquee-strip__group {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .marquee-strip__item {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--color-primary);
+    font-size: clamp(11px, 1.4vw, 14px);
+    padding: 0 clamp(10px, 2vw, 20px);
+  }
+
+  .marquee-strip__dot {
+    color: var(--color-ternary);
+    flex-shrink: 0;
+  }
+
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (max-width: 749px) {
+    .marquee-strip {
+      padding: 10px 0;
+    }
+    .marquee-strip__item {
+      font-size: 11px;
+      padding: 0 10px;
+    }
+  }
+</style>

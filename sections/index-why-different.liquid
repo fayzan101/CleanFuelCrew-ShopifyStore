@@ -1,0 +1,274 @@
+<section class="why-different" {{ section.shopify_attributes }}>
+  <div class="why-different__inner">
+    <div class="why-different__left">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="why-different__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 class="why-different__heading">
+          {%- assign parts = section.settings.heading | split: '|' -%}
+          {{ parts[0] -}}
+          <em>{{ parts[1] }}</em>{{ parts[2] }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.body != blank -%}
+        <p class="why-different__body">{{ section.settings.body }}</p>
+      {%- endif -%}
+
+      <div class="why-different__badges">
+        {%- assign badge_items = section.settings.badges | split: ',' -%}
+        {%- for badge in badge_items -%}
+          <span class="why-different__badge">{{ badge | strip }}</span>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.cta_label != blank -%}
+        <a href="{{ section.settings.cta_url | default: '/pages/about' }}" class="why-different__cta">
+          {{ section.settings.cta_label }} &rarr;
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="why-different__right">
+      <div class="why-different__image-wrap">
+        {%- if section.settings.image != blank -%}
+          {%- assign wd_img_src = section.settings.image | image_url: width: 900 -%}
+        {%- else -%}
+          {%- assign wd_img_src = 'Index-WhyDifferent.png' | asset_url -%}
+        {%- endif -%}
+        <img
+          src="{{ wd_img_src }}"
+          alt="Why we're different"
+          class="why-different__img"
+          loading="lazy"
+          width="900"
+          height="800"
+        >
+
+        <div class="why-different__spin-badge" aria-hidden="true">
+          <img
+            src="{{ 'Index-Spin-0RefinedSugar.png' | asset_url }}"
+            alt="Why we're different"
+            class=""
+            loading="lazy"
+            width="130"
+            height="132"
+            decoding="async"
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why-different {
+    background: var(--color-primary);
+    padding: 96px 60px;
+  }
+
+  .why-different__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .why-different__eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    margin: 0 0 20px 0;
+  }
+
+  .why-different__heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 3.8vw, 52px);
+    font-weight: 700;
+    color: var(--color-secondary);
+    line-height: 1.15;
+    margin: 0 0 24px 0;
+  }
+
+  .why-different__heading em {
+    font-style: italic;
+    color: var(--color-ternary);
+  }
+
+  .why-different__body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #5a4030;
+    margin: 0 0 36px 0;
+    max-width: 480px;
+  }
+
+  .why-different__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .why-different__badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    border: 1.5px solid var(--color-primary);
+    padding: 8px 18px;
+    border-radius: 999px;
+    background-color: #ffffff;
+    transition: background 0.2s ease, color 0.2s ease;
+    cursor: default;
+  }
+
+  .why-different__badge:hover {
+    background: var(--color-secondary);
+    color: var(--color-primary);
+  }
+
+  .why-different__cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color-ternary);
+    transition: opacity 0.2s ease;
+  }
+
+  .why-different__cta:hover {
+    opacity: 0.7;
+  }
+
+  .why-different__right {
+    position: relative;
+  }
+
+  .why-different__image-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .why-different__img {
+    width: 100%;
+    height: 580px;
+    object-fit: contain;
+    display: block;
+  }
+
+  .why-different__spin-badge {
+    position: absolute;
+    top: 24px;
+    left: -5rem;
+    animation: why-spin 12s linear infinite;
+    z-index: 2;
+  }
+
+  @keyframes why-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .why-different {
+      padding: 64px 24px;
+    }
+
+    .why-different__inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .why-different__img {
+      height: 360px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Why We're Different",
+  "tag": "section",
+  "class": "section-index-why-different",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Why We're Different"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading (use | to wrap italic word)",
+      "default": "Nature made it |delicious.|\nWe kept it that way."
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body text",
+      "default": "We believe the best flavors come straight from nature. That's why every jar of The Clean Spread is sweetened only with whole dates — no refined sugar, no artificial anything. Just slow-roasted nuts and seeds, crafted into spreads so rich and creamy, you'll forget they're good for you."
+    },
+    {
+      "type": "text",
+      "id": "badges",
+      "label": "Badges (comma-separated)",
+      "default": "Date Sweetened,Vegan,No Preservatives,Nutrient Dense,100% Natural,No Refined Sugar"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Learn More About Us"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL",
+      "info": "Leave blank to default to /pages/about"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product image",
+      "info": "Leave blank to use the default image from assets"
+    },
+    {
+      "type": "text",
+      "id": "spin_text",
+      "label": "Spinning badge text",
+      "default": "0% Refined Sugar • 0% Refined Sugar • "
+    },
+    {
+      "type": "color",
+      "id": "spin_color",
+      "label": "Spinning badge text color",
+      "default": "#5c3d2e"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why We're Different"
+    }
+  ]
+}
+{% endschema %}
