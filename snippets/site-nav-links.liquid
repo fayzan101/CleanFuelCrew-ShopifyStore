@@ -6,7 +6,7 @@
 {%- if menu != blank and menu.links.size >= 5 -%}
   {%- for link in menu.links -%}
     <li>
-      <a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>
+      <a href="{{ link.url }}"{% if link.current or link.active %} aria-current="page"{% endif %}>
         {{ link.title | escape }}
       </a>
     </li>
@@ -16,7 +16,7 @@
   {%- assign recipes_page = pages.recipes -%}
   {%- assign contact_page = pages.contact -%}
   <li><a href="{{ routes.root_url }}"{% if request.path == routes.root_url %} aria-current="page"{% endif %}>Home</a></li>
-  <li><a href="{{ routes.all_products_collection_url }}">Shop</a></li>
+  <li><a href="{{ routes.all_products_collection_url }}"{% if template.name == 'collection' or template.name == 'product' %} aria-current="page"{% endif %}>Shop</a></li>
   <li>
     <a href="{{ about_page.url | default: '/pages/about' }}"{% if about_page != blank and about_page.url == request.path %} aria-current="page"{% endif %}>
       About

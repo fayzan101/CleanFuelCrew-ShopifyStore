@@ -191,13 +191,24 @@ h1, h2, h3, h4, h5, h6 {
   text-transform: uppercase;
   font-size: 1.6rem;
   transition: all 0.3s ease;
+  position: relative;
 }
 
-.header__nav a:hover {
-  text-decoration: underline;
-  font-weight: 800;
-  opacity: 1;
-  letter-spacing: 2.5px;
+.header__nav a::before{
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -2px;
+  width: 100%;
+  height: 2px;
+  background: var(--color-secondary);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.header__nav a:hover::before,
+.header__nav a[aria-current="page"]::before {
+  transform: scaleX(1);
 }
 
 .header__right {
