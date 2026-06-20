@@ -58,9 +58,25 @@
   "settings": {}
 },
     "testimonials": {
-      "type": "index-testimonials",
-      "settings": {}
-    },
+  "type": "index-testimonials",
+  "blocks": {
+    "review1": { "type": "review", "settings": { "name": "Patricia Raphael", "rating": 5, "quote": "I just tried the spread this morning. It was really nice — not sweet at all! I had both the pistachio and choco hazelnut mixed in a sandwich and it was amazing." } },
+    "review2": {
+          "type": "review",
+          "settings": {
+            "name": "Aabgina",
+            "rating": 5,
+            "quote": "We met at the Ripe market. Messaging you to tell you that my kids loved loved loved the chocolate hazelnut spread Thank god I have tried so may things to get them OFF NUTELLA. At last I heard her say this is better than Nutella.. Alhamdallah."
+          }
+        },
+    "review3": { "type": "review", "settings": { "name": "Kylie-Anne Pacheco", "rating": 5, "quote": "Thank you so much! I absolutely love your spreads, really they are so good. I think I'd like to try the no-tella chocolate one next. I regret not buying it." } },
+    "review4": { "type": "review", "settings": { "name": "Anna", "rating": 5, "quote": "Hey!! They're soooo delicious thank you! I'm particularly obsessed with the pistachio one! I will definitely be a regular customer!" } },
+    "review5": { "type": "review", "settings": { "name": "Natalie", "rating": 5, "quote": "I should have bought 3 of your almond cinnamon spread. The girls are already halfway through the jar! They LOVE it. You're onto a winner there." } },
+    "review6": { "type": "review", "settings": { "name": "Lauren", "rating": 5, "quote": "Absolutely in love with the almond cinnamon spread." } }
+  },
+  "block_order": ["review1", "review2", "review3", "review4", "review5", "review6"],
+  "settings": {}
+},
     "cta_banner": {
       "type": "index-cta-banner",
       "settings": {}
