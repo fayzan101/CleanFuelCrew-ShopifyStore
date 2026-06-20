@@ -153,20 +153,16 @@
 
       const formData = new FormData(form);
       try {
-        const response = await fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { Accept: 'application/json' },
-          body: formData
-        });
-
-        if (!response.ok) throw new Error('Add to cart failed');
-
-        const cartResponse = await fetch('/cart.js');
-        const cart = await cartResponse.json();
-        document.querySelectorAll('.cart-count').forEach((el) => {
-          el.textContent = cart.item_count;
-          el.hidden = cart.item_count === 0;
-        });
+        if (window.AmadalCart) {
+          await window.AmadalCart.add(formData);
+        } else {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: formData
+          });
+          if (!response.ok) throw new Error('Add to cart failed');
+        }
 
         if (submitBtn) {
           submitBtn.textContent = 'Added!';

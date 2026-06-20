@@ -166,23 +166,20 @@
     const originalText = button.textContent;
 
     try {
-      const response = await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json'
-        },
-        body: JSON.stringify({ id: variantId, quantity: 1 })
-      });
+      if (window.AmadalCart) {
+        await window.AmadalCart.add({ id: variantId, quantity: 1 });
+      } else {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          },
+          body: JSON.stringify({ id: variantId, quantity: 1 })
+        });
 
-      if (!response.ok) throw new Error('Add to cart failed');
-
-      const cartResponse = await fetch('/cart.js');
-      const cart = await cartResponse.json();
-      document.querySelectorAll('.cart-count').forEach((el) => {
-        el.textContent = cart.item_count;
-        el.hidden = cart.item_count === 0;
-      });
+        if (!response.ok) throw new Error('Add to cart failed');
+      }
 
       button.textContent = 'Added!';
       setTimeout(() => {

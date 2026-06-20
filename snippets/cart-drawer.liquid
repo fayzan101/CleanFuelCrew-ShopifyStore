@@ -1,0 +1,28 @@
+<div
+  id="CartDrawer"
+  class="cart-drawer"
+  hidden
+  data-cart-url="{{ routes.cart_url }}"
+  data-checkout-url="{{ routes.root_url }}checkout"
+>
+  <button type="button" class="cart-drawer__backdrop" data-action="close-cart-drawer" aria-label="Close cart" tabindex="-1"></button>
+
+  <div class="cart-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="CartDrawerTitle">
+    <div class="cart-drawer__header">
+      <h2 id="CartDrawerTitle" class="cart-drawer__title">My Cart</h2>
+      <button type="button" class="cart-drawer__close" data-action="close-cart-drawer" aria-label="Close cart">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="cart-drawer__body" data-cart-drawer-body></div>
+
+    <div class="cart-drawer__footer" data-cart-drawer-footer hidden>
+      <p class="cart-drawer__subtotal">
+        Subtotal: <span data-cart-drawer-subtotal></span>
+      </p>
+      <a href="{{ routes.cart_url }}" class="cart-drawer__btn" data-cart-drawer-view>View cart</a>
+      <a href="{{ routes.root_url }}checkout" class="cart-drawer__btn cart-drawer__btn--checkout" data-cart-drawer-checkout>Checkout</a>
+    </div>
+  </div>
+</div>
