@@ -26,6 +26,7 @@
 
     <div class="card-product__info">
       <h3 class="card-product__title h4">{{ card_product.title | escape }}</h3>
+      {% render 'judgeme-badge', card_product: card_product, badge_context: 'card' %}
       {% render 'price', product: card_product, show_badges: true %}
     </div>
   </a>

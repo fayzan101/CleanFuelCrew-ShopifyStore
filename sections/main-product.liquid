@@ -4,7 +4,7 @@
     assign allergens_metafield = product.metafields.custom.allergens
     assign expiry_metafield = product.metafields.custom.expiry
 
-    assign review_count = 0
+    assign review_count = product.metafields.reviews.rating_count.value | default: 0
     assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media
     assign current_variant = product.selected_or_first_available_variant
     assign shipping_page = pages[section.settings.shipping_page_handle]
@@ -95,9 +95,13 @@
           <h1 class="product__title">{{ product.title | escape }}</h1>
         {%- endif -%}
 
-    <div class="product__price-wrap">
-      {% render 'price', product: product, use_variant: true, show_badges: true %}
-    </div>
+        <div class="product__rating">
+          {% render 'judgeme-badge', product: product, badge_context: 'product' %}
+        </div>
+
+        <div class="product__price-wrap">
+          {% render 'price', product: product, use_variant: true, show_badges: true %}
+        </div>
 
         {%- if product.description != blank -%}
           <div class="product__description rte">
@@ -305,55 +309,8 @@
         data-tab-panel="reviews"
         hidden
       >
-        <div class="product-reviews">
-          <h2 class="product-reviews__heading">Reviews</h2>
-
-          {%- if review_count == 0 -%}
-            <p class="product-reviews__empty">There are no reviews yet.</p>
-            <p class="product-reviews__prompt">
-              Be the first to review &ldquo;{{ product.title | escape }}&rdquo;
-            </p>
-          {%- endif -%}
-
-          <p class="product-reviews__note">
-            <em>Your email address will not be published. Required fields are marked *</em>
-          </p>
-
-          <form class="product-reviews__form" action="#" method="post">
-            <div class="field">
-              <label>Your rating <span aria-hidden="true">*</span></label>
-              <div class="product-reviews__stars" role="group" aria-label="Rating">
-                {%- for i in (1..5) -%}
-                  <button type="button" class="product-reviews__star" data-action="review-star" data-value="{{ i }}" aria-label="{{ i }} stars">&#9734;</button>
-                {%- endfor -%}
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="ReviewBody-{{ section.id }}">Your review <span aria-hidden="true">*</span></label>
-              <textarea id="ReviewBody-{{ section.id }}" name="review[body]" rows="6" required></textarea>
-            </div>
-
-            <div class="product-reviews__row">
-              <div class="field">
-                <label for="ReviewName-{{ section.id }}">Name <span aria-hidden="true">*</span></label>
-                <input type="text" id="ReviewName-{{ section.id }}" name="review[author]" required>
-              </div>
-              <div class="field">
-                <label for="ReviewEmail-{{ section.id }}">Email <span aria-hidden="true">*</span></label>
-                <input type="email" id="ReviewEmail-{{ section.id }}" name="review[email]" required>
-              </div>
-            </div>
-
-            <div class="field product-reviews__checkbox">
-              <label>
-                <input type="checkbox" name="review[save]">
-                Save my name, email, and website in this browser for the next time I comment.
-              </label>
-            </div>
-
-            <button type="submit" class="button product-reviews__submit">Submit</button>
-          </form>
+        <div class="product-reviews product-reviews--judgeme">
+          {% render 'judgeme-reviews', product: product %}
         </div>
       </div>
     </div>

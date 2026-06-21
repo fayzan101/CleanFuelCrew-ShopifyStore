@@ -1,0 +1,22 @@
+{%- comment -%}
+  Judge.me preview badge (stars + review count)
+  Requires Judge.me app embed enabled in Theme settings → App embeds
+{%- endcomment -%}
+{%- liquid
+  assign badge_product = product | default: card_product
+  assign badge_style = jm_style | default: ''
+  assign badge_context = badge_context | default: 'default'
+-%}
+
+{%- if badge_product -%}
+  <div class="judgeme-badge judgeme-badge--{{ badge_context }}">
+    <div
+      style="{{ badge_style }}"
+      class="jdgm-widget jdgm-preview-badge"
+      data-id="{{ badge_product.id }}"
+      data-auto-install="false"
+    >
+      {{ badge_product.metafields.judgeme.badge }}
+    </div>
+  </div>
+{%- endif -%}
