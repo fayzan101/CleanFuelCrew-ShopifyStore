@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -7,61 +16,110 @@
         "heading": "Spread the Good.",
         "subtext": "Nut & seed spreads sweetened only with whole dates. Zero refined sugar. Zero preservatives. Just pure, lick-the-spoon deliciousness.",
         "primary_label": "Shop Now",
-        "secondary_label": "Our Story "
+        "primary_url": "",
+        "secondary_label": "Our Story",
+        "secondary_url": ""
       }
     },
     "marquee_hero": {
       "type": "index-marquee",
-      "settings": {}
+      "settings": {
+        "items": "0% Refined Sugar,Date Sweetened,100% Plant Based,No Preservatives,Handcrafted",
+        "speed": 30
+      }
     },
     "featured_products": {
       "type": "index-featured-products",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Our Collection",
+        "heading": "Taste the",
+        "heading_italic": "Goodness",
+        "subtext": "Every jar is a love letter to real ingredients — nuts, seeds, and dates, slow-roasted and ground to creamy perfection.",
+        "collection": "frontpage",
+        "products_to_show": 3,
+        "cta_label": "View All Flavors",
+        "cta_url": ""
+      }
     },
     "why_dates": {
       "type": "index-why-dates",
-      "settings": {}
+      "settings": {
+        "heading": "Why |Dates|",
+        "heading_main": "Why",
+        "heading_accent": "Dates",
+        "subheading": "The Ultimate Super-Sweetener",
+        "intro": "Most brands use \"empty\" sugars. We use whole dates. Here is why they are the undisputed gold standard for your body:",
+        "padding_block": 96,
+        "header_spacing": 64,
+        "card_radius": 16,
+        "stack_base_offset": 24,
+        "stack_offset": 24
+      }
     },
     "why_different": {
       "type": "index-why-different",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Why We're Different",
+        "heading": "Nature made it |delicious.|\nWe kept it that way.",
+        "body": "We believe the best flavors come straight from nature. That's why every jar of The Clean Spread is sweetened only with whole dates — no refined sugar, no artificial anything. Just slow-roasted nuts and seeds, crafted into spreads so rich and creamy, you'll forget they're good for you.",
+        "badges": "Date Sweetened,Vegan,No Preservatives,Nutrient Dense,100% Natural,No Refined Sugar",
+        "cta_label": "Learn More About Us",
+        "cta_url": "",
+        "spin_text": "0% Refined Sugar • 0% Refined Sugar •",
+        "spin_color": "#5c3d2e"
+      }
     },
     "real_talk": {
-  "type": "index-real-talk",
-  "blocks": {
-    "card1": {
-      "type": "card",
+      "type": "index-real-talk",
+      "blocks": {
+        "card1": {
+          "type": "card",
+          "settings": {
+            "default_asset": "Index-oil-on-top.png",
+            "heading": "Oil on Top? That's Nature at Work.",
+            "body": "That layer of oil is just the natural separation of pure nut oils — a beautiful reminder that we never use artificial stabilizers. A quick stir is all it takes."
+          }
+        },
+        "card2": {
+          "type": "card",
+          "settings": {
+            "default_asset": "Index-Good-calories.png",
+            "heading": "Only the Good Calories.",
+            "body": "Packed with feel-good fuel from real nuts, seeds, dates, and coconut oil. Rich in omega-3s, vitamins, and protein — no empty calories here."
+          }
+        },
+        "card3": {
+          "type": "card",
+          "settings": {
+            "default_asset": "Index-Real-food.png",
+            "heading": "Short Shelf Life? That's a Good Thing.",
+            "body": "Real food doesn't last forever, and neither do our spreads. No preservatives means every spoonful is as fresh and alive as nature intended."
+          }
+        }
+      },
+      "block_order": [
+        "card1",
+        "card2",
+        "card3"
+      ],
       "settings": {
-        "heading": "Oil on Top? That's Nature at Work.",
-        "body": "That layer of oil is just the natural separation of pure nut oils — a beautiful reminder that we never use artificial stabilizers. A quick stir is all it takes.",
-        "default_asset": "Index-oil-on-top.png"
+        "eyebrow": "Real Talk",
+        "heading": "What Makes Us",
+        "heading_italic": "Real"
       }
     },
-    "card2": {
-      "type": "card",
-      "settings": {
-        "heading": "Only the Good Calories.",
-        "body": "Packed with feel-good fuel from real nuts, seeds, dates, and coconut oil. Rich in omega-3s, vitamins, and protein — no empty calories here.",
-        "default_asset": "Index-Good-calories.png"
-      }
-    },
-    "card3": {
-      "type": "card",
-      "settings": {
-        "heading": "Short Shelf Life? That's a Good Thing.",
-        "body": "Real food doesn't last forever, and neither do our spreads. No preservatives means every spoonful is as fresh and alive as nature intended.",
-        "default_asset": "Index-Real-food.png"
-      }
-    }
-  },
-  "block_order": ["card1", "card2", "card3"],
-  "settings": {}
-},
     "testimonials": {
-  "type": "index-testimonials",
-  "blocks": {
-    "review1": { "type": "review", "settings": { "name": "Patricia Raphael", "rating": 5, "quote": "I just tried the spread this morning. It was really nice — not sweet at all! I had both the pistachio and choco hazelnut mixed in a sandwich and it was amazing." } },
-    "review2": {
+      "type": "index-testimonials",
+      "blocks": {
+        "review1": {
+          "type": "review",
+          "settings": {
+            "name": "Patricia Raphael",
+            "rating": 5,
+            "quote": "I just tried the spread this morning. It was really nice — not sweet at all! I had both the pistachio and choco hazelnut mixed in a sandwich and it was amazing."
+          }
+        },
+        "review2": {
           "type": "review",
           "settings": {
             "name": "Aabgina",
@@ -69,17 +127,62 @@
             "quote": "We met at the Ripe market. Messaging you to tell you that my kids loved loved loved the chocolate hazelnut spread Thank god I have tried so may things to get them OFF NUTELLA. At last I heard her say this is better than Nutella.. Alhamdallah."
           }
         },
-    "review3": { "type": "review", "settings": { "name": "Kylie-Anne Pacheco", "rating": 5, "quote": "Thank you so much! I absolutely love your spreads, really they are so good. I think I'd like to try the no-tella chocolate one next. I regret not buying it." } },
-    "review4": { "type": "review", "settings": { "name": "Anna", "rating": 5, "quote": "Hey!! They're soooo delicious thank you! I'm particularly obsessed with the pistachio one! I will definitely be a regular customer!" } },
-    "review5": { "type": "review", "settings": { "name": "Natalie", "rating": 5, "quote": "I should have bought 3 of your almond cinnamon spread. The girls are already halfway through the jar! They LOVE it. You're onto a winner there." } },
-    "review6": { "type": "review", "settings": { "name": "Lauren", "rating": 5, "quote": "Absolutely in love with the almond cinnamon spread." } }
-  },
-  "block_order": ["review1", "review2", "review3", "review4", "review5", "review6"],
-  "settings": {}
-},
+        "review3": {
+          "type": "review",
+          "settings": {
+            "name": "Kylie-Anne Pacheco",
+            "rating": 5,
+            "quote": "Thank you so much! I absolutely love your spreads, really they are so good. I think I'd like to try the no-tella chocolate one next. I regret not buying it."
+          }
+        },
+        "review4": {
+          "type": "review",
+          "settings": {
+            "name": "Anna",
+            "rating": 5,
+            "quote": "Hey!! They're soooo delicious thank you! I'm particularly obsessed with the pistachio one! I will definitely be a regular customer!"
+          }
+        },
+        "review5": {
+          "type": "review",
+          "settings": {
+            "name": "Natalie",
+            "rating": 5,
+            "quote": "I should have bought 3 of your almond cinnamon spread. The girls are already halfway through the jar! They LOVE it. You're onto a winner there."
+          }
+        },
+        "review6": {
+          "type": "review",
+          "settings": {
+            "name": "Lauren",
+            "rating": 5,
+            "quote": "Absolutely in love with the almond cinnamon spread."
+          }
+        }
+      },
+      "block_order": [
+        "review1",
+        "review2",
+        "review3",
+        "review4",
+        "review5",
+        "review6"
+      ],
+      "settings": {
+        "eyebrow": "Testimonial",
+        "heading": "Client's Success",
+        "heading_italic": "Stories"
+      }
+    },
     "cta_banner": {
       "type": "index-cta-banner",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Ready to taste the difference?",
+        "heading": "Every\n Spoonful |Tells\n a Story|",
+        "subtext": "From our kitchen to your table — pure ingredients, honest flavors, and the kind of goodness you can feel.",
+        "cta_label": "Shop the Collection",
+        "cta_url": ""
+      }
     }
   },
   "order": [
