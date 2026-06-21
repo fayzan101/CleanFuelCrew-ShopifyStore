@@ -1000,6 +1000,13 @@ shopify-account:not(:defined) {
   margin-bottom: 2rem;
 }
 
+.product__weight {
+  margin: -1.2rem 0 2rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 1.4rem;
+  color: var(--color-quaternary);
+}
+
 .product__price-wrap .price {
   font-family: "DM Sans", sans-serif;
   font-size: 2rem;

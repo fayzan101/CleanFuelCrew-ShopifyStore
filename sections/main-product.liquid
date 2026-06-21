@@ -103,6 +103,13 @@
           {% render 'price', product: product, use_variant: true, show_badges: true %}
         </div>
 
+        {%- if current_variant.weight > 0 -%}
+          <p class="product__weight" data-product-weight>
+            <span class="product__meta-label">Weight:</span>
+            {{ current_variant.weight | weight_with_unit: current_variant.weight_unit }}
+          </p>
+        {%- endif -%}
+
         {%- if product.description != blank -%}
           <div class="product__description rte">
             {{ product.description }}
@@ -258,7 +265,18 @@
             </summary>
             <div class="product-accordion__body rte">
               {%- if ingredients_metafield != blank -%}
-                {{ ingredients_metafield | metafield_tag }}
+                {%- case ingredients_metafield.type -%}
+                  {%- when 'multi_line_text_field' -%}
+                    {% render 'ingredients-list', lines: ingredients_metafield.value %}
+                  {%- when 'list.single_line_text_field' -%}
+                    <ul>
+                      {%- for ingredient in ingredients_metafield.value -%}
+                        <li>{{ ingredient }}</li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- else -%}
+                    {{ ingredients_metafield | metafield_tag }}
+                {%- endcase -%}
               {%- else -%}
                 {% render 'ingredients-list', lines: section.settings.default_ingredients_list %}
               {%- endif -%}
@@ -359,6 +377,10 @@
   "class": "section-main-product",
   "settings": [
     {
+      "type": "paragraph",
+      "content": "Add ingredients per product in Shopify admin: Products → [product] → Metafields → Ingredients (custom.ingredients). Create the metafield definition once under Settings → Custom data → Products."
+    },
+    {
       "type": "checkbox",
       "id": "show_banner",
       "label": "Show page banner",
@@ -388,7 +410,7 @@
       "id": "default_ingredients_list",
       "label": "Default ingredients list",
       "default": "100% natural ingredients\nNo refined sugar\nSmall-batch crafted",
-      "info": "One ingredient per line. Shown as a list when product has no ingredients metafield (custom.ingredients)"
+      "info": "One ingredient per line. Shown when product has no ingredients metafield (custom.ingredients)."
     },
     {
       "type": "richtext",
