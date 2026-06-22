@@ -1776,6 +1776,12 @@ shopify-account:not(:defined) {
   gap: 3rem 2rem;
   list-style: none;
   padding-left: 0 !important;
+  align-items: stretch;
+}
+
+.product-grid--shop .product-grid__item {
+  display: flex;
+  min-width: 0;
 }
 
 @media screen and (min-width: 550px) {
@@ -1810,6 +1816,10 @@ shopify-account:not(:defined) {
 
 .card-product-shop {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
   border: 2px solid rgb(230, 230, 230);
 }
 
@@ -1817,6 +1827,7 @@ shopify-account:not(:defined) {
   position: relative;
   overflow: hidden;
   background: #fff;
+  flex-shrink: 0;
 }
 
 .card-product-shop__hit-area {
@@ -2013,12 +2024,14 @@ shopify-account:not(:defined) {
 }
 
 .card-product-shop__info-link {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   padding-top: 2.6rem;
+  padding-bottom: 2.6rem;
   text-align: center;
   text-decoration: none;
   color: inherit;
-  margin-bottom: 2.6rem;
 }
 
 .card-product-shop__title {
@@ -2028,10 +2041,17 @@ shopify-account:not(:defined) {
   font-weight: 600;
   color: var(--color-secondary);
   line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: calc(2 * 1.3 * 2rem);
 }
 
 .card-product-shop__price {
+  margin-top: auto;
   margin-bottom: 1rem;
+  padding-top: 0.6rem;
 }
 
 .card-product-shop__price .price {
@@ -2902,12 +2922,13 @@ body.quick-view-open {
 
 .search-page .card-product-shop__info-link {
   padding-top: 1.2rem;
-  margin-bottom: 1.2rem;
+  padding-bottom: 1.2rem;
 }
 
 .search-page .card-product-shop__title {
   font-size: 1.5rem;
   margin-bottom: 0.4rem;
+  min-height: calc(2 * 1.3 * 1.5rem);
 }
 
 .search-page .card-product-shop__price {
