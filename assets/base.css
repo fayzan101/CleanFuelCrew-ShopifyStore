@@ -2063,7 +2063,7 @@ shopify-account:not(:defined) {
 }
 
 .card-product-shop:hover .card-product-shop__arrow{
-  left: 15px;
+  left: 52%;
 }
 
 .card-product-shop__arrow {
@@ -2076,7 +2076,7 @@ shopify-account:not(:defined) {
   font-size: 2.4rem;
   line-height: 1;
   position: relative;
-  left: 5px;
+  left: 48%;
   transition: all 0.3s ease;
 }
 
