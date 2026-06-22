@@ -1,9 +1,24 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-page",
-      "settings": {}
+      "settings": {
+        "show_banner": true,
+        "banner_subtitle": "Home / Page",
+        "banner_image": "shopify://shop_images/696374824_17888632848473678_5385456346966897044_n.jpg"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
