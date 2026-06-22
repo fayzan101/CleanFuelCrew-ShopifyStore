@@ -7,14 +7,16 @@
   info_heading: section.settings.info_heading,
   info_text: section.settings.info_text,
   location_label: section.settings.location_label,
+  location_text: section.settings.location_text,
   phone_label: section.settings.phone_label,
   phone_number: section.settings.phone_number,
+  email_label: section.settings.email_label,
   email_address: section.settings.email_address,
   instagram_label: section.settings.instagram_label,
-  instagram_handle: section.settings.instagram_handle,
+  instagram_handle: section.settings.instagram_handle | default: '@cleanfuelcrew' ,
   instagram_url: section.settings.instagram_url,
-  form_heading: section.settings.form_heading,
-  submit_label: section.settings.submit_label
+  form_heading: section.settings.form_heading | default: 'Say Something...',
+  submit_label: section.settings.submit_label | default: 'Send message'
 %}
 
 {% schema %}
@@ -63,8 +65,14 @@
     {
       "type": "text",
       "id": "location_label",
-      "label": "Location",
-      "default": "Dubai Based"
+      "label": "Location label",
+      "default": "Location"
+    },
+    {
+      "type": "text",
+      "id": "location_text",
+      "label": "Location text",
+      "default": "Dubai"
     },
     {
       "type": "text",
@@ -80,9 +88,15 @@
     },
     {
       "type": "text",
+      "id": "email_label",
+      "label": "Email label",
+      "default": "Email Address"
+    },
+    {
+      "type": "text",
       "id": "email_address",
       "label": "Email address",
-      "default": "thecleanspread@gmail.com"
+      "default": "thecleanfuelcrew@gmail.com"
     },
     {
       "type": "text",

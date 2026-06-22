@@ -38,7 +38,8 @@
                 <circle cx="12" cy="10" r="2.5"></circle>
               </svg>
             </span>
-            <span class="contact-page__detail-text">{{ location_label | escape }}</span>
+            <span class="contact-page__detail-label">{{ location_label | escape }}</span>
+            <span class="contact-page__detail-text">{{ location_text | escape }}</span>
           </li>
 
           <li class="contact-page__detail">
@@ -61,6 +62,7 @@
               </svg>
             </span>
             <span class="contact-page__detail-text">
+              <span class="contact-page__detail-label">{{ email_label | escape }}</span>
               <a href="mailto:{{ email_address }}" class="contact-page__detail-value">{{ email_address | escape }}</a>
             </span>
           </li>
