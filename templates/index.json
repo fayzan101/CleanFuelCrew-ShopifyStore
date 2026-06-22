@@ -12,9 +12,9 @@
     "hero": {
       "type": "index-hero",
       "settings": {
-        "eyebrow": "Handcrafted in small batches",
-        "heading": "Spread the Good.",
-        "subtext": "Nut & seed spreads sweetened only with whole dates. Zero refined sugar. Zero preservatives. Just pure, lick-the-spoon deliciousness.",
+        "eyebrow": "Handcrafted in Dubai",
+        "heading": "Sweetened by Nature",
+        "subtext": "Premium nut spreads powered by dates. No refined sugar. No gluten. No dairy. Just rich flavour, honest ingredients, and energy that goes the distance.",
         "primary_label": "Shop Now",
         "primary_url": "",
         "secondary_label": "Our Story",
@@ -43,12 +43,52 @@
     },
     "why_dates": {
       "type": "index-why-dates",
+      "blocks": {
+        "reason_LWB9EK": {
+          "type": "reason",
+          "settings": {
+            "heading": "Steady Energy, No Crash",
+            "body": "<p>Dates are naturally rich in fiber, helping slow sugar absorption for balanced energy that lasts — no spikes, no crashes.</p>",
+            "default_asset": "Index-NoSuagr.png"
+          }
+        },
+        "reason_wXqzwG": {
+          "type": "reason",
+          "settings": {
+            "heading": "Sweetness With Benefits",
+            "body": "<p>Dates aren’t just sweet. They bring antioxidants, potassium, and magnesium to support energy, heart health, and recovery.</p>",
+            "default_asset": "Index-DatesSpread.png"
+          }
+        },
+        "reason_n7tYNM": {
+          "type": "reason",
+          "settings": {
+            "heading": "Zero Refined Junk",
+            "body": "<p>We use the whole fruit — not extracts, syrups, or shortcuts. That means full fiber, full nutrients, and zero refined sugar or additives.</p>",
+            "default_asset": "Index-ZeroRefinedJunk.png"
+          }
+        },
+        "reason_EJTEFw": {
+          "type": "reason",
+          "settings": {
+            "heading": "Nature’s Caramel",
+            "body": "<p>Unlike artificial alternatives, dates deliver deep caramel-like sweetness without chemical aftertaste or synthetic processing.</p>",
+            "default_asset": "Index-NaturesCaramel.png"
+          }
+        }
+      },
+      "block_order": [
+        "reason_LWB9EK",
+        "reason_wXqzwG",
+        "reason_n7tYNM",
+        "reason_EJTEFw"
+      ],
       "settings": {
         "heading": "Why |Dates|",
         "heading_main": "Why",
         "heading_accent": "Dates",
-        "subheading": "The Ultimate Super-Sweetener",
-        "intro": "Most brands use \"empty\" sugars. We use whole dates. Here is why they are the undisputed gold standard for your body:",
+        "subheading": "Natural Sweetener",
+        "intro": "Most brands rely on empty sugars or synthetic substitutes. We use whole dates. Here’s why they stand out:",
         "padding_block": 96,
         "header_spacing": 64,
         "card_radius": 16,
@@ -60,8 +100,8 @@
       "type": "index-why-different",
       "settings": {
         "eyebrow": "Why We're Different",
-        "heading": "Nature made it |delicious.|\nWe kept it that way.",
-        "body": "We believe the best flavors come straight from nature. That's why every jar of The Clean Spread is sweetened only with whole dates — no refined sugar, no artificial anything. Just slow-roasted nuts and seeds, crafted into spreads so rich and creamy, you'll forget they're good for you.",
+        "heading": "Nature made it | delicious |. We just kept it clean.",
+        "body": "We believe real flavour doesn’t need fixing. That’s why every jar from Cleanfuelcrew is sweetened only with whole dates — no refined sugar, no artificial additives, and nothing that doesn’t belong. Just slow-roasted nuts and seeds, blended into rich, creamy textures that feel indulgent but work with your body, not against it.",
         "badges": "Date Sweetened,Vegan,No Preservatives,Nutrient Dense,100% Natural,No Refined Sugar",
         "cta_label": "Learn More About Us",
         "cta_url": "",
