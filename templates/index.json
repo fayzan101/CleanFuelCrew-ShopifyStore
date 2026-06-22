@@ -57,6 +57,7 @@
           "settings": {
             "heading": "Sweetness With Benefits",
             "body": "<p>Dates aren’t just sweet. They bring antioxidants, potassium, and magnesium to support energy, heart health, and recovery.</p>",
+            "image": "shopify://shop_images/Screenshot_2026-06-22_095100.png",
             "default_asset": "Index-DatesSpread.png"
           }
         },
@@ -105,6 +106,7 @@
         "badges": "Date Sweetened,Vegan,No Preservatives,Nutrient Dense,100% Natural,No Refined Sugar",
         "cta_label": "Learn More About Us",
         "cta_url": "",
+        "image": "shopify://shop_images/WhatsAppImage2026-06-21at12.19.48PM.jpg",
         "spin_text": "0% Refined Sugar • 0% Refined Sugar •",
         "spin_color": "#5c3d2e"
       }
@@ -115,6 +117,7 @@
         "card1": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/600030756_17870200443473678_3109758034595053155_n.jpg",
             "default_asset": "Index-oil-on-top.png",
             "heading": "Oil on Top? That's Nature at Work.",
             "body": "That layer of oil is just the natural separation of pure nut oils — a beautiful reminder that we never use artificial stabilizers. A quick stir is all it takes."
@@ -131,6 +134,7 @@
         "card3": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/581350059_17867253285473678_7420677071956879312_n.jpg",
             "default_asset": "Index-Real-food.png",
             "heading": "Short Shelf Life? That's a Good Thing.",
             "body": "Real food doesn't last forever, and neither do our spreads. No preservatives means every spoonful is as fresh and alive as nature intended."
