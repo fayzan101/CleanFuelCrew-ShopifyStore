@@ -1,12 +1,24 @@
 {%- liquid
   assign banner_title = banner_title | default: 'About Us'
-  assign banner_subtitle = banner_subtitle | default: 'Clean, nourishing spreads crafted with thoughtfully sourced, real ingredients that you can trust. Loved by families who want better, healthier choices without compromising on taste.'
+  assign banner_subtitle = banner_subtitle | default: ''
+  assign story_eyebrow = story_eyebrow | default: 'OUR STORY'
+  assign mission_eyebrow = mission_eyebrow | default: 'OUR MISSION'
+  assign mission_cta_label = mission_cta_label | default: 'Go to Instagram →'
   assign instagram_url = instagram_url | default: 'https://www.instagram.com/the_clean_spread/'
+  assign person_eyebrow = person_eyebrow | default: 'THE PERSON BEHIND THE SPREAD'
+  assign person_heading = person_heading | default: 'Ayesha'
+  assign person_image_alt = person_image_alt | default: person_heading
 
   if banner_image != blank
     assign about_banner_bg = banner_image | image_url: width: 1800
   else
     assign about_banner_bg = 'about-banner.png' | asset_url
+  endif
+
+  if mission_image != blank
+    assign mission_bg = mission_image | image_url: width: 1800
+  else
+    assign mission_bg = 'about-mission.png' | asset_url
   endif
 -%}
 <div
@@ -18,77 +30,109 @@
     <div class="about-banner__bg" style="background-image: url('{{ about_banner_bg }}')"></div>
     <div class="about-banner__overlay" aria-hidden="true"></div>
     <div class="page-width about-banner__content">
-      <h1 class="about-banner__title">{{ banner_title }}</h1>
+      <h1 class="about-banner__title">{{ banner_title | escape }}</h1>
       {%- if banner_subtitle != blank -%}
-        <p class="about-banner__description">{{ banner_subtitle }}</p>
+        <p class="about-banner__description">{{ banner_subtitle | escape }}</p>
       {%- endif -%}
     </div>
   </div>
+
   <section class="about-story">
     <div class="about-story__inner">
       <div class="about-story__text">
-        <p class="about-story__eyebrow">OUR STORY</p>
-        <h2 class="about-story__heading">Made with <span class="about-story__highlight">purpose,</span> eaten with joy</h2>
-        <p class="about-story__body">
-          Born in a Dubai kitchen from a lifelong craving to snack better — cleanfuelcrew is wholesome food made honest, minimal, and truly delicious.
-        </p>
-        <p class="about-story__body">
-          What began as a personal mission in Dubai to navigate the demands of insulin resistance without giving up a sweet tooth evolved into cleanfuelcrew, a brand focused on providing honest energy. Disappointed by the lack of clean options and tired of "healthy snacks" packed with hidden sugars and chemical additives, our founder started crafting artisanal treats in their own kitchen. cleanfuelcrew emphasizes clean-label integrity, intentionally editing out the fluff so you will never find refined sugars, gluten, dairy, or artificial ingredients in our recipes. Our kitchen script is beautifully simple: sweetened by nature and powered by dates. By pairing premium nuts, seeds, and rich cacao, our mission is to promote mindful eating and bridge the gap between healthy and truly indulgent food. It's time to flip the page on conventional snacks and establish a healthy, joyful lifestyle together.
-        </p>
+        {%- if story_eyebrow != blank -%}
+          <p class="about-story__eyebrow">{{ story_eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if story_heading != blank -%}
+          <div class="about-story__heading rte">{{ story_heading }}</div>
+        {%- endif -%}
+        {%- if story_body != blank -%}
+          <div class="about-story__body rte">{{ story_body }}</div>
+        {%- endif -%}
       </div>
       <div class="about-story__image-wrap">
-        <img
-          src="{{ 'about-story.png' | asset_url }}"
-          alt="The Clean Spread products"
-          class="about-story__image"
-          loading="lazy"
-          width="808"
-          height="650"
-        >
+        {%- if story_image != blank -%}
+          {{
+            story_image
+            | image_url: width: 1200
+            | image_tag:
+              class: 'about-story__image',
+              loading: 'lazy',
+              widths: '400, 600, 808, 1200',
+              sizes: '(min-width: 990px) 48vw, 100vw',
+              alt: banner_title
+          }}
+        {%- else -%}
+          <img
+            src="{{ 'about-story.png' | asset_url }}"
+            alt="{{ banner_title | escape }}"
+            class="about-story__image"
+            loading="lazy"
+            width="808"
+            height="650"
+          >
+        {%- endif -%}
       </div>
     </div>
   </section>
 
-  <div class="about-mission" style="--banner-img: url('{{ 'about-mission.png' | asset_url }}')">
+  <div class="about-mission" style="--banner-img: url('{{ mission_bg }}')">
     <div class="about-mission__overlay" aria-hidden="true"></div>
     <div class="about-mission__inner">
-      <p class="about-mission__eyebrow">OUR MISSION</p>
-      <blockquote class="about-mission__quote">
-        "To inspire mindful eating and support families in building a lifestyle rooted in health, taste, and
-        togetherness."
-      </blockquote>
-      <a
-        href="{{ instagram_url }}"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="about-mission__cta"
-      >
-        Go to Instagram →
-      </a>
+      {%- if mission_eyebrow != blank -%}
+        <p class="about-mission__eyebrow">{{ mission_eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if mission_quote != blank -%}
+        <blockquote class="about-mission__quote">&ldquo;{{ mission_quote | escape }}&rdquo;</blockquote>
+      {%- endif -%}
+      {%- if instagram_url != blank -%}
+        <a
+          href="{{ instagram_url }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="about-mission__cta"
+        >
+          {{ mission_cta_label | escape }}
+        </a>
+      {%- endif -%}
     </div>
   </div>
 
   <section class="about-person">
     <div class="about-person__inner">
       <div class="about-person__image-wrap">
-        <img
-          src="{{ 'about-aishwarya.png' | asset_url }}"
-          alt="Ayesha, Founder of cleanfuelcrew"
-          class="about-person__image"
-          loading="lazy"
-          width="814"
-          height="550"
-        >
+        {%- if person_image != blank -%}
+          {{
+            person_image
+            | image_url: width: 1200
+            | image_tag:
+              class: 'about-person__image',
+              loading: 'lazy',
+              widths: '400, 600, 814, 1200',
+              sizes: '(min-width: 990px) 48vw, 100vw',
+              alt: person_image_alt
+          }}
+        {%- else -%}
+          <img
+            src="{{ 'about-aishwarya.png' | asset_url }}"
+            alt="{{ person_image_alt | escape }}"
+            class="about-person__image"
+            loading="lazy"
+            width="814"
+            height="550"
+          >
+        {%- endif -%}
       </div>
       <div class="about-person__text">
-        <p class="about-person__eyebrow">THE PERSON BEHIND THE SPREAD</p>
-        <h2 class="about-person__heading">Ayesha</h2>
-        <p class="about-person__body">
-          A founder first, Ayesha's belief in clean, nourishing ingredients shapes every product she creates. Living in Dubai for over a decade and managing insulin resistance herself, she understands the challenge of finding treats that satisfy cravings without compromise.
-          <br>
-          <br>
-          cleanfuelcrew is her way of sharing that solution with everyone who wants better snacks — full of flavour, naturally sweetened, and made with ingredients they can genuinely trust.
-        </p>
+        {%- if person_eyebrow != blank -%}
+          <p class="about-person__eyebrow">{{ person_eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if person_heading != blank -%}
+          <h2 class="about-person__heading">{{ person_heading | escape }}</h2>
+        {%- endif -%}
+        {%- if person_body != blank -%}
+          <div class="about-person__body rte">{{ person_body }}</div>
+        {%- endif -%}
       </div>
     </div>
   </section>
@@ -105,7 +149,6 @@
       margin: 0 0 1.2rem;
     }
 
-    /* Banner */
     .about-banner-wrap {
       position: relative;
       display: flex;
@@ -128,6 +171,7 @@
       position: absolute;
       inset: 0;
       z-index: 1;
+      background: rgba(92, 61, 46, 0.35);
     }
 
     .about-banner__content {
@@ -154,7 +198,6 @@
       margin: 0 auto;
     }
 
-    /* Our Story */
     .about-story {
       padding: clamp(5rem, 8vw, 9rem) 0;
       background: var(--color-primary);
@@ -186,7 +229,11 @@
       margin: 0 0 2rem;
     }
 
-    .about-story__highlight {
+    .about-story__heading p {
+      margin: 0;
+    }
+
+    .about-story__heading em {
       color: var(--color-ternary);
       font-style: italic;
       font-size: clamp(3.2rem, 3.8vw, 4.3rem);
@@ -196,12 +243,15 @@
       font-size: 1.3rem;
       line-height: 1.75;
       color: var(--color-secondary);
-      margin: 0 0 1.6rem;
       font-weight: 400;
       font-family: 'DM Sans', sans-serif;
     }
 
-    .about-story__body:last-child {
+    .about-story__body p {
+      margin: 0 0 1.6rem;
+    }
+
+    .about-story__body p:last-child {
       margin-bottom: 0;
     }
 
@@ -218,7 +268,6 @@
       min-height: 40rem;
     }
 
-    /* Our Mission */
     .about-mission {
       position: relative;
       display: flex;
@@ -288,7 +337,6 @@
       background: var(--color-secondary);
     }
 
-    /* The Person */
     .about-person {
       padding: clamp(5rem, 8vw, 9rem) 0;
       background: var(--color-primary);
@@ -329,17 +377,14 @@
       font-weight: 400;
       line-height: 1.75;
       font-family: 'DM Sans', sans-serif;
+    }
+
+    .about-person__body p {
       margin: 0 0 1.6rem;
     }
 
-    .about-person__eyebrow {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--color-ternary);
-      margin: 0 0 1.2rem;
+    .about-person__body p:last-child {
+      margin-bottom: 0;
     }
 
     .about-person__heading {
@@ -348,10 +393,6 @@
       color: var(--color-secondary);
       font-weight: 500;
       margin: 0 0 2rem;
-    }
-
-    .about-person__body:last-child {
-      margin-bottom: 0;
     }
   </style>
 </div>

@@ -4,7 +4,20 @@
   banner_title: section.settings.banner_title,
   banner_subtitle: section.settings.banner_subtitle,
   banner_image: section.settings.banner_image,
-  instagram_url: section.settings.instagram_url
+  story_eyebrow: section.settings.story_eyebrow,
+  story_heading: section.settings.story_heading,
+  story_body: section.settings.story_body,
+  story_image: section.settings.story_image,
+  mission_image: section.settings.mission_image,
+  mission_eyebrow: section.settings.mission_eyebrow,
+  mission_quote: section.settings.mission_quote,
+  mission_cta_label: section.settings.mission_cta_label,
+  instagram_url: section.settings.instagram_url,
+  person_image: section.settings.person_image,
+  person_image_alt: section.settings.person_image_alt,
+  person_eyebrow: section.settings.person_eyebrow,
+  person_heading: section.settings.person_heading,
+  person_body: section.settings.person_body
 %}
 
 {% schema %}
@@ -16,6 +29,11 @@
     {
       "type": "header",
       "content": "Banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner image"
     },
     {
       "type": "text",
@@ -30,19 +48,96 @@
       "default": "Clean, nourishing spreads crafted with thoughtfully sourced, real ingredients that you can trust. Loved by families who want better, healthier choices without compromising on taste."
     },
     {
+      "type": "header",
+      "content": "Our story"
+    },
+    {
+      "type": "text",
+      "id": "story_eyebrow",
+      "label": "Eyebrow",
+      "default": "OUR STORY"
+    },
+    {
+      "type": "richtext",
+      "id": "story_heading",
+      "label": "Heading",
+      "default": "<p>Made with <em>purpose,</em> eaten with joy</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "story_body",
+      "label": "Story text",
+      "default": "<p>Born in a Dubai kitchen from a lifelong craving to snack better — cleanfuelcrew is wholesome food made honest, minimal, and truly delicious.</p><p>What began as a personal mission in Dubai to navigate the demands of insulin resistance without giving up a sweet tooth evolved into cleanfuelcrew, a brand focused on providing honest energy.</p>"
+    },
+    {
       "type": "image_picker",
-      "id": "banner_image",
-      "label": "Banner image",
-      "info": "Upload a custom banner for the About page. If empty, the theme default image is used."
+      "id": "story_image",
+      "label": "Story image"
     },
     {
       "type": "header",
-      "content": "Mission section"
+      "content": "Our mission"
+    },
+    {
+      "type": "image_picker",
+      "id": "mission_image",
+      "label": "Mission background image"
+    },
+    {
+      "type": "text",
+      "id": "mission_eyebrow",
+      "label": "Eyebrow",
+      "default": "OUR MISSION"
+    },
+    {
+      "type": "textarea",
+      "id": "mission_quote",
+      "label": "Quote",
+      "default": "To inspire mindful eating and support families in building a lifestyle rooted in health, taste, and togetherness."
+    },
+    {
+      "type": "text",
+      "id": "mission_cta_label",
+      "label": "Button label",
+      "default": "Go to Instagram →"
     },
     {
       "type": "url",
       "id": "instagram_url",
       "label": "Instagram URL"
+    },
+    {
+      "type": "header",
+      "content": "Founder section"
+    },
+    {
+      "type": "image_picker",
+      "id": "person_image",
+      "label": "Founder image"
+    },
+    {
+      "type": "text",
+      "id": "person_image_alt",
+      "label": "Founder image alt text",
+      "default": "Founder"
+    },
+    {
+      "type": "text",
+      "id": "person_eyebrow",
+      "label": "Eyebrow",
+      "default": "THE PERSON BEHIND THE SPREAD"
+    },
+    {
+      "type": "text",
+      "id": "person_heading",
+      "label": "Name / heading",
+      "default": "Ayesha"
+    },
+    {
+      "type": "richtext",
+      "id": "person_body",
+      "label": "Bio",
+      "default": "<p>A founder first, Ayesha's belief in clean, nourishing ingredients shapes every product she creates.</p>"
     }
   ]
 }

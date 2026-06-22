@@ -4,6 +4,10 @@
 
 {%- case page.handle -%}
   {%- when 'about' -%}
+    {%- comment -%}
+      For full theme editor controls (banner image, story, mission, founder),
+      assign the "about" template to this page: Pages → About → Theme template → about
+    {%- endcomment -%}
     {% render 'page-about', shopify_attributes: section.shopify_attributes %}
 
   {%- when 'wishlist' -%}
@@ -33,7 +37,7 @@
   "settings": [
     {
       "type": "paragraph",
-      "content": "Banner settings below apply to generic pages only. About, Wishlist, Shipping & Returns, and Contact control their own layout in snippets."
+      "content": "For the About page, use the 'about' page template (Pages → About → Theme template → about) to edit all content in the theme customizer. Banner settings below apply to generic pages only."
     },
     {
       "type": "checkbox",
