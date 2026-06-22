@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -5,9 +14,22 @@
       "settings": {
         "banner_title": "Contact",
         "banner_subtitle": "Home / Contact",
-        "instagram_url": "https://www.instagram.com/thecleanspread/"
+        "banner_image": "shopify://shop_images/contact-us-banner.png",
+        "info_heading": "Information",
+        "info_text": "Have questions? Feel free to reach out—we're here to help. Contact us anytime and we'll get back to you soon.",
+        "location_label": "Dubai Based",
+        "phone_label": "Phone Number",
+        "phone_number": "+971 564381651",
+        "email_address": "thecleanspread@gmail.com",
+        "instagram_label": "Instagram",
+        "instagram_handle": "@thecleanspread",
+        "instagram_url": "https://www.instagram.com/thecleanspread/",
+        "form_heading": "Say Something...",
+        "submit_label": "Send message"
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
