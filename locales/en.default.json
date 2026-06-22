@@ -9,6 +9,13 @@
       "previous": "Previous",
       "next": "Next"
     },
+    "templates": {
+      "contact": {
+        "form": {
+          "post_success": "Thanks for contacting us. We'll get back to you soon."
+        }
+      }
+    },
     "search": {
       "search": "Search",
       "no_results": "No results found for \"{{ terms }}\".",
