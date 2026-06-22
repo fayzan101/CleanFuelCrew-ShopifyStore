@@ -38,8 +38,10 @@
                 <circle cx="12" cy="10" r="2.5"></circle>
               </svg>
             </span>
-            <span class="contact-page__detail-label">{{ location_label | escape }}</span><br>
-            <a href="https://www.google.com/maps/place/Dubai" class="contact-page__detail-value">{{ location_text | escape }}</a>
+            <span class="contact-page__detail-text">
+              <span class="contact-page__detail-label">{{ location_label | escape }}</span>
+              <a href="https://www.google.com/maps/place/Dubai" class="contact-page__detail-value">{{ location_text | escape }}</a>
+            </span>
           </li>
 
           <li class="contact-page__detail">
