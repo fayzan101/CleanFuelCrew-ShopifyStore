@@ -2,6 +2,12 @@
   assign banner_title = banner_title | default: 'About Us'
   assign banner_subtitle = banner_subtitle | default: 'Clean, nourishing spreads crafted with thoughtfully sourced, real ingredients that you can trust. Loved by families who want better, healthier choices without compromising on taste.'
   assign instagram_url = instagram_url | default: 'https://www.instagram.com/the_clean_spread/'
+
+  if banner_image != blank
+    assign about_banner_bg = banner_image | image_url: width: 1800
+  else
+    assign about_banner_bg = 'about-banner.png' | asset_url
+  endif
 -%}
 <div
   {% if shopify_attributes != blank %}
@@ -9,7 +15,7 @@
   {% endif %}
 >
   <div class="about-banner-wrap">
-    <div class="about-banner__bg" style="background-image: url('{{ 'about-banner.png' | asset_url }}')"></div>
+    <div class="about-banner__bg" style="background-image: url('{{ about_banner_bg }}')"></div>
     <div class="about-banner__overlay" aria-hidden="true"></div>
     <div class="page-width about-banner__content">
       <h1 class="about-banner__title">{{ banner_title }}</h1>
