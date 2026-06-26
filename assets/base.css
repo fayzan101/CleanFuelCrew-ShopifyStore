@@ -1536,29 +1536,48 @@ shopify-account:not(:defined) {
   margin-bottom: 2.5rem;
 }
 
+/* Mobile: Show products vertically */
 .product-related__track {
   display: flex;
+  flex-direction: column;
   gap: 2rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding-bottom: 0.5rem;
-}
-
-.product-related__track::-webkit-scrollbar {
-  display: none;
 }
 
 .product-related__slide {
-  flex: 0 0 min(100%, 26rem);
-  scroll-snap-align: start;
+  width: 100%;
 }
 
-@media screen and (min-width: 550px) {
+.product-related__dots {
+  display: none;
+}
+
+/* Tablet and Desktop: Keep horizontal slider */
+@media screen and (min-width: 750px) {
+  .product-related__track {
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 0.5rem;
+  }
+
+  .product-related__track::-webkit-scrollbar {
+    display: none;
+  }
+
   .product-related__slide {
-    flex-basis: calc(50% - 1rem);
+    flex: 0 0 calc(50% - 1rem);
+    scroll-snap-align: start;
+  }
+
+  .product-related__dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 2rem;
   }
 }
 
@@ -1566,14 +1585,6 @@ shopify-account:not(:defined) {
   .product-related__slide {
     flex-basis: calc(25% - 1.5rem);
   }
-}
-
-.product-related__dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.8rem;
-  margin-top: 2rem;
 }
 
 .product-related__dot {
@@ -1590,38 +1601,6 @@ shopify-account:not(:defined) {
   width: 3.2rem;
   border-radius: 1rem;
   background: var(--color-ternary);
-}
-
-/* Keep slider/grid layout for tablets and desktop */
-@media screen and (min-width: 750px) {
-  .product-related__track {
-    flex-direction: row;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .product-related__track::-webkit-scrollbar {
-    display: none;
-  }
-
-  .product-related__slide {
-    flex: 0 0 calc(50% - 1rem);
-    scroll-snap-align: start;
-  }
-}
-
-@media screen and (min-width: 990px) {
-  .product-related__slide {
-    flex-basis: calc(25% - 1.5rem);
-  }
-}
-@media screen and (max-width: 749px) {
-  .product-related__dots {
-    display: none;
-  }
 }
 
 .pagination {
