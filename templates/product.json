@@ -1,14 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-product",
       "settings": {
         "show_banner": true,
+        "banner_subtitle": "",
+        "banner_image": "shopify://shop_images/WhatsApp_Image_2026-06-26_at_6.30.12_PM.jpg",
+        "shipping_page_handle": "shipping-returns",
         "default_ingredients_list": "100% natural ingredients\nNo refined sugar\nSmall-batch crafted",
         "default_allergens": "<p>May contain traces of nuts. Please check the label if you have allergies.</p>",
-        "default_expiry": "<p>Best before 12 months from production. Store in a cool, dry place after opening.</p>"
+        "default_expiry": "<p>Best before 12 months from production. Store in a cool, dry place after opening.</p>",
+        "show_related": true,
+        "related_heading": "Related Product",
+        "related_count": 4
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
