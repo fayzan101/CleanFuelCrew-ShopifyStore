@@ -1520,14 +1520,76 @@ shopify-account:not(:defined) {
   max-width: 72rem;
   margin: 0 auto;
 }
+
+.product-related {
+  padding-bottom: 5rem;
+}
+
+.product-related .price {
+  text-align: center;
+}
+
+.product-related__heading {
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.2rem, 4vw, 3rem);
+  margin-bottom: 2.5rem;
+}
+
 .product-related__track {
   display: flex;
-  flex-direction: column;
   gap: 2rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+}
+
+.product-related__track::-webkit-scrollbar {
+  display: none;
 }
 
 .product-related__slide {
-  width: 100%;
+  flex: 0 0 min(100%, 26rem);
+  scroll-snap-align: start;
+}
+
+@media screen and (min-width: 550px) {
+  .product-related__slide {
+    flex-basis: calc(50% - 1rem);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .product-related__slide {
+    flex-basis: calc(25% - 1.5rem);
+  }
+}
+
+.product-related__dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.product-related__dot {
+  width: 0.8rem;
+  height: 0.8rem;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(92, 61, 46, 0.2);
+  cursor: pointer;
+}
+
+.product-related__dot.is-active {
+  width: 3.2rem;
+  border-radius: 1rem;
+  background: var(--color-ternary);
 }
 
 /* Keep slider/grid layout for tablets and desktop */
