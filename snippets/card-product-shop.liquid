@@ -61,6 +61,7 @@
             data-product-title="{{ card_product.title | escape }}"
             data-tooltip="{% if card_product.available and can_purchase == true %}Add to cart{% else %}{{ 'products.product.sold_out' | t }}{% endif %}"
             aria-label="{% if card_product.available and can_purchase == true %}Add {{ card_product.title | escape }} to cart{% else %}{{ card_product.title | escape }} is sold out{% endif %}"
+            disabled="{% unless card_product.available and can_purchase == true %}disabled{% endunless %}"
           >
             <span class="header__icon-img" style="--icon-url: url('{{ 'cart.svg' | asset_url }}');"></span>
           </button>
