@@ -113,10 +113,11 @@
                 '<input type="number" name="quantity" class="quantity-stepper__input" min="1" value="1" aria-label="Quantity">' +
                 '<button type="button" class="quantity-stepper__btn" data-action="qty-plus" aria-label="Increase quantity">&#43;</button>' +
               '</div>' +
-              '<button type="submit" class="button product-form__submit' + (variant.available ? '' : ' is-sold-out') + '" data-quick-view-submit' +
+              '<button type="submit" class="button product-form__submit' + (variant.available && can_purchase == true ? '' : ' is-sold-out') + '" data-quick-view-submit' +
                 ' data-product-available="' + variant.available + '"' +
                 ' data-product-title="' + escapeHtml(product.title) + '">' +
                 (variant.available && can_purchase == true ? 'Add to cart' : 'Sold out') +
+                (variant.available && can_purchase == true ? '' : ' disabled') +
               '</button>' +
               '<button type="button" class="product-wishlist" data-action="wishlist-toggle"' +
                 ' data-product-id="' + product.id + '"' +
