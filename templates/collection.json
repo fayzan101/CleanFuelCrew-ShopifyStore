@@ -22,7 +22,7 @@
         "price_filter_max": 5000,
         "show_popular": true,
         "popular_heading": "Popular products",
-        "popular_collection": "",
+        "popular_collection": "frontpage",
         "popular_count": 3,
         "whatsapp_url": ""
       }
