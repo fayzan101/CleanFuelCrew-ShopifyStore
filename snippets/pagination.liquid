@@ -6,7 +6,7 @@
   <ul class="pagination__list" role="list">
     <li class="pagination__item-wrap">
       {%- if paginate.previous -%}
-        
+        <a
           href="{{ paginate.previous.url }}{% if filter_params != blank %}&{{ filter_params }}{% endif %}"
           class="pagination__item pagination__item--nav"
           aria-label="{{ 'general.pagination.previous' | t }}"
@@ -27,7 +27,7 @@
     {%- for part in paginate.parts -%}
       <li class="pagination__item-wrap">
         {%- if part.is_link -%}
-          
+          <a
             href="{{ part.url }}{% if filter_params != blank %}&{{ filter_params }}{% endif %}"
             class="pagination__item pagination__item--page"
             aria-label="{{ 'general.pagination.page' | t: current: part.title, total: paginate.pages }}"
@@ -48,7 +48,7 @@
 
     <li class="pagination__item-wrap">
       {%- if paginate.next -%}
-        
+        <a
           href="{{ paginate.next.url }}{% if filter_params != blank %}&{{ filter_params }}{% endif %}"
           class="pagination__item pagination__item--nav"
           aria-label="{{ 'general.pagination.next' | t }}"
