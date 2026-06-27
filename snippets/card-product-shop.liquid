@@ -1,6 +1,11 @@
 {%- liquid
   assign card_variant = card_product.selected_or_first_available_variant
   assign card_image = card_product.featured_media
+  assign can_purchase = true
+
+  if card_product.featured_image == blank
+    assign can_purchase = false
+  endif
 -%}
 
 <article class="card-product-shop{% unless card_product.available %} card-product-shop--sold-out{% endunless %}" data-product-price="{{ card_product.price }}">
@@ -51,11 +56,11 @@
           <input type="hidden" name="id" value="{{ card_variant.id }}">
           <button
             type="submit"
-            class="card-product-shop__action{% unless card_product.available %} is-sold-out{% endunless %}"
+            class="card-product-shop__action{% unless card_product.available and can_purchase == true %} is-sold-out{% endunless %}"
             data-product-available="{{ card_product.available }}"
             data-product-title="{{ card_product.title | escape }}"
-            data-tooltip="{% if card_product.available %}Add to cart{% else %}{{ 'products.product.sold_out' | t }}{% endif %}"
-            aria-label="{% if card_product.available %}Add {{ card_product.title | escape }} to cart{% else %}{{ card_product.title | escape }} is sold out{% endif %}"
+            data-tooltip="{% if card_product.available and can_purchase == true %}Add to cart{% else %}{{ 'products.product.sold_out' | t }}{% endif %}"
+            aria-label="{% if card_product.available and can_purchase == true %}Add {{ card_product.title | escape }} to cart{% else %}{{ card_product.title | escape }} is sold out{% endif %}"
           >
             <span class="header__icon-img" style="--icon-url: url('{{ 'cart.svg' | asset_url }}');"></span>
           </button>

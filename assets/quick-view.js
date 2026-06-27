@@ -90,6 +90,8 @@
 
     const descriptionHtml = getDescriptionHtml(product);
 
+    const can_purchase = product.featured_image != null;
+
     return (
       '<div class="quick-view__layout">' +
         '<div class="quick-view__media">' +
@@ -114,7 +116,7 @@
               '<button type="submit" class="button product-form__submit' + (variant.available ? '' : ' is-sold-out') + '" data-quick-view-submit' +
                 ' data-product-available="' + variant.available + '"' +
                 ' data-product-title="' + escapeHtml(product.title) + '">' +
-                (variant.available ? 'Add to cart' : 'Sold out') +
+                (variant.available && can_purchase == true ? 'Add to cart' : 'Sold out') +
               '</button>' +
               '<button type="button" class="product-wishlist" data-action="wishlist-toggle"' +
                 ' data-product-id="' + product.id + '"' +
