@@ -1,6 +1,10 @@
 /**
  * Amadal — client-side wishlist (localStorage)
  */
+
+// I want the product to diable the ad to cart button and show sod out even if the procut featured image is not available
+
+
 (function () {
   'use strict';
 
@@ -240,7 +244,7 @@
       const price = product
         ? formatMoney(product.price, window.Shopify?.currency?.active)
         : item.price;
-      const available = Boolean(variant?.available);
+      const available = Boolean(variant?.available && product?.featured_image);
       const variantId = variant?.id || '';
 
       row.innerHTML =
@@ -253,6 +257,7 @@
         '<p class="wishlist-row__price">' + price + '</p>' +
         '<button type="button" class="button wishlist-row__add' + (available ? '' : ' is-sold-out') + '" data-action="wishlist-add-to-cart" data-variant-id="' + variantId + '"' +
           ' data-product-available="' + available + '"' +
+          (available ? '' : ' disabled') +
           ' data-product-title="' + escapeHtml(title) + '">' +
           (available ? 'Add to cart' : 'Sold out') +
         '</button>' +
