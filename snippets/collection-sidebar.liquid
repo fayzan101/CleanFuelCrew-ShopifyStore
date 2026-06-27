@@ -83,7 +83,7 @@
                   <li>
                     {%- if filter.param_name == 'filter.p.product_type' -%}
                       <a
-                        href="{{ shop_collection_url }}?product_type={{ value.label | url_param_encode }}"
+                        href="{{ value.url_to_add }}"
                         data-category-link
                         data-filter-mode="type"
                         data-filter-value="{{ value.label | escape }}"
@@ -93,7 +93,7 @@
                       </a>
                     {%- else -%}
                       <a
-                        href="{{ shop_collection_url }}?product_category_id={{ value.value | url_param_encode }}"
+                        href="{{ value.url_to_add }}"
                         data-category-link
                         data-filter-mode="category"
                         data-filter-value="{{ value.value | escape }}"
@@ -120,7 +120,7 @@
               {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
               <li>
                 <a
-                  href="{{ shop_collection_url }}?product_type={{ product_type | url_param_encode }}"
+                  href="{{ value.url_to_add }}"
                   data-category-link
                   data-filter-mode="type"
                   data-filter-value="{{ product_type | escape }}"
@@ -144,7 +144,7 @@
               {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
               <li>
                 <a
-                  href="{{ shop_collection_url }}?product_category_id={{ product.category.id | url_param_encode }}"
+                  href="{{ value.url_to_add }}"
                   data-category-link
                   data-filter-mode="category"
                   data-filter-value="{{ product.category.id | escape }}"
