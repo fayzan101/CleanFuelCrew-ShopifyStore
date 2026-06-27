@@ -1,3 +1,9 @@
+{% assign can_purchase = true %}
+
+{% if product.featured_image == blank %}
+  {% assign can_purchase = false %}
+{% endif %}
+
 <div class="section product-page" {{ section.shopify_attributes }}>
   {%- liquid
     assign ingredients_metafield = product.metafields.custom.ingredients
@@ -159,7 +165,7 @@
               data-product-available="{{ current_variant.available }}"
               data-product-title="{{ product.title | escape }}"
             >
-              {%- if current_variant.available -%}
+              {%- if current_variant.available and can_purchase == true -%}
                 Add to cart
               {%- else -%}
                 {{ 'products.product.sold_out' | t }}
