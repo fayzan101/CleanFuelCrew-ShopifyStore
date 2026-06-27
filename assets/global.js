@@ -387,25 +387,25 @@
     }
 
     if (sidebar) {
-      // sidebar.addEventListener('click', (event) => {
-      //   const link = event.target.closest('[data-category-link]');
-      //   if (!link) return;
+      sidebar.addEventListener('click', (event) => {
+        const link = event.target.closest('[data-category-link]');
+        if (!link) return;
 
-      //   event.preventDefault();
-      //   const url = new URL(link.href, window.location.origin);
-      //   const currentUrl = new URL(window.location.href);
-      //   const currentQ = (currentUrl.searchParams.get('q') || '').trim();
+        event.preventDefault();
+        const url = new URL(link.href, window.location.origin);
+        const currentUrl = new URL(window.location.href);
+        const currentQ = (currentUrl.searchParams.get('q') || '').trim();
 
-      //   if (link.dataset.filterMode === 'all') {
-      //     url.searchParams.delete('q');
-      //     url.searchParams.delete('product_type');
-      //     url.searchParams.delete('product_category_id');
-      //   } else if (currentQ) {
-      //     url.searchParams.set('q', currentQ);
-      //   }
+        if (link.dataset.filterMode === 'all') {
+          url.searchParams.delete('q');
+          url.searchParams.delete('product_type');
+          url.searchParams.delete('product_category_id');
+        } else if (currentQ) {
+          url.searchParams.set('q', currentQ);
+        }
 
-      //   navigateCollection(url.toString());
-      // });
+        navigateCollection(url.toString());
+      });
     }
 
     window.addEventListener('popstate', () => {
