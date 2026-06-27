@@ -10,7 +10,30 @@
         assign collection_banner_title = 'Shop'
       endif
     endif
+
+    assign active_product_type = ''
+    assign active_category_id = ''
+    if collection.filters != empty
+      for filter in collection.filters
+        if filter.param_name == 'filter.p.product_type'
+          for active_value in filter.active_values
+            assign active_product_type = active_value.label
+          endfor
+        endif
+        if filter.param_name == 'filter.p.t.category'
+          for active_value in filter.active_values
+            assign active_category_id = active_value.value
+          endfor
+        endif
+      endfor
+    endif
+
+    assign is_filtered = false
+    if active_product_type != blank or active_category_id != blank
+      assign is_filtered = true
+    endif
   -%}
+
   {% render 'page-banner',
     banner_title: collection_banner_title,
     banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
@@ -21,10 +44,25 @@
     <div class="collection-page__layout">
       <div class="collection-page__main">
         {%- paginate collection.products by section.settings.products_per_page -%}
+
+          {%- comment -%} Capture current filter params to forward to sort and pagination {%- endcomment -%}
+          {%- assign filter_params = '' -%}
+          {%- if active_product_type != blank -%}
+            {%- assign filter_params = 'product_type=' | append: active_product_type | url_encode -%}
+          {%- elsif active_category_id != blank -%}
+            {%- assign filter_params = 'product_category_id=' | append: active_category_id | url_encode -%}
+          {%- endif -%}
+
           <div class="collection-toolbar">
-            <p class="collection-toolbar__count" data-collection-count data-default-count="Showing all {{ collection.products_count }} result{% if collection.products_count != 1 %}s{% endif %}">
-              Showing all {{ collection.products_count }} result{% if collection.products_count != 1 %}s{% endif %}
-            </p>
+            {%- if is_filtered -%}
+              <p class="collection-toolbar__count" data-collection-count>
+                Showing {{ collection.products_count }} result{% if collection.products_count != 1 %}s{% endif %}
+              </p>
+            {%- else -%}
+              <p class="collection-toolbar__count" data-collection-count data-default-count="Showing all {{ collection.products_count }} result{% if collection.products_count != 1 %}s{% endif %}">
+                Showing all {{ collection.products_count }} result{% if collection.products_count != 1 %}s{% endif %}
+              </p>
+            {%- endif -%}
 
             <div class="collection-toolbar__sort">
               <label class="visually-hidden" for="SortBy-{{ section.id }}">Sort by</label>
@@ -32,6 +70,7 @@
                 id="SortBy-{{ section.id }}"
                 class="collection-toolbar__sort-select"
                 data-action="collection-sort"
+                data-filter-params="{{ filter_params | escape }}"
               >
                 {%- for option in collection.sort_options -%}
                   <option
@@ -67,9 +106,10 @@
 
           {%- if paginate.pages > 1 -%}
             <div data-collection-pagination>
-              {% render 'pagination', paginate: paginate %}
+              {% render 'pagination', paginate: paginate, filter_params: filter_params %}
             </div>
           {%- endif -%}
+
         {%- endpaginate -%}
       </div>
 
@@ -97,7 +137,7 @@
       "id": "banner_title",
       "label": "Banner title",
       "default": "Shop",
-      "info": "Leave blank to use “Shop” on the all-products collection, or the collection title on other collections"
+      "info": "Leave blank to use \u201cShop\u201d on the all-products collection, or the collection title on other collections"
     },
     {
       "type": "text",

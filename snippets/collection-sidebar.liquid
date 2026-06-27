@@ -28,6 +28,8 @@
   assign seen_category_keys = '||'
   assign filters_source = collections.all
   assign shop_collection_url = collection.url | default: collections.all.url
+
+  assign current_search_q = request.query_string | split: 'q=' | last | split: '&' | first | url_decode
 -%}
 
 <aside class="collection-sidebar" data-collection-sidebar>
@@ -40,7 +42,7 @@
       class="collection-sidebar__search-input"
       data-collection-search-input
       placeholder="Search entire store..."
-      value=""
+      value="{{ current_search_q | escape }}"
     >
     <button type="submit" class="collection-sidebar__search-btn" aria-label="Search">
       <span class="header__icon-img" style="--icon-url: url('{{ 'search.svg' | asset_url }}');"></span>
@@ -54,9 +56,7 @@
         <li>
           <a
             href="{{ shop_collection_url }}"
-            data-category-link
-            data-filter-mode="all"
-            {% if collection.handle == 'all' and active_product_type == blank and active_category_id == blank %}aria-current="page"{% endif %}
+            {% if active_product_type == blank and active_category_id == blank and current_search_q == blank %}aria-current="page"{% endif %}
           >
             All products
           </a>
@@ -84,20 +84,14 @@
                     {%- if filter.param_name == 'filter.p.product_type' -%}
                       <a
                         href="{{ shop_collection_url }}?product_type={{ value.label | url_param_encode }}"
-                        data-category-link
-                        data-filter-mode="type"
-                        data-filter-value="{{ value.label | escape }}"
-                        {% if is_active %} aria-current="page"{% endif %}
+                        {% if is_active %}aria-current="page"{% endif %}
                       >
                         {{ value.label | escape }}
                       </a>
                     {%- else -%}
                       <a
                         href="{{ shop_collection_url }}?product_category_id={{ value.value | url_param_encode }}"
-                        data-category-link
-                        data-filter-mode="category"
-                        data-filter-value="{{ value.value | escape }}"
-                        {% if is_active %} aria-current="page"{% endif %}
+                        {% if is_active %}aria-current="page"{% endif %}
                       >
                         {{ value.label | escape }}
                       </a>
@@ -121,9 +115,6 @@
               <li>
                 <a
                   href="{{ shop_collection_url }}?product_type={{ product_type | url_param_encode }}"
-                  data-category-link
-                  data-filter-mode="type"
-                  data-filter-value="{{ product_type | escape }}"
                   {% if product_type == active_product_type %}aria-current="page"{% endif %}
                 >
                   {{ product_type | escape }}
@@ -145,9 +136,6 @@
               <li>
                 <a
                   href="{{ shop_collection_url }}?product_category_id={{ product.category.id | url_param_encode }}"
-                  data-category-link
-                  data-filter-mode="category"
-                  data-filter-value="{{ product.category.id | escape }}"
                   {% if product.category.id == active_category_id %}aria-current="page"{% endif %}
                 >
                   {{ product.category.name | escape }}
