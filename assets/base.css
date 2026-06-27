@@ -873,7 +873,7 @@ shopify-account:not(:defined) {
 .product-form__submit.is-sold-out,
 .wishlist-row__add.is-sold-out {
   opacity: 0.75;
-  cursor: pointer;
+  cursor: not-allowed;
 }
 
 /* Announcement */
