@@ -79,9 +79,9 @@
                   {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
                   <li>
                     {%- if filter.param_name == 'filter.p.product_type' -%}
-                      <a href="{{ shop_collection_url }}?product_type={{ value.label | url_param_encode }}" {% if is_active %}aria-current="page"{% endif %}>{{ value.label | escape }}</a>
+                      <a href="{{ shop_collection_url }}?filter.p.product_type={{ value.label | url_param_encode }}" {% if is_active %}aria-current="page"{% endif %}>{{ value.label | escape }}</a>
                     {%- else -%}
-                      <a href="{{ shop_collection_url }}?product_category_id={{ value.value | url_param_encode }}" {% if is_active %}aria-current="page"{% endif %}>{{ value.label | escape }}</a>
+                      <a href="{{ shop_collection_url }}?filter.p.t.category={{ value.value | url_param_encode }}" {% if is_active %}aria-current="page"{% endif %}>{{ value.label | escape }}</a>
                     {%- endif -%}
                   </li>
                 {%- endunless -%}
@@ -100,7 +100,7 @@
             {%- unless seen_category_keys contains item_token -%}
               {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
               <li>
-                <a href="{{ shop_collection_url }}?product_type={{ product_type | url_param_encode }}" {% if product_type == active_product_type %}aria-current="page"{% endif %}>{{ product_type | escape }}</a>
+                <a href="{{ shop_collection_url }}?filter.p.product_type={{ product_type | url_param_encode }}" {% if product_type == active_product_type %}aria-current="page"{% endif %}>{{ product_type | escape }}</a>
               </li>
             {%- endunless -%}
           {%- endif -%}
@@ -116,7 +116,7 @@
             {%- unless seen_category_keys contains item_token -%}
               {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
               <li>
-                <a href="{{ shop_collection_url }}?product_category_id={{ product.category.id | url_param_encode }}" {% if product.category.id == active_category_id %}aria-current="page"{% endif %}>{{ product.category.name | escape }}</a>
+                <a href="{{ shop_collection_url }}?filter.p.t.category={{ product.category.id | url_param_encode }}" {% if product.category.id == active_category_id %}aria-current="page"{% endif %}>{{ product.category.name | escape }}</a>
               </li>
             {%- endunless -%}
           {%- endif -%}

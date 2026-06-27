@@ -30,9 +30,9 @@
 
     assign filter_params = ''
     if active_product_type != blank
-      assign filter_params = 'product_type=' | append: active_product_type
+      assign filter_params = 'filter.p.product_type=' | append: active_product_type
     elsif active_category_id != blank
-      assign filter_params = 'product_category_id=' | append: active_category_id
+      assign filter_params = 'filter.p.t.category=' | append: active_category_id
     endif
   -%}
 
