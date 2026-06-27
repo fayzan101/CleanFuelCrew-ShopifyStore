@@ -13,19 +13,26 @@
 
     <div class="card-product-shop__media">
       {%- if card_image -%}
-        {{
-          card_image
-          | image_url: width: 600
-          | image_tag:
-            class: 'card-product-shop__image',
-            loading: 'lazy',
-            widths: '200, 400, 600',
-            sizes: '(min-width: 990px) 30vw, 50vw',
-            alt: card_image.alt | escape
-        }}
-      {%- else -%}
-        {{ 'product-1' | placeholder_svg_tag: 'card-product-shop__image placeholder' }}
-      {%- endif -%}
+      {{
+        card_image
+        | image_url: width: 600
+        | image_tag:
+          class: 'card-product-shop__image',
+          loading: 'lazy',
+          widths: '200, 400, 600',
+          sizes: '(min-width: 990px) 30vw, 50vw',
+          alt: card_image.alt | escape
+      }}
+    {%- else -%}
+      <img
+        src="{{ 'coming-soon.jpg' | file_url }}"
+        alt="Coming Soon"
+        class="card-product-shop__image"
+        loading="lazy"
+        width="600"
+        height="600"
+      >
+    {%- endif -%}
     </div>
 
     <div class="card-product-shop__overlay">
