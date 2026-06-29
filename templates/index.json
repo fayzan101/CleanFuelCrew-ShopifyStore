@@ -31,11 +31,14 @@
     },
     "featured_products": {
       "type": "index-featured-products",
+      "custom_css": [
+        "p {max-width: 60vw; text-align: center; margin: auto;}"
+      ],
       "settings": {
         "eyebrow": "Our Collection",
-        "heading": "Powered By",
-        "heading_italic": "Nature",
-        "subtext": "Slow-roasted nuts, wholesome seeds, and naturally sweet dates come together in every jar for a clean, satisfying spread.",
+        "heading": "​proudly crafted in",
+        "heading_italic": "UAE",
+        "subtext": "​Slow-roasted nuts, wholesome seeds, and naturally sweet dates come together in our entire range—from our smooth, satisfying spreads and crunchy granolas to our energy-boosting bars—for a clean, delicious experience in every bite.",
         "collection": "frontpage",
         "products_to_show": 3,
         "cta_label": "View All Flavors",
