@@ -118,7 +118,7 @@
         "card1": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/600030756_17870200443473678_3109758034595053155_n.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM_1.jpg",
             "default_asset": "Index-oil-on-top.png",
             "heading": "Oil on Top? That's Nature at Work.",
             "body": "That layer of oil is just the natural separation of pure nut oils — a beautiful reminder that we never use artificial stabilizers. A quick stir is all it takes."
@@ -127,6 +127,7 @@
         "card2": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM.jpg",
             "default_asset": "Index-Good-calories.png",
             "heading": "Only the Good Calories.",
             "body": "Packed with feel-good fuel from real nuts, seeds, dates, and coconut oil. Rich in omega-3s, vitamins, and protein — no empty calories here."
@@ -135,7 +136,7 @@
         "card3": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/581350059_17867253285473678_7420677071956879312_n.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.29.22_PM.jpg",
             "default_asset": "Index-Real-food.png",
             "heading": "Short Shelf Life? That's a Good Thing.",
             "body": "Real food doesn't last forever, and neither do our spreads. No preservatives means every spoonful is as fresh and alive as nature intended."
