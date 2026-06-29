@@ -1,8 +1,10 @@
+{% assign banner_image = section.settings.banner_image %}
+
 <div class="section wishlist-page"{% if shopify_attributes != blank %} {{ shopify_attributes }}{% endif %}>
   {% render 'page-banner',
     banner_title: 'Wishlist',
     banner_subtitle: 'Home / Wishlist',
-    banner_image: blank
+    banner_image: banner_image
   %}
 
   <div class="page-width wishlist-page__inner" data-wishlist-page>
@@ -23,3 +25,16 @@
     </div>
   </div>
 </div>
+
+{% schema %}
+{
+  "name": "Wishlist Page",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner_image",
+      "label": "Banner Image"
+    }
+  ]
+}
+{% endschema %}
