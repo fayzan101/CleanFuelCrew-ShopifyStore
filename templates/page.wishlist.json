@@ -1,7 +1,7 @@
 {
   "sections": {
     "main": {
-      "type": "wishlist-page",
+      "type": "page-wishlist",
       "settings": {}
     }
   },

@@ -50,7 +50,8 @@
       "subtotal": "Subtotal",
       "checkout": "Checkout",
       "update": "Update",
-      "remove": "Remove"
+      "remove": "Remove",
+      "taxes_included": "Taxes included",
     }
   },
   "collections": {
