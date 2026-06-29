@@ -18,7 +18,7 @@
         "shipping_page_handle": "shipping-returns",
         "default_ingredients_list": "100% natural ingredients\nNo refined sugar\nSmall-batch crafted",
         "default_allergens": "<p>May contain traces of nuts. Please check the label if you have allergies.</p>",
-        "default_expiry": "<p>Expires in 4 months after Manufacturing Date. Store in a Cool and Dry Place. Freshly made product with no preservatives. consume within 20 days of opening</p>",
+        "default_expiry": "<p>Expires in 4 months after Manufacturing Date. Store in a Cool and Dry Place. consume within 20 days of opening</p>",
         "show_related": true,
         "related_heading": "Related Product",
         "related_count": 4

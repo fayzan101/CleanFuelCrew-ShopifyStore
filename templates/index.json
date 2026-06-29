@@ -15,7 +15,7 @@
         "background_image": "shopify://shop_images/696374824_17888632848473678_5385456346966897044_n.jpg",
         "eyebrow": "Handcrafted in Dubai",
         "heading": "Sweetened by Nature",
-        "subtext": "Premium nut spreads powered by dates. No refined sugar. No gluten. No dairy. Just rich flavour, honest ingredients, and energy that goes the distance.",
+        "subtext": "Made with whole dates, slow-roasted nuts, and nothing artificial. No refined sugar. No gluten. No dairy. Just rich flavour, honest ingredients, and clean energy that fuels your day.",
         "primary_label": "Shop Now",
         "primary_url": "",
         "secondary_label": "Our Story",
@@ -33,9 +33,9 @@
       "type": "index-featured-products",
       "settings": {
         "eyebrow": "Our Collection",
-        "heading": "Taste the",
-        "heading_italic": "Goodness",
-        "subtext": "Every jar is a love letter to real ingredients — nuts, seeds, and dates, slow-roasted and ground to creamy perfection.",
+        "heading": "Powered By",
+        "heading_italic": "Nature",
+        "subtext": "Slow-roasted nuts, wholesome seeds, and naturally sweet dates come together in every jar for a clean, satisfying spread.",
         "collection": "frontpage",
         "products_to_show": 3,
         "cta_label": "View All Flavors",
@@ -50,6 +50,7 @@
           "settings": {
             "heading": "Steady Energy, No Crash",
             "body": "<p>Dates are naturally rich in fiber, helping slow sugar absorption for balanced energy that lasts — no spikes, no crashes.</p>",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM_1_f3c0ff80-1d07-4643-b50c-3123cff4fa35.jpg",
             "default_asset": "Index-NoSuagr.png"
           }
         },
@@ -67,6 +68,7 @@
           "settings": {
             "heading": "Zero Refined Junk",
             "body": "<p>We use the whole fruit — not extracts, syrups, or shortcuts. That means full fiber, full nutrients, and zero refined sugar or additives.</p>",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.29.22_PM_157a2e81-fbc7-4a4f-8a31-bb6cc957d229.jpg",
             "default_asset": "Index-ZeroRefinedJunk.png"
           }
         },
@@ -75,6 +77,7 @@
           "settings": {
             "heading": "Nature’s Caramel",
             "body": "<p>Unlike artificial alternatives, dates deliver deep caramel-like sweetness without chemical aftertaste or synthetic processing.</p>",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM_ca11276b-9351-42ba-8e05-03c3ade3581a.jpg",
             "default_asset": "Index-NaturesCaramel.png"
           }
         }
@@ -102,8 +105,8 @@
       "type": "index-why-different",
       "settings": {
         "eyebrow": "Why We're Different",
-        "heading": "Nature made it | delicious |. We just kept it clean.",
-        "body": "We believe real flavour doesn’t need fixing. That’s why every jar from Cleanfuelcrew is sweetened only with whole dates — no refined sugar, no artificial additives, and nothing that doesn’t belong. Just slow-roasted nuts and seeds, blended into rich, creamy textures that feel indulgent but work with your body, not against it.",
+        "heading": "Nature's finest | ingredients| , blended to perfection.",
+        "body": "At Clean Fuel Crew, we believe indulgence should never come with compromise.\n\nEvery jar is handcrafted using premium nuts, seeds, and whole dates—never refined sugar, artificial sweeteners, processed additives, gluten, or dairy. Instead of relying on shortcuts or synthetic ingredients, we let nature do the work, creating rich, creamy spreads that taste indulgent while delivering honest nutrition.\n\nIt's simple: clean ingredients, real flavour, and energy your body can actually use.",
         "badges": "Date Sweetened,Vegan,No Preservatives,Nutrient Dense,100% Natural,No Refined Sugar",
         "cta_label": "Learn More About Us",
         "cta_url": "",
@@ -127,6 +130,7 @@
         "card2": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM.jpg",
             "default_asset": "Index-Good-calories.png",
             "heading": "Only the Good Calories.",
             "body": "Packed with feel-good fuel from real nuts, seeds, dates, and coconut oil. Rich in omega-3s, vitamins, and protein — no empty calories here."
@@ -222,9 +226,9 @@
     "cta_banner": {
       "type": "index-cta-banner",
       "settings": {
-        "eyebrow": "Ready to taste the difference?",
-        "heading": "Every\n Spoonful |Tells\n a Story|",
-        "subtext": "From our kitchen to your table — pure ingredients, honest flavors, and the kind of goodness you can feel.",
+        "eyebrow": "Made By Nature",
+        "heading": "Simple ingredients.| Extraordinary flavour |",
+        "subtext": "Crafted with slow-roasted nuts, wholesome seeds, and whole dates to deliver indulgence without compromise.",
         "cta_label": "Shop the Collection",
         "cta_url": ""
       }
