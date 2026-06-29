@@ -50,6 +50,7 @@
           "settings": {
             "heading": "Steady Energy, No Crash",
             "body": "<p>Dates are naturally rich in fiber, helping slow sugar absorption for balanced energy that lasts — no spikes, no crashes.</p>",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM_1_f3c0ff80-1d07-4643-b50c-3123cff4fa35.jpg",
             "default_asset": "Index-NoSuagr.png"
           }
         },
@@ -67,6 +68,7 @@
           "settings": {
             "heading": "Zero Refined Junk",
             "body": "<p>We use the whole fruit — not extracts, syrups, or shortcuts. That means full fiber, full nutrients, and zero refined sugar or additives.</p>",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.29.22_PM_157a2e81-fbc7-4a4f-8a31-bb6cc957d229.jpg",
             "default_asset": "Index-ZeroRefinedJunk.png"
           }
         },
@@ -75,6 +77,7 @@
           "settings": {
             "heading": "Nature’s Caramel",
             "body": "<p>Unlike artificial alternatives, dates deliver deep caramel-like sweetness without chemical aftertaste or synthetic processing.</p>",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM_ca11276b-9351-42ba-8e05-03c3ade3581a.jpg",
             "default_asset": "Index-NaturesCaramel.png"
           }
         }
@@ -118,7 +121,7 @@
         "card1": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM_1.jpg",
+            "image": "shopify://shop_images/600030756_17870200443473678_3109758034595053155_n.jpg",
             "default_asset": "Index-oil-on-top.png",
             "heading": "Oil on Top? That's Nature at Work.",
             "body": "That layer of oil is just the natural separation of pure nut oils — a beautiful reminder that we never use artificial stabilizers. A quick stir is all it takes."
@@ -136,7 +139,7 @@
         "card3": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.29.22_PM.jpg",
+            "image": "shopify://shop_images/581350059_17867253285473678_7420677071956879312_n.jpg",
             "default_asset": "Index-Real-food.png",
             "heading": "Short Shelf Life? That's a Good Thing.",
             "body": "Real food doesn't last forever, and neither do our spreads. No preservatives means every spoonful is as fresh and alive as nature intended."
