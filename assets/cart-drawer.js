@@ -207,7 +207,7 @@
       return;
     }
 
-    const originalText = submitBtn?.textContent || '';
+    const originalText = submitBtn?.innerHTML || '';
 
     if (submitBtn) submitBtn.disabled = true;
 
@@ -215,9 +215,9 @@
       await addToCart(new FormData(form), { productTitle });
 
       if (submitBtn) {
-        submitBtn.textContent = 'Added!';
+        submitBtn.innerHTML = 'Added!';
         window.setTimeout(() => {
-          submitBtn.textContent = originalText;
+          submitBtn.innerHTML = originalText;
           submitBtn.disabled = false;
         }, 1500);
       }
