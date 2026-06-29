@@ -33,9 +33,9 @@
       "type": "index-featured-products",
       "settings": {
         "eyebrow": "Our Collection",
-        "heading": "Taste the",
-        "heading_italic": "Goodness",
-        "subtext": "Every jar is a love letter to real ingredients — nuts, seeds, and dates, slow-roasted and ground to creamy perfection.",
+        "heading": "Powered By",
+        "heading_italic": "Nature",
+        "subtext": "Slow-roasted nuts, wholesome seeds, and naturally sweet dates come together in every jar for a clean, satisfying spread.",
         "collection": "frontpage",
         "products_to_show": 3,
         "cta_label": "View All Flavors",
@@ -226,9 +226,9 @@
     "cta_banner": {
       "type": "index-cta-banner",
       "settings": {
-        "eyebrow": "Ready to taste the difference?",
-        "heading": "Every\n Spoonful |Tells\n a Story|",
-        "subtext": "From our kitchen to your table — pure ingredients, honest flavors, and the kind of goodness you can feel.",
+        "eyebrow": "Made By Nature",
+        "heading": "Simple ingredients.| Extraordinary flavour |",
+        "subtext": "Crafted with slow-roasted nuts, wholesome seeds, and whole dates to deliver indulgence without compromise.",
         "cta_label": "Shop the Collection",
         "cta_url": ""
       }
