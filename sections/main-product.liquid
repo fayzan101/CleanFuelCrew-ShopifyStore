@@ -164,7 +164,7 @@
               class="button product-form__submit{% unless current_variant.available %} is-sold-out{% endunless %}"
               data-product-available="{{ current_variant.available }}"
               data-product-title="{{ product.title | escape }}"
-              disabled="{% unless current_variant.available and can_purchase == true %}disabled{% endunless %}"
+              {% unless current_variant.available and can_purchase == true %}disabled{% endunless %}
             >
               {%- if current_variant.available and can_purchase == true -%}
                 Add to cart
