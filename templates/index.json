@@ -142,7 +142,7 @@
         "card3": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/581350059_17867253285473678_7420677071956879312_n.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-30_at_5.09.45_PM.jpg",
             "default_asset": "Index-Real-food.png",
             "heading": "​Embracing a Limited Expiration Date",
             "body": "​Because our products are made from authentic, whole ingredients, they do not have an indefinite shelf life. By excluding artificial preservatives, we ensure that every serving remains as fresh and vibrant as nature intended"
@@ -153,6 +153,9 @@
         "card1",
         "card2",
         "card3"
+      ],
+      "custom_css": [
+        ".real-talk__card-image{min-height: 330px;}"
       ],
       "settings": {
         "eyebrow": "Real Talk",
