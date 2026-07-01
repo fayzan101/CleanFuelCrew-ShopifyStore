@@ -177,7 +177,7 @@
             "star_rating": "all",
             "show_review_media": true,
             "display_order": "media_first",
-            "no_image_fallback": "review_text_only",
+            "no_image_fallback": "product_image",
             "max_reviews": 20,
             "review_length": "small",
             "text_size": "small",
@@ -197,7 +197,7 @@
             "transition_speed": 5,
             "header_text": "",
             "show_average_rating": true,
-            "rating_display": "default"
+            "rating_display": "show_nothing"
           }
         }
       },
