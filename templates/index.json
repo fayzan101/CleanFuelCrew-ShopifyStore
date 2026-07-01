@@ -170,7 +170,7 @@
           "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {
             "show_sample_reviews": false,
-            "reviews_selection": "all",
+            "reviews_selection": "product_reviews",
             "products": [
               "peanut-butter",
               "pack-of-5-hazelnut-date-balls",
@@ -187,12 +187,12 @@
             "review_length": "medium",
             "text_size": "medium",
             "image_ratio": "0.75",
-            "reviews_shown": 4,
+            "reviews_shown": 5,
             "show_reviewer_name": true,
             "show_product_name": true,
             "hide_arrows_mobile": true,
             "arrows_position": "sides",
-            "max_width": 700,
+            "max_width": 1200,
             "corner_styling": "round",
             "header_text_color": "#000000",
             "text_color": "#000000",
