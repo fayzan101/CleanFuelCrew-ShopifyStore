@@ -2071,7 +2071,7 @@ shopify-account:not(:defined) {
   justify-content: center;
   font-family: var(--font-heading-family);
   font-size: 1.8rem;
-  color: var(--color-secondary);
+  color: var(--color-text);
 }
 
 .card-product-shop:hover .card-product-shop__arrow{
@@ -3105,7 +3105,7 @@ body.quick-view-open {
   margin: 0;
   font-size: 1.6rem;
   font-weight: 600;
-  color: var(--color-secondary);
+  color: var(--color-text);
   min-width: 8rem;
   text-align: right;
   white-space: nowrap;
@@ -3427,7 +3427,7 @@ body.quick-view-open {
 .contact-page__detail-label {
   font-size: 1.5rem;
   /* font-weight: 600; */
-  color: #555555;
+  color: var(--color-text);
 }
 
 .contact-page__detail-value {
