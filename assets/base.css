@@ -1,14 +1,14 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 :root{
-  --color-primary: #FDF6EE;
-  --color-secondary: #5c3d2e;
-  --color-ternary: #C8915F;
+  --color-primary: #F7f0e6;
+  --color-secondary: #c1573d;
+  --color-ternary: #7c8b5f;
   --color-background: #ffffff;
-  --color-text: #5c3d2e;
-  --color-accent: #C8915F;
+  --color-text: #c1573d;
+  --color-accent: #7c8b5f;
   --font-body-family: "DM Sans", sans-serif;
-  --font-heading-family: "Playfair Display", serif;
+  --font-heading-family: "Fraunces", serif;
 }
 
 *,
