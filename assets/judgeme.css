@@ -12,8 +12,8 @@
   --jdgm-border: rgba(92, 61, 46, 0.12);
   --jdgm-shadow: 0 2px 16px rgba(92, 61, 46, 0.08);
   --jdgm-radius: 1rem;
-  --jdgm-font-body: var(--font-body-family, "DM Sans", sans-serif);
-  --jdgm-font-heading: var(--font-heading-family, "Playfair Display", serif);
+  --jdgm-font-body: var(--font-body-family);
+  --jdgm-font-heading: var(--font-heading-family);
 
   clear: both;
   max-width: 72rem;
@@ -507,7 +507,7 @@
 
 .judgeme-badge .jdgm-prev-badge__text,
 .judgeme-badge .jdgm-prev-badge__stars {
-  font-family: var(--font-body-family, "DM Sans", sans-serif);
+  font-family: var(--font-body-family);
 }
 
 /* Product page */
