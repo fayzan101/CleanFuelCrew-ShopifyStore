@@ -110,4 +110,30 @@
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.88);
   }
+
+  @media screen and (max-width: 749px) {
+    .page-banner {
+      min-height: 32rem;
+    }
+
+    .page-banner__image {
+      object-fit: contain;
+      object-position: center center;
+      background: var(--color-secondary);
+    }
+
+    .page-banner__content {
+      padding: 2.8rem 1.6rem;
+    }
+
+    .page-banner__title {
+      margin-top: 0;
+      font-size: clamp(2.6rem, 8vw, 3.2rem);
+    }
+
+    .page-banner__eyebrow {
+      font-size: 1.2rem;
+      letter-spacing: 0.12em;
+    }
+  }
 {% endstyle %}
