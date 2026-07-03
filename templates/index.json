@@ -31,11 +31,14 @@
     },
     "featured_products": {
       "type": "index-featured-products",
+      "custom_css": [
+        "p {max-width: 60vw; text-align: center; margin: auto;}"
+      ],
       "settings": {
         "eyebrow": "Our Collection",
-        "heading": "Powered By",
-        "heading_italic": "Nature",
-        "subtext": "Slow-roasted nuts, wholesome seeds, and naturally sweet dates come together in every jar for a clean, satisfying spread.",
+        "heading": "​Proudly crafted in",
+        "heading_italic": "UAE",
+        "subtext": "​Slow-roasted nuts, wholesome seeds, and naturally sweet dates come together in our entire range—from our smooth, satisfying spreads and crunchy granolas to our energy-boosting bars—for a clean, delicious experience in every bite.",
         "collection": "frontpage",
         "products_to_show": 3,
         "cta_label": "View All Flavors",
@@ -139,7 +142,7 @@
         "card3": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/581350059_17867253285473678_7420677071956879312_n.jpg",
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-30_at_5.09.45_PM.jpg",
             "default_asset": "Index-Real-food.png",
             "heading": "​Embracing a Limited Expiration Date",
             "body": "​Because our products are made from authentic, whole ingredients, they do not have an indefinite shelf life. By excluding artificial preservatives, we ensure that every serving remains as fresh and vibrant as nature intended"
@@ -151,6 +154,9 @@
         "card2",
         "card3"
       ],
+      "custom_css": [
+        ".real-talk__card-image {min-height: 330px;}"
+      ],
       "settings": {
         "eyebrow": "Real Talk",
         "heading": "What Makes Us",
@@ -160,67 +166,46 @@
     "testimonials": {
       "type": "index-testimonials",
       "blocks": {
-        "review1": {
-          "type": "review",
+        "judge_me_reviews_cards_carousel_CARRH9": {
+          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {
-            "name": "Patricia Raphael",
-            "rating": 5,
-            "quote": "I just tried the spread this morning. It was really nice — not sweet at all! I had both the pistachio and choco hazelnut mixed in a sandwich and it was amazing."
-          }
-        },
-        "review2": {
-          "type": "review",
-          "settings": {
-            "name": "Aabgina",
-            "rating": 5,
-            "quote": "We met at the Ripe market. Messaging you to tell you that my kids loved loved loved the chocolate hazelnut spread Thank god I have tried so may things to get them OFF NUTELLA. At last I heard her say this is better than Nutella.. Alhamdallah."
-          }
-        },
-        "review3": {
-          "type": "review",
-          "settings": {
-            "name": "Kylie-Anne Pacheco",
-            "rating": 5,
-            "quote": "Thank you so much! I absolutely love your spreads, really they are so good. I think I'd like to try the no-tella chocolate one next. I regret not buying it."
-          }
-        },
-        "review4": {
-          "type": "review",
-          "settings": {
-            "name": "Anna",
-            "rating": 5,
-            "quote": "Hey!! They're soooo delicious thank you! I'm particularly obsessed with the pistachio one! I will definitely be a regular customer!"
-          }
-        },
-        "review5": {
-          "type": "review",
-          "settings": {
-            "name": "Natalie",
-            "rating": 5,
-            "quote": "I should have bought 3 of your almond cinnamon spread. The girls are already halfway through the jar! They LOVE it. You're onto a winner there."
-          }
-        },
-        "review6": {
-          "type": "review",
-          "settings": {
-            "name": "Lauren",
-            "rating": 5,
-            "quote": "Absolutely in love with the almond cinnamon spread."
+            "show_sample_reviews": false,
+            "reviews_selection": "store_reviews",
+            "products": [],
+            "star_rating": "all",
+            "show_review_media": true,
+            "display_order": "media_first",
+            "no_image_fallback": "product_image",
+            "max_reviews": 20,
+            "review_length": "medium",
+            "text_size": "medium",
+            "image_ratio": "0.75",
+            "reviews_shown": 5,
+            "show_reviewer_name": true,
+            "show_product_name": true,
+            "hide_arrows_mobile": true,
+            "arrows_position": "sides",
+            "max_width": 1200,
+            "corner_styling": "round",
+            "header_text_color": "#000000",
+            "text_color": "#000000",
+            "card_color": "#f9f9f9",
+            "stars_color": "#ffd700",
+            "arrows_color": "#000000",
+            "transition_speed": 5,
+            "header_text": "",
+            "show_average_rating": true,
+            "rating_display": "show_nothing"
           }
         }
       },
       "block_order": [
-        "review1",
-        "review2",
-        "review3",
-        "review4",
-        "review5",
-        "review6"
+        "judge_me_reviews_cards_carousel_CARRH9"
       ],
       "settings": {
         "eyebrow": "Testimonial",
-        "heading": "Client's Success",
-        "heading_italic": "Stories"
+        "heading": "Customer",
+        "heading_italic": "Reviews"
       }
     },
     "cta_banner": {

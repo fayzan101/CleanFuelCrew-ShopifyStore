@@ -1,4 +1,11 @@
 <section class="testimonials" {{ section.shopify_attributes }}>
+  {%- assign has_app_block = false -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == '@app' or block.type contains 'shopify://apps/' -%}
+      {%- assign has_app_block = true -%}
+    {%- endif -%}
+  {%- endfor -%}
+
   <div class="testimonials__inner">
     <div class="testimonials__left">
       {%- if section.settings.eyebrow != blank -%}
@@ -48,61 +55,73 @@
     </div>
 
     <div class="testimonials__right">
-      <div class="testimonials__viewport" id="testimonials-viewport-{{ section.id }}">
-        <div class="testimonials__track" id="testimonials-track-{{ section.id }}">
+      {%- if has_app_block -%}
+        <div class="testimonials__app-widget">
           {%- for block in section.blocks -%}
-            {%- assign rating = block.settings.rating | times: 1 -%}
-            <div class="testimonials__card" {{ block.shopify_attributes }}>
-              <div class="testimonials__author">
-                {%- if block.settings.avatar != blank -%}
-                  <img
-                    src="{{ block.settings.avatar | image_url: width: 80 }}"
-                    alt="{{ block.settings.name | escape }}"
-                    class="testimonials__avatar"
-                    loading="lazy"
-                    width="40"
-                    height="40"
-                  >
-                {%- else -%}
-                  <span class="testimonials__avatar-placeholder" aria-hidden="true">
-                    <svg
-                      width="22"
-                      height="22"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.8"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <circle cx="12" cy="8" r="4"/>
-                      <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
-                    </svg>
-                  </span>
-                {%- endif -%}
-                <span class="testimonials__name">{{ block.settings.name }}</span>
+            {%- if block.type == '@app' or block.type contains 'shopify://apps/' -%}
+              <div class="testimonials__app-block" {{ block.shopify_attributes }}>
+                {% render block %}
               </div>
-
-              <div class="testimonials__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
-                {%- for i in (1..5) -%}
-                  <svg
-                    class="testimonials__star{% if i > rating %} testimonials__star--empty{% endif %}"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                  </svg>
-                {%- endfor -%}
-              </div>
-
-              <p class="testimonials__quote-text">{{ block.settings.quote }}</p>
-              <button class="testimonials__toggle" type="button" hidden>Read more</button>
-            </div>
+            {%- endif -%}
           {%- endfor -%}
         </div>
-      </div>
+      {%- else -%}
+        <div class="testimonials__viewport" id="testimonials-viewport-{{ section.id }}">
+          <div class="testimonials__track" id="testimonials-track-{{ section.id }}">
+            {%- for block in section.blocks -%}
+              {%- assign rating = block.settings.rating | times: 1 -%}
+              <div class="testimonials__card" {{ block.shopify_attributes }}>
+                <div class="testimonials__author">
+                  {%- if block.settings.avatar != blank -%}
+                    <img
+                      src="{{ block.settings.avatar | image_url: width: 80 }}"
+                      alt="{{ block.settings.name | escape }}"
+                      class="testimonials__avatar"
+                      loading="lazy"
+                      width="40"
+                      height="40"
+                    >
+                  {%- else -%}
+                    <span class="testimonials__avatar-placeholder" aria-hidden="true">
+                      <svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <circle cx="12" cy="8" r="4"/>
+                        <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+                      </svg>
+                    </span>
+                  {%- endif -%}
+                  <span class="testimonials__name">{{ block.settings.name }}</span>
+                </div>
+
+                <div class="testimonials__stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+                  {%- for i in (1..5) -%}
+                    <svg
+                      class="testimonials__star{% if i > rating %} testimonials__star--empty{% endif %}"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    </svg>
+                  {%- endfor -%}
+                </div>
+
+                <p class="testimonials__quote-text">{{ block.settings.quote }}</p>
+                <button class="testimonials__toggle" type="button" hidden>Read more</button>
+              </div>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -185,6 +204,14 @@
     min-width: 0;
     padding-right: 20px;
     box-sizing: border-box;
+  }
+
+  .testimonials__app-widget {
+    width: 100%;
+  }
+
+  .testimonials__app-block {
+    width: 100%;
   }
 
   .testimonials__viewport {
@@ -339,6 +366,7 @@
   }
 </style>
 
+{%- unless has_app_block -%}
 <script>
   (function() {
     var sectionId = {{ section.id | json }};
@@ -457,6 +485,7 @@
     startAutoplay();
   })();
 </script>
+{%- endunless -%}
 
 {% schema %}
 {
@@ -484,6 +513,9 @@
     }
   ],
   "blocks": [
+    {
+      "type": "@app"
+    },
     {
       "type": "review",
       "name": "Review",
