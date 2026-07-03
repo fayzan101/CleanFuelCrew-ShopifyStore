@@ -48,7 +48,8 @@
     display: flex;
     align-items: center;
     overflow: hidden;
-
+    position: relative;
+    top:30px;
   }
 
   .hero__background {
@@ -61,7 +62,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: top center;
     display: block;
   }
 
@@ -154,10 +155,11 @@
     border-color: var(--color-secondary);
   }
 
-  /* @media (max-width: 768px) { */
+  @media (max-width: 768px) {
     .hero {
       min-height: 0;
       display: block;
+      top:0;
     }
 
     .hero__background {
@@ -215,7 +217,7 @@
       padding: 1rem 1.6rem;
       font-size: 1.15rem;
     }
-  /* } */
+  }
 </style>
 
 {% schema %}
