@@ -97,6 +97,11 @@
           <aside class="cart-page__totals" data-cart-totals>
             <h2 class="cart-page__totals-title">Cart totals</h2>
 
+            {%- liquid
+              assign free_shipping_threshold = section.settings.free_shipping_threshold | times: 100
+              assign free_shipping_remaining = free_shipping_threshold | minus: cart.total_price
+            -%}
+
             <details class="cart-page__coupons">
               <summary class="cart-page__coupons-summary">
                 <span>Add coupons</span>
@@ -118,8 +123,13 @@
             <dl class="cart-page__summary">
               {%- if section.settings.show_free_shipping -%}
                 <div class="cart-page__summary-row">
-                  <dt>{{ section.settings.free_shipping_label }}</dt>
-                  <dd>{{ section.settings.free_shipping_value }}</dd>
+                  {%- if cart.total_price >= free_shipping_threshold -%}
+                    <dt>{{ section.settings.free_shipping_label }}</dt>
+                    <dd>{{ section.settings.free_shipping_value }}</dd>
+                  {%- else -%}
+                    <dt>{{ section.settings.free_shipping_pending_label }}</dt>
+                    <dd>{{ free_shipping_remaining | money }} left</dd>
+                  {%- endif -%}
                 </div>
               {%- endif -%}
 
@@ -195,6 +205,19 @@
       "id": "free_shipping_value",
       "label": "Free shipping value",
       "default": "FREE"
+    },
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free shipping minimum",
+      "default": 100,
+      "info": "When the cart subtotal reaches this amount, the cart shows the free shipping value."
+    },
+    {
+      "type": "text",
+      "id": "free_shipping_pending_label",
+      "label": "Free shipping pending label",
+      "default": "Free shipping over this amount"
     },
     {
       "type": "text",

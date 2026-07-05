@@ -17,6 +17,8 @@
         "show_free_shipping": true,
         "free_shipping_label": "Free shipping",
         "free_shipping_value": "FREE",
+        "free_shipping_threshold": 100,
+        "free_shipping_pending_label": "Free shipping over this amount",
         "taxes_label": "Taxes",
         "taxes_value": "Calculated at checkout"
       }
