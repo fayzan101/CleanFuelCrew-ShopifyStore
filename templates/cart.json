@@ -14,7 +14,7 @@
       "settings": {
         "banner_subtitle": "Home / Cart",
         "banner_image": "shopify://shop_images/BannerImage.png",
-        "show_free_shipping": true,
+        "show_free_shipping": false,
         "free_shipping_label": "Free shipping",
         "free_shipping_value": "FREE",
         "taxes_label": "Taxes",
