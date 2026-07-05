@@ -1,26 +1,34 @@
 <footer class="footer" role="contentinfo" style="background-image: url('{{ 'footer-bg.png' | asset_url }}');" {{ section.shopify_attributes }}>
   <div class="page-width footer__inner">
     <div class="footer__top">
-      <div class="footer__brand">
+      <div class="footer__brand footer__panel">
+        <p class="footer__eyebrow">Naturally sweetened snacks</p>
         <a href="{{ routes.root_url }}" class="footer__logo">
           {%- if settings.logo != blank -%}
             {{ settings.logo | image_url: width: 180 | image_tag: alt: shop.name }}
           {%- else -%}
-             <img src="{{ 'Logo.png' | asset_url }}" alt="{{ shop.name }}" class="header__logo-fallback" height="80px" width="80px" />
+            <img src="{{ 'Logo.png' | asset_url }}" alt="{{ shop.name }}" class="header__logo-fallback" height="80" width="80" />
           {%- endif -%}
         </a>
         <p class="footer__desc">{{ shop.meta_description | default: 'The Clean Fuel Crew crafts naturally sweetened, clean-label snacks you can enjoy every day. Made with real ingredients, never refined sugar or artificial additives.' }}</p>
+        <div class="footer__brand-actions">
+          <a href="{{ routes.all_products_collection_url }}" class="footer__cta">Shop all products</a>
+          <a href="https://www.instagram.com/thecleanfuelcrew/" class="footer__social-link" aria-label="Instagram">
+            <span class="footer__social-icon" style="--icon-url: url('{{ 'insta.svg' | asset_url }}');"></span>
+            <span>Follow us</span>
+          </a>
+        </div>
       </div>
 
       <div class="footer__cols">
-        <div class="footer__col">
+        <div class="footer__col footer__panel">
           <h4 class="footer__col-title">Quick Links</h4>
           <ul>
             {% render 'site-nav-links', menu: section.settings.menu %}
           </ul>
         </div>
 
-        <div class="footer__col">
+        <div class="footer__col footer__panel">
           <h4 class="footer__col-title">Products</h4>
           <ul>
             {%- liquid
@@ -43,14 +51,16 @@
           </ul>
         </div>
 
-        <div class="footer__col">
+        <div class="footer__col footer__panel">
           <h4 class="footer__col-title">Get in Touch</h4>
-          <p>thecleanfuelcrew@gmail.com</p>
-          <br>
-          <h5 class="footer__col-title">Follow Us On</h5>
-          <p><a href="https://www.instagram.com/thecleanfuelcrew/" aria-label="Instagram">
-            <span class="footer__social-icon" style="--icon-url: url('{{ 'insta.svg' | asset_url }}');"></span>
-          </a></p>
+          <a class="footer__contact-link" href="mailto:thecleanfuelcrew@gmail.com">thecleanfuelcrew@gmail.com</a>
+          <div class="footer__contact-note">Questions, wholesale, or collaborations</div>
+          <div class="footer__social-block">
+            <h5 class="footer__col-title">Follow Us On</h5>
+            <a href="https://www.instagram.com/thecleanfuelcrew/" aria-label="Instagram">
+              <span class="footer__social-icon" style="--icon-url: url('{{ 'insta.svg' | asset_url }}');"></span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
