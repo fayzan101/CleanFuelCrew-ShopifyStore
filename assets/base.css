@@ -647,6 +647,8 @@ shopify-account:not(:defined) {
   grid-template-columns: minmax(28rem, 1fr) minmax(0, 2fr);
   gap: 3rem;
   align-items: stretch;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .footer__brand {
@@ -663,6 +665,7 @@ shopify-account:not(:defined) {
   padding: 2.8rem;
   box-shadow: 0 1.2rem 3rem rgba(92, 61, 46, 0.06);
   backdrop-filter: blur(8px);
+  width: 100%;
 }
 
 .footer__eyebrow {
@@ -691,6 +694,7 @@ shopify-account:not(:defined) {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 3rem;
+  width: 100%;
 }
 
 .footer__col {
