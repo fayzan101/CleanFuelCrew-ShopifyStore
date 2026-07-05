@@ -99,6 +99,12 @@
 
             {%- liquid
               assign free_shipping_threshold = section.settings.free_shipping_threshold | times: 100
+              assign shipping_fee = section.settings.shipping_fee | times: 100
+              assign shipping_charge = 0
+              if cart.total_price < free_shipping_threshold
+                assign shipping_charge = shipping_fee
+              endif
+              assign estimated_total = cart.total_price | plus: shipping_charge
               assign free_shipping_remaining = free_shipping_threshold | minus: cart.total_price
             -%}
 
@@ -127,8 +133,8 @@
                     <dt>{{ section.settings.free_shipping_label }}</dt>
                     <dd>{{ section.settings.free_shipping_value }}</dd>
                   {%- else -%}
-                    <dt>{{ section.settings.free_shipping_pending_label }}</dt>
-                    <dd>{{ free_shipping_remaining | money }} left</dd>
+                    <dt>{{ section.settings.shipping_label }}</dt>
+                    <dd>{{ shipping_charge | money }}</dd>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -147,8 +153,14 @@
 
             <div class="cart-page__estimated">
               <span class="cart-page__estimated-label">Estimated total</span>
-              <span class="cart-page__estimated-value" data-cart-total>{{ cart.total_price | money }}</span>
+              <span class="cart-page__estimated-value" data-cart-total>{{ estimated_total | money }}</span>
             </div>
+
+            {%- if cart.total_price < free_shipping_threshold -%}
+              <p class="cart-page__shipping-note">
+                Add {{ free_shipping_remaining | money }} more to get free shipping.
+              </p>
+            {%- endif -%}
 
             <button type="submit" name="checkout" class="button cart-page__checkout">
               Proceed to Checkout
@@ -212,6 +224,19 @@
       "label": "Free shipping minimum",
       "default": 100,
       "info": "When the cart subtotal reaches this amount, the cart shows the free shipping value."
+    },
+    {
+      "type": "text",
+      "id": "shipping_label",
+      "label": "Shipping label",
+      "default": "Shipping"
+    },
+    {
+      "type": "number",
+      "id": "shipping_fee",
+      "label": "Shipping fee",
+      "default": 10,
+      "info": "Shown and added to the estimated total when the cart is below the free-shipping minimum."
     },
     {
       "type": "text",
