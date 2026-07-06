@@ -126,17 +126,16 @@
           "settings": {
             "image": "shopify://shop_images/600030756_17870200443473678_3109758034595053155_n.jpg",
             "default_asset": "Index-oil-on-top.png",
-            "heading": "Oil on Top? That's Nature at Work.",
-            "body": "That layer of oil is just the natural separation of pure nut oils — a beautiful reminder that we never use artificial stabilizers. A quick stir is all it takes."
+            "heading": "Natural Oil & Nut Butter Separation.",
+            "body": "The oil separation seen is a hallmark of our commitment to all-natural, additive-free nut butters. Because we never use artificial stabilizers or emulsifiers, you are seeing pure, healthy nut oils; simply stir to restore the perfect creamy texture."
           }
         },
         "card2": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM.jpg",
             "default_asset": "Index-Good-calories.png",
             "heading": "Only the Good Calories.",
-            "body": "Packed with feel-good fuel from real nuts, seeds, dates, and coconut oil. Rich in omega-3s, vitamins, and protein — no empty calories here."
+            "body": "Discover the power of wholesome ingredients in every spoon. We make every calorie count by providing sustained energy your body needs."
           }
         },
         "card3": {
@@ -144,8 +143,8 @@
           "settings": {
             "image": "shopify://shop_images/WhatsApp_Image_2026-06-30_at_5.09.45_PM.jpg",
             "default_asset": "Index-Real-food.png",
-            "heading": "​Embracing a Limited Expiration Date",
-            "body": "​Because our products are made from authentic, whole ingredients, they do not have an indefinite shelf life. By excluding artificial preservatives, we ensure that every serving remains as fresh and vibrant as nature intended"
+            "heading": "Embracing a Limited Expiration Date",
+            "body": "Because our products are made from authentic, whole ingredients, they do not have an indefinite shelf life. By excluding artificial preservatives, we ensure that every serving remains as fresh and vibrant as nature intended"
           }
         }
       },
@@ -158,9 +157,8 @@
         ".real-talk__card-image {min-height: 330px;}"
       ],
       "settings": {
-        "eyebrow": "Real Talk",
-        "heading": "What Makes Us",
-        "heading_italic": "Real"
+        "heading": "Good to ",
+        "heading_italic": "Know"
       }
     },
     "testimonials": {
