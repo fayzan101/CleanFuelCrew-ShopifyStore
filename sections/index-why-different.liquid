@@ -14,7 +14,7 @@
       {%- endif -%}
 
       {%- if section.settings.body != blank -%}
-        <p class="why-different__body">{{ section.settings.body }}</p>
+        <p class="why-different__body">{{ section.settings.body | newline_to_br }}</p>
       {%- endif -%}
 
       <div class="why-different__badges">
