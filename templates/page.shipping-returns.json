@@ -11,6 +11,9 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "custom_css": [
+        ".page-banner {min-height: 650px;}"
+      ],
       "settings": {
         "show_banner": true,
         "banner_subtitle": "Home / Page",
