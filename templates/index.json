@@ -36,9 +36,9 @@
       ],
       "settings": {
         "eyebrow": "Our Collection",
-        "heading": "​Proudly crafted in",
+        "heading": "Proudly crafted in",
         "heading_italic": "UAE",
-        "subtext": "​Slow-roasted nuts, wholesome seeds, and naturally sweet dates come together in our entire range—from our smooth, satisfying spreads and crunchy granolas to our energy-boosting bars—for a clean, delicious experience in every bite.",
+        "subtext": "Slow-roasted nuts, wholesome seeds, and naturally sweet dates come together in our entire range—from our smooth, satisfying spreads and crunchy granolas to our energy-boosting bars—for a clean, delicious experience in every bite.",
         "collection": "frontpage",
         "products_to_show": 3,
         "cta_label": "View All Flavors",
@@ -51,37 +51,33 @@
         "reason_LWB9EK": {
           "type": "reason",
           "settings": {
-            "heading": "Steady Energy, No Crash",
-            "body": "<p>Dates are naturally rich in fiber, helping slow sugar absorption for balanced energy that lasts — no spikes, no crashes.</p>",
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM_1_f3c0ff80-1d07-4643-b50c-3123cff4fa35.jpg",
-            "default_asset": "Index-NoSuagr.png"
+            "heading": "Morning Momentum",
+            "body": "<ul><li>Fuel for the AM Scramble</li><li>Crunchy, golden and ready when you are</li><li>Grab The Granola</li></ul>",
+            "default_asset": "Index-Morning-momentum.png"
           }
         },
         "reason_wXqzwG": {
           "type": "reason",
           "settings": {
-            "heading": "Sweetness With Benefits",
-            "body": "<p>Dates aren’t just sweet. They bring antioxidants, potassium, and magnesium to support energy, heart health, and recovery.</p>",
-            "image": "shopify://shop_images/Screenshot_2026-06-22_095100.png",
-            "default_asset": "Index-DatesSpread.png"
+            "heading": "All Day Run & Hustle",
+            "body": "<ul><li>Fuel for the Mid-Day Gap</li><li>Steady energy for every school run & back to back meetings</li><li>Fuel Your Hustle</li></ul>",
+            "default_asset": "Index-Run-Hustle.png"
           }
         },
         "reason_n7tYNM": {
           "type": "reason",
           "settings": {
-            "heading": "Zero Refined Junk",
-            "body": "<p>We use the whole fruit — not extracts, syrups, or shortcuts. That means full fiber, full nutrients, and zero refined sugar or additives.</p>",
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.29.22_PM_157a2e81-fbc7-4a4f-8a31-bb6cc957d229.jpg",
-            "default_asset": "Index-ZeroRefinedJunk.png"
+            "heading": "Post-Game Glow",
+            "body": "<ul><li>Fuel for the Game</li><li>Nutritious recovery with a decadent, sugar free treat</li><li>Recover with Nut Butters</li></ul>",
+            "default_asset": "Index-Post-game.png"
           }
         },
         "reason_EJTEFw": {
           "type": "reason",
           "settings": {
-            "heading": "Nature’s Caramel",
-            "body": "<p>Unlike artificial alternatives, dates deliver deep caramel-like sweetness without chemical aftertaste or synthetic processing.</p>",
-            "image": "shopify://shop_images/WhatsApp_Image_2026-06-29_at_4.26.07_PM_ca11276b-9351-42ba-8e05-03c3ade3581a.jpg",
-            "default_asset": "Index-NaturesCaramel.png"
+            "heading": "Fueling Our Community, One Event at a Time",
+            "body": "<p>At The Clean Fuel Crew, we believe that building a strong community starts with what we put into our bodies. We are passionate about connecting with our neighbors at local events, sharing more than just snacks—we're sharing a commitment to a healthier lifestyle.</p><p>Come say hi at our next local event and discover how we're redefining indulgence with clean, wholesome ingredients.</p>",
+            "default_asset": "Index-Fueling-Community.png"
           }
         }
       },
@@ -92,11 +88,8 @@
         "reason_EJTEFw"
       ],
       "settings": {
-        "heading": "Why |Dates|",
-        "heading_main": "Why",
-        "heading_accent": "Dates",
-        "subheading": "Natural Sweetener",
-        "intro": "Most brands rely on empty sugars or synthetic substitutes. We use whole dates. Here’s why they stand out:",
+        "heading": "Shop By ",
+        "heading_italic": "Momentum",
         "padding_block": 96,
         "header_spacing": 64,
         "card_radius": 16,

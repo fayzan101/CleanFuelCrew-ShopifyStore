@@ -1,94 +1,50 @@
 <section class="why-dates" {{ section.shopify_attributes }}>
   <div class="why-dates__inner">
     <div class="why-dates__header">
-      <div class="why-dates__heading-group">
-        {%- if section.settings.eyebrow != blank -%}
-          <span class="why-dates__eyebrow">{{ section.settings.eyebrow }}</span>
-        {%- endif -%}
-        {%- if section.settings.heading != blank -%}
-          <h2 class="why-dates__heading">
-            {{ section.settings.heading_main }}
-            <span class="why-dates__heading-accent">{{ section.settings.heading_accent }}</span>
-          </h2>
-        {%- endif -%}
-      </div>
-      <div class="why-dates__intro-block">
-        {%- if section.settings.subheading != blank -%}
-          <span class="why-dates__heading-sub">({{ section.settings.subheading }})</span>
-        {%- endif -%}
-        {%- if section.settings.intro != blank -%}
-          <p class="why-dates__intro">{{ section.settings.intro }}</p>
-        {%- endif -%}
-      </div>
+      {%- if section.settings.heading != blank -%}
+        <h2 class="why-dates__heading">
+          {{ section.settings.heading }}
+          <em>{{ section.settings.heading_italic }}</em>
+        </h2>
+      {%- endif -%}
     </div>
 
     <div class="why-dates__stack">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          {%- liquid
-            assign stack_top = section.settings.stack_offset | times: forloop.index0 | plus: section.settings.stack_base_offset
-          -%}
-          <div
-            class="why-dates__card"
-            style="top: {{ stack_top }}px; z-index: {{ forloop.index }};"
-            {{ block.shopify_attributes }}
-          >
-            <div class="why-dates__card-inner">
-              <div class="why-dates__item-text">
-                <span class="why-dates__number">{{ forloop.index | prepend: '0' }}</span>
-                <h3 class="why-dates__item-heading">{{ block.settings.heading }}</h3>
-                <div class="why-dates__item-body">{{ block.settings.body }}</div>
-              </div>
-              <div class="why-dates__item-image">
-                {%- if block.settings.image != blank -%}
-                  {{
-                    block.settings.image
-                    | image_url: width: 1200
-                    | image_tag: loading: 'lazy', alt: block.settings.heading
-                  }}
-                {%- elsif block.settings.default_asset != blank -%}
-                  <img
-                    src="{{ block.settings.default_asset | asset_url }}"
-                    alt="{{ block.settings.heading | escape }}"
-                    loading="lazy"
-                    width="600"
-                    height="500"
-                  >
-                {%- endif -%}
-              </div>
-            </div>
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        {%- comment -%} Fallback content so the section is never empty by default {%- endcomment -%}
-        {%- assign fallback_reasons = '01|No Sugar Crash|Dates are packed with natural fiber. This slows down the absorption of sugar into your bloodstream, providing steady, sustained energy instead of a sudden spike and "bonk."|Index-NoSuagr.png###02|Sweetness With Benefits|Dates are a functional superfood. In every jar of Clean Fuel, you’re getting antioxidants to fight inflammation, potassium for heart and muscle health, and magnesium to support energy metabolism.|Index-DatesSpread.png###03|Zero Refined Junk|When we say "Clean," we mean it. We use the entire fruit, not just a syrup or extract. This means you get 100% of the nutrients, 100% of the fiber, and 0% of the guilt.|Index-ZeroRefinedJunk.png###04|Nature’s Caramel, Not a Lab Chemical|Unlike Stevia or Erythritol, dates aren’t made in a factory. They offer a rich, caramel flavor without the weird bitter aftertaste found in "zero-sugar" alternatives.|Index-NaturesCaramel.png'
-          | split: '###'
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign stack_top = section.settings.stack_offset | times: forloop.index0 | plus: section.settings.stack_base_offset
         -%}
-        {%- for reason in fallback_reasons -%}
-          {%- assign parts = reason | split: '|' -%}
-          {%- liquid
-            assign stack_top = section.settings.stack_offset | times: forloop.index0 | plus: section.settings.stack_base_offset
-          -%}
-          <div class="why-dates__card" style="top: {{ stack_top }}px; z-index: {{ forloop.index }};">
-            <div class="why-dates__card-inner">
-              <div class="why-dates__item-text">
-                <span class="why-dates__number">{{ parts[0] }}</span>
-                <h3 class="why-dates__item-heading">{{ parts[1] }}</h3>
-                <div class="why-dates__item-body">{{ parts[2] }}</div>
-              </div>
-              <div class="why-dates__item-image">
+        <div
+          class="why-dates__card"
+          style="top: {{ stack_top }}px; z-index: {{ forloop.index }};"
+          {{ block.shopify_attributes }}
+        >
+          <div class="why-dates__card-inner">
+            <div class="why-dates__item-text">
+              <span class="why-dates__number">{{ forloop.index | prepend: '0' }}</span>
+              <h3 class="why-dates__item-heading">{{ block.settings.heading }}</h3>
+              <div class="why-dates__item-body">{{ block.settings.body }}</div>
+            </div>
+            <div class="why-dates__item-image">
+              {%- if block.settings.image != blank -%}
+                {{
+                  block.settings.image
+                  | image_url: width: 1200
+                  | image_tag: loading: 'lazy', alt: block.settings.heading
+                }}
+              {%- elsif block.settings.default_asset != blank -%}
                 <img
-                  src="{{ parts[3] | asset_url }}"
-                  alt="{{ parts[1] | escape }}"
+                  src="{{ block.settings.default_asset | asset_url }}"
+                  alt="{{ block.settings.heading | escape }}"
                   loading="lazy"
                   width="600"
                   height="500"
                 >
-              </div>
+              {%- endif -%}
             </div>
           </div>
-        {%- endfor -%}
-      {%- endif -%}
+        </div>
+      {%- endfor -%}
     </div>
   </div>
 </section>
@@ -98,7 +54,7 @@
   .section-index-why-dates {
     overflow: visible !important;
   }
-    .why-dates {
+  .why-dates {
     background: var(--color-primary);
     padding: {{ section.settings.padding_block }}px 60px;
     overflow: visible !important;
@@ -107,66 +63,25 @@
   .why-dates__inner {
     max-width: 1200px;
     margin: 0 auto;
-    overflow: visible !important;
   }
 
-    .why-dates__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 40px;
-    margin-bottom: {{ section.settings.header_spacing }}px;
-    flex-wrap: wrap;
-  }
-
-  .why-dates__heading-group {
-    flex-shrink: 0;
-  }
-  .why-dates__eyebrow {
-    display: block;
-    font-family: var(--font-body-family);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-ternary);
-    margin-bottom: 8px;
+  .why-dates__header {
+    margin-bottom: 56px;
+    text-align: center;
   }
 
   .why-dates__heading {
     font-family: var(--font-heading-family);
-    font-size: clamp(36px, 4.5vw, 56px);
-    font-weight: 700;
+    font-size: clamp(30px, 5vw, 50px);
+    font-weight: 550;
     color: var(--color-secondary);
     margin: 0;
-    line-height: 1.1;
   }
-    .why-dates__heading em,
-  .why-dates__heading-accent {
+
+  .why-dates__heading em {
     font-style: italic;
     font-weight: 500;
     color: var(--color-ternary);
-  }
-
-  .why-dates__heading-sub {
-    display: block;
-    font-family: var(--font-body-family);
-    font-size: 15px;
-    font-weight: 400;
-    color: var(--color-secondary);
-    opacity: 0.6;
-    text-align: right;
-    margin-bottom: 6px;
-  }
-  .why-dates__intro {
-    font-family: var(--font-body-family);
-    font-size: 17px;
-    line-height: 1.6;
-    color: var(--color-text);
-    opacity: 0.75;
-    max-width: 480px;
-    text-align: right;
-    margin: 0;
   }
 
     /* ---- Stacking cards ---- */
@@ -238,7 +153,7 @@
     object-fit: cover;
     border-radius: 12px;
     display: block;
-  } 
+  }
 
     @media (max-width: 768px) {
     .why-dates {
@@ -289,31 +204,13 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Why |Dates|"
+      "default": "Shop By"
     },
     {
       "type": "text",
-      "id": "heading_main",
-      "label": "Heading (normal style)",
-      "default": "Why"
-    },
-    {
-      "type": "text",
-      "id": "heading_accent",
-      "label": "Heading (italic accent style)",
-      "default": "Dates"
-    },
-    {
-      "type": "text",
-      "id": "subheading",
-      "label": "Heading suffix (shown in parentheses)",
-      "default": "The Ultimate Super-Sweetener"
-    },
-    {
-      "type": "textarea",
-      "id": "intro",
-      "label": "Intro paragraph",
-      "default": "Most brands use \"empty\" sugars. We use whole dates. Here is why they are the undisputed gold standard for your body:"
+      "id": "heading_italic",
+      "label": "Heading (italic part)",
+      "default": "Momentum"
     },
     {
       "type": "header",
@@ -381,18 +278,33 @@
     {
       "name": "Why Dates",
       "blocks": [
-        { "type": "reason", "settings": { "heading": "No Sugar Crash", "default_asset": "Index-NoSuagr.png" } },
         {
           "type": "reason",
-          "settings": { "heading": "Sweetness With Benefits", "default_asset": "Index-DatesSpread.png" }
+          "settings": {
+            "heading": "Morning Momentum",
+            "default_asset": "Index-Morning-momentum.png"
+          }
         },
         {
           "type": "reason",
-          "settings": { "heading": "Zero Refined Junk", "default_asset": "Index-ZeroRefinedJunk.png" }
+          "settings": {
+            "heading": "All Day Run & Hustle",
+            "default_asset": "Index-Run-Hustle.png"
+          }
         },
         {
           "type": "reason",
-          "settings": { "heading": "Nature's Caramel, Not a Lab Chemical", "default_asset": "Index-NaturesCaramel.png" }
+          "settings": {
+            "heading": "Post-Game Glow",
+            "default_asset": "Index-Post-game.png"
+          }
+        },
+        {
+          "type": "reason",
+          "settings": {
+            "heading": "Fueling Our Community, One Event at a Time",
+            "default_asset": "Index-Fueling-Community.png"
+          }
         }
       ]
     }
