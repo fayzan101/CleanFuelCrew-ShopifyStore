@@ -88,6 +88,7 @@
 
   <a href="{{ card_product.url }}" class="card-product-shop__info-link">
     <h3 class="card-product-shop__title">{{ card_product.title | escape }}</h3>
+    {%  unless card_product.available and can_purchase == true %} <span class="card-product-shop__sold-out">Coming Soon</span> {% endunless %}
     {% render 'judgeme-badge', card_product: card_product, badge_context: 'card-shop' %}
     <div class="card-product-shop__price">
       {% render 'price', product: card_product, show_badges: true %}
