@@ -56,7 +56,7 @@
   }
   .why-dates {
     background: var(--color-primary);
-    padding: 0 60px;
+    padding: {{ section.settings.padding_block }}px 60px 0 60px;
     overflow: visible !important;
   }
 
@@ -157,7 +157,7 @@
 
     @media (max-width: 768px) {
     .why-dates {
-      padding: 0px 24px;
+      padding: 64px 24px 0 24px;
     }
     .why-dates__stack {
       padding: 40px 0;
