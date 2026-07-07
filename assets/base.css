@@ -1688,6 +1688,19 @@ shopify-account:not(:defined) {
   }
 }
 
+@media screen and (max-width: 749px) {
+  .product-form__actions{
+    justify-content: center;
+  }
+  .product__main-wrap{
+    margin: auto;
+  }
+  .product__layout{
+    align-items: center;
+    text-align: center;
+  }
+}
+
 .product-related__dot {
   width: 0.8rem;
   height: 0.8rem;
