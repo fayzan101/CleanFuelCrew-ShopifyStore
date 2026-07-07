@@ -14,7 +14,7 @@
       {%- endif -%}
 
       {%- if section.settings.body != blank -%}
-        <p class="why-different__body">{{ section.settings.body }}</p>
+        <p class="why-different__body">{{ section.settings.body | newline_to_br }}</p>
       {%- endif -%}
 
       <div class="why-different__badges">
@@ -224,13 +224,13 @@
       "type": "textarea",
       "id": "heading",
       "label": "Heading (use | to wrap italic word)",
-      "default": "Nature made it |delicious.|\nWe kept it that way."
+      "default": "Nature's finest |ingredients,| blended to perfection."
     },
     {
       "type": "textarea",
       "id": "body",
       "label": "Body text",
-      "default": "We believe the best flavors come straight from nature. That's why every jar of The Clean Fuel  is sweetened only with whole dates — no refined sugar, no artificial anything. Just slow-roasted nuts and seeds, crafted into spreads so rich and creamy, you'll forget they're good for you."
+      "default": "At Clean Fuel Crew, we believe indulgence should never come with compromise. Whether it's our handcrafted spreads or our granola and dark chocolate energy bars, we use only premium nuts, seeds, and whole dates.\n\nWe never use refined sugar, artificial sweeteners, or processed additives. It's simple: clean ingredients, real flavour, and honest energy your body can actually use."
     },
     {
       "type": "text",
