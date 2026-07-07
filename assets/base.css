@@ -1688,7 +1688,7 @@ shopify-account:not(:defined) {
   }
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (max-width: 989px) {
   .product-form__actions{
     justify-content: center;
   }
@@ -1698,6 +1698,9 @@ shopify-account:not(:defined) {
   .product__layout{
     align-items: center;
     text-align: center;
+  }
+  .product__thumbs--vertical {
+    justify-content: center;
   }
 }
 
