@@ -3015,6 +3015,7 @@ body.quick-view-open {
 /* Search page — smaller product cards */
 .search-page .product-grid--shop {
   gap: 2rem 1.4rem;
+  margin: 0 20px
 }
 
 @media screen and (min-width: 550px) {
