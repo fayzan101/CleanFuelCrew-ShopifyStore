@@ -49,7 +49,7 @@
     align-items: center;
     overflow: hidden;
     position: relative;
-    top:30px;
+    top: 30px;
   }
 
   .hero__background {
@@ -157,19 +157,22 @@
 
   @media (max-width: 768px) {
     .hero {
-      min-height: 0;
-      display: block;
-      top:0;
+      display: flex;
+      align-items: flex-end;
+      min-height: 640px;
+      top: 0;
     }
 
     .hero__background {
-      position: relative;
-      inset: auto;
+      position: absolute;
+      inset: 0;
     }
 
     .hero__bg-img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
     }
 
     .hero__overlay {
@@ -182,12 +185,11 @@
     }
 
     .hero__content {
-      position: absolute;
-      inset: auto 0 0 0;
-      max-width: none;
+      position: relative;
+      z-index: 1;
+      max-width: 100%;
       padding: 1.6rem 1.6rem 2rem;
       margin: 0;
-      max-width: 100%;
     }
 
     .hero__eyebrow {
