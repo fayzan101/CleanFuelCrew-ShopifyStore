@@ -3072,7 +3072,7 @@ body.quick-view-open {
   width: 1.8rem;
   height: 1.8rem;
   font-size: 1.8rem;
-  left: 18px;
+  /* left: 18px; */
 }
 
 .search-page .card-product-shop__arrow::before {
