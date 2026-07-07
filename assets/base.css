@@ -2604,6 +2604,10 @@ shopify-account:not(:defined) {
     border-bottom: 1px solid rgba(92, 61, 46, 0.12);
     margin-bottom: 0.4rem;
   }
+  
+  .wishlist-page__empty {
+    max-width: 100%;
+  }
 }
 
 .wishlist-page__head-label {
