@@ -15,7 +15,8 @@
         for active_value in filter.active_values
           assign active_product_type = active_value.label
         endfor
-      elif filter.param_name == 'filter.p.t.category'
+      endif 
+      if filter.param_name == 'filter.p.t.category'
         for active_value in filter.active_values
           assign active_category_id = active_value.value
         endfor
@@ -54,74 +55,102 @@
       <h2 class="collection-sidebar__heading">Categories</h2>
       <ul class="collection-sidebar__list" role="list">
 
+  <li>
+    <a href="{{ shop_collection_url }}" {% if active_product_type == blank and active_category_id == blank and current_search_q == blank %}aria-current="page"{% endif %}>All products</a>
+  </li>
+
+  {%- comment -%}
+    Categories come first. Their visible label is saved in seen_category_keys,
+    so a product type with the same name will be skipped.
+  {%- endcomment -%}
+  {%- for filter in filters_source.filters -%}
+    {%- if filter.param_name == 'filter.p.t.category' -%}
+      {%- for value in filter.values -%}
+        {%- if value.count > 0 -%}
+          {%- assign item_key = value.label | strip | downcase -%}
+          {%- assign item_token = '||' | append: item_key | append: '||' -%}
+
+          {%- unless seen_category_keys contains item_token -%}
+            {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
+            <li>
+              <a
+                href="{{ shop_collection_url }}?filter.p.t.category={{ value.value | url_param_encode }}"
+                {% if value.value == active_category_id %}aria-current="page"{% endif %}
+              >
+                {{ value.label | escape }}
+              </a>
+            </li>
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} Product types only appear when no matching category exists. {%- endcomment -%}
+  {%- for filter in filters_source.filters -%}
+    {%- if filter.param_name == 'filter.p.product_type' -%}
+      {%- for value in filter.values -%}
+        {%- if value.count > 0 -%}
+          {%- assign item_key = value.label | strip | downcase -%}
+          {%- assign item_token = '||' | append: item_key | append: '||' -%}
+
+          {%- unless seen_category_keys contains item_token -%}
+            {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
+            <li>
+              <a
+                href="{{ shop_collection_url }}?filter.p.product_type={{ value.label | url_param_encode }}"
+                {% if value.label == active_product_type %}aria-current="page"{% endif %}
+              >
+                {{ value.label | escape }}
+              </a>
+            </li>
+          {%- endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- comment -%} Fallback product types. {%- endcomment -%}
+  {%- for product_type in store_types -%}
+    {%- if product_type != blank -%}
+      {%- assign item_key = product_type | strip | downcase -%}
+      {%- assign item_token = '||' | append: item_key | append: '||' -%}
+
+      {%- unless seen_category_keys contains item_token -%}
+        {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
         <li>
-          <a href="{{ shop_collection_url }}" {% if active_product_type == blank and active_category_id == blank and current_search_q == blank %}aria-current="page"{% endif %}>All products</a>
+          <a
+            href="{{ shop_collection_url }}?filter.p.product_type={{ product_type | url_param_encode }}"
+            {% if product_type == active_product_type %}aria-current="page"{% endif %}
+          >
+            {{ product_type | escape }}
+          </a>
         </li>
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
 
-        {%- comment -%} From storefront filters (Search & Discovery app) {%- endcomment -%}
-        {%- for filter in filters_source.filters -%}
-          {%- if filter.param_name == 'filter.p.product_type' or filter.param_name == 'filter.p.t.category' -%}
-            {%- for value in filter.values -%}
-              {%- if value.count > 0 -%}
-                {%- liquid
-                  assign item_key = filter.param_name | append: ':' | append: value.value | downcase
-                  assign item_token = item_key | prepend: '||' | append: '||'
-                  assign is_active = false
-                  if filter.param_name == 'filter.p.product_type' and value.label == active_product_type
-                    assign is_active = true
-                  endif
-                  if filter.param_name == 'filter.p.t.category' and value.value == active_category_id
-                    assign is_active = true
-                  endif
-                -%}
-                {%- unless seen_category_keys contains item_token -%}
-                  {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
-                  <li>
-                    {%- if filter.param_name == 'filter.p.product_type' -%}
-                      <a href="{{ shop_collection_url }}?filter.p.product_type={{ value.label | url_param_encode }}" {% if is_active %}aria-current="page"{% endif %}>{{ value.label | escape }}</a>
-                    {%- else -%}
-                      <a href="{{ shop_collection_url }}?filter.p.t.category={{ value.value | url_param_encode }}" {% if is_active %}aria-current="page"{% endif %}>{{ value.label | escape }}</a>
-                    {%- endif -%}
-                  </li>
-                {%- endunless -%}
-              {%- endif -%}
-            {%- endfor -%}
-          {%- endif -%}
-        {%- endfor -%}
+  {%- comment -%} Fallback taxonomy categories. {%- endcomment -%}
+  {%- for product in collections.all.products -%}
+    {%- if product.category != blank and product.category.name != blank -%}
+      {%- assign item_key = product.category.name | strip | downcase -%}
+      {%- assign item_token = '||' | append: item_key | append: '||' -%}
 
-        {%- comment -%} Fallback: shop.types {%- endcomment -%}
-        {%- for product_type in store_types -%}
-          {%- if product_type != blank -%}
-            {%- liquid
-              assign item_key = 'filter.p.product_type:' | append: product_type | downcase
-              assign item_token = item_key | prepend: '||' | append: '||'
-            -%}
-            {%- unless seen_category_keys contains item_token -%}
-              {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
-              <li>
-                <a href="{{ shop_collection_url }}?filter.p.product_type={{ product_type | url_param_encode }}" {% if product_type == active_product_type %}aria-current="page"{% endif %}>{{ product_type | escape }}</a>
-              </li>
-            {%- endunless -%}
-          {%- endif -%}
-        {%- endfor -%}
+      {%- unless seen_category_keys contains item_token -%}
+        {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
+        <li>
+          <a
+            href="{{ shop_collection_url }}?filter.p.t.category={{ product.category.id | url_param_encode }}"
+            {% if product.category.id == active_category_id %}aria-current="page"{% endif %}
+          >
+            {{ product.category.name | escape }}
+          </a>
+        </li>
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
 
-        {%- comment -%} Fallback: taxonomy categories from products {%- endcomment -%}
-        {%- for product in collections.all.products -%}
-          {%- if product.category != blank and product.category.name != blank -%}
-            {%- liquid
-              assign item_key = 'filter.p.t.category:' | append: product.category.id | downcase
-              assign item_token = item_key | prepend: '||' | append: '||'
-            -%}
-            {%- unless seen_category_keys contains item_token -%}
-              {%- assign seen_category_keys = seen_category_keys | append: item_key | append: '||' -%}
-              <li>
-                <a href="{{ shop_collection_url }}?filter.p.t.category={{ product.category.id | url_param_encode }}" {% if product.category.id == active_category_id %}aria-current="page"{% endif %}>{{ product.category.name | escape }}</a>
-              </li>
-            {%- endunless -%}
-          {%- endif -%}
-        {%- endfor -%}
-
-      </ul>
+</ul>
     </div>
   {%- endif -%}
 
