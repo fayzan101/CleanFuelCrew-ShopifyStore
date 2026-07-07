@@ -15,8 +15,7 @@
         for active_value in filter.active_values
           assign active_product_type = active_value.label
         endfor
-      endif
-      if filter.param_name == 'filter.p.t.category'
+      elif filter.param_name == 'filter.p.t.category'
         for active_value in filter.active_values
           assign active_category_id = active_value.value
         endfor
