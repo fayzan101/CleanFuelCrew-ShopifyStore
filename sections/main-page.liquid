@@ -14,7 +14,10 @@
     {% render 'page-wishlist', shopify_attributes: section.shopify_attributes %}
 
   {%- when 'shipping-returns' -%}
-    {% render 'page-shipping-returns', shopify_attributes: section.shopify_attributes %}
+    {% render 'page-shipping-returns',
+      shopify_attributes: section.shopify_attributes,
+      banner_image: section.settings.banner_image
+    %}
 
   {%- when 'contact' -%}
     {% render 'page-contact',
