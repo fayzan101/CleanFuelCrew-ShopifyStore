@@ -12,7 +12,8 @@
     "main": {
       "type": "main-page",
       "custom_css": [
-        ".page-banner {min-height: 650px;}"
+        ".page-banner {min-height: 650px;}",
+        ".page-banner__image {object-position: top;}"
       ],
       "settings": {
         "show_banner": true,
