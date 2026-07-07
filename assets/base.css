@@ -1682,11 +1682,11 @@ shopify-account:not(:defined) {
   }
 }
 
-@media screen and (min-width: 990px) {
+/* @media screen and (min-width: 990px) {
   .product-related__slide {
     flex-basis: calc(25% - 1.5rem);
   }
-}
+} */
 
 .product-related__dot {
   width: 0.8rem;
