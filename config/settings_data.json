@@ -13,7 +13,7 @@
     "color_text": "#121212",
     "color_accent": "#1a1a1a",
     "logo_width": 120,
-    "favicon": "shopify://shop_images/logo_be99cfed-b054-4617-bd2b-dbb7eca8cfc4.png",
+    "favicon": "shopify://shop_images/Logo.png",
     "sections": {
       "header": {
         "type": "header",
