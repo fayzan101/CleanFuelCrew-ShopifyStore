@@ -88,7 +88,7 @@
         "reason_EJTEFw"
       ],
       "settings": {
-        "heading": "Shop By ",
+        "heading": "Shop By",
         "heading_italic": "Momentum",
         "padding_block": 96,
         "header_spacing": 64,
@@ -117,7 +117,7 @@
         "card1": {
           "type": "card",
           "settings": {
-            "image": "shopify://shop_images/600030756_17870200443473678_3109758034595053155_n.jpg",
+            "image": "shopify://shop_images/oil.jpg",
             "default_asset": "Index-oil-on-top.png",
             "heading": "Natural Oil & Nut Butter Separation.",
             "body": "The oil separation seen is a hallmark of our commitment to all-natural, additive-free nut butters. Because we never use artificial stabilizers or emulsifiers, you are seeing pure, healthy nut oils; simply stir to restore the perfect creamy texture."
@@ -150,7 +150,7 @@
         ".real-talk__card-image {min-height: 330px;}"
       ],
       "settings": {
-        "heading": "Good to ",
+        "heading": "Good to",
         "heading_italic": "Know"
       }
     },
