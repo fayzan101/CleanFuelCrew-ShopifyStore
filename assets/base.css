@@ -1669,7 +1669,7 @@ shopify-account:not(:defined) {
   }
 
   .product-related__slide {
-    flex: 0 0 calc(50% - 1rem);
+    flex-basis: calc(25% - 1.5rem);
     scroll-snap-align: start;
   }
 
@@ -1682,11 +1682,11 @@ shopify-account:not(:defined) {
   }
 }
 
-/* @media screen and (min-width: 990px) {
+@media screen and (min-width: 990px) {
   .product-related__slide {
     flex-basis: calc(25% - 1.5rem);
   }
-} */
+}
 
 .product-related__dot {
   width: 0.8rem;
