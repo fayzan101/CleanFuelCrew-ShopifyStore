@@ -20,14 +20,18 @@
     endif
 
     assign featured_zoom_url = featured_media | image_url: width: 3000
+
+    assign product_banner_subtitle = 'Home / Shop / ' | append: product.title
+    if section.settings.banner_subtitle != blank
+      assign product_banner_subtitle = section.settings.banner_subtitle
+    endif
   -%}
 
   {%- if section.settings.show_banner -%}
     {% render 'page-banner',
       banner_title: product.title,
-      banner_image: section.settings.banner_image | default: featured_media,
-      breadcrumb_preset: 'product',
-      breadcrumb_product: product
+      banner_subtitle: product_banner_subtitle,
+      banner_image: section.settings.banner_image | default: featured_media
     %}
   {%- endif -%}
 

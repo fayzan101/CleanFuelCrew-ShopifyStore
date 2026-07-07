@@ -6,25 +6,10 @@
 
   if request.page_type == 'product'
     assign og_type = 'product'
-    if page_description == blank and product.description != blank
-      assign og_description = product.description | strip_html | truncate: 200
-    endif
   elsif request.page_type == 'article'
     assign og_type = 'article'
-    if page_description == blank
-      assign og_description = article.excerpt | default: article.content | strip_html | truncate: 200
-    endif
-  elsif request.page_type == 'collection'
-    if page_description == blank and collection.description != blank
-      assign og_description = collection.description | strip_html | truncate: 200
-    endif
   elsif request.page_type == 'password'
     assign og_url = request.origin
-  endif
-
-  assign og_image = page_image
-  if og_image == blank and request.page_type == 'product' and product.featured_media
-    assign og_image = product.featured_media
   endif
 -%}
 
@@ -33,32 +18,14 @@
 <meta property="og:title" content="{{ og_title | escape }}">
 <meta property="og:type" content="{{ og_type }}">
 <meta property="og:description" content="{{ og_description | escape }}">
-<meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' }}">
 
-{%- if og_image -%}
-  {%- assign og_image_url = og_image | image_url: width: 1200 -%}
-  <meta property="og:image" content="https:{{ og_image_url }}">
-  <meta property="og:image:secure_url" content="https:{{ og_image_url }}">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="{{ 1200 | divided_by: og_image.aspect_ratio | round }}">
-  <meta property="og:image:alt" content="{{ og_image.alt | default: og_title | escape }}">
-{%- endif -%}
-
-{%- if request.page_type == 'product' -%}
-  <meta property="product:price:amount" content="{{ product.selected_or_first_available_variant.price | money_without_currency | strip_html }}">
-  <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
-{%- endif -%}
-
-{%- if request.page_type == 'article' -%}
-  <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">
-  <meta property="article:modified_time" content="{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%z' }}">
-  <meta property="article:author" content="{{ article.author | escape }}">
+{%- if page_image -%}
+  <meta property="og:image" content="http:{{ page_image | image_url }}">
+  <meta property="og:image:secure_url" content="https:{{ page_image | image_url }}">
+  <meta property="og:image:width" content="{{ page_image.width }}">
+  <meta property="og:image:height" content="{{ page_image.height }}">
 {%- endif -%}
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title | escape }}">
 <meta name="twitter:description" content="{{ og_description | escape }}">
-{%- if og_image -%}
-  <meta name="twitter:image" content="https:{{ og_image_url }}">
-  <meta name="twitter:image:alt" content="{{ og_image.alt | default: og_title | escape }}">
-{%- endif -%}
