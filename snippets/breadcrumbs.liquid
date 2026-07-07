@@ -1,0 +1,95 @@
+{%- comment -%}
+  Visible breadcrumb navigation.
+  Usage: {% render 'breadcrumbs', items: breadcrumb_items %}
+  Or use preset: {% render 'breadcrumbs', preset: 'product', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  assign breadcrumb_class = class | default: 'breadcrumbs'
+  assign show_home = show_home | default: true, allow_false: true
+-%}
+
+{%- if preset == 'product' and product -%}
+  <nav class="{{ breadcrumb_class }}" aria-label="Breadcrumb">
+    <ol class="{{ breadcrumb_class }}__list" role="list">
+      <li class="{{ breadcrumb_class }}__item">
+        <a class="{{ breadcrumb_class }}__link" href="{{ routes.root_url }}">Home</a>
+      </li>
+      <li class="{{ breadcrumb_class }}__item">
+        <a class="{{ breadcrumb_class }}__link" href="{{ routes.all_products_collection_url }}">Shop</a>
+      </li>
+      <li class="{{ breadcrumb_class }}__item" aria-current="page">
+        <span class="{{ breadcrumb_class }}__current">{{ product.title | escape }}</span>
+      </li>
+    </ol>
+  </nav>
+
+{%- elsif preset == 'collection' and collection -%}
+  <nav class="{{ breadcrumb_class }}" aria-label="Breadcrumb">
+    <ol class="{{ breadcrumb_class }}__list" role="list">
+      <li class="{{ breadcrumb_class }}__item">
+        <a class="{{ breadcrumb_class }}__link" href="{{ routes.root_url }}">Home</a>
+      </li>
+      <li class="{{ breadcrumb_class }}__item">
+        <a class="{{ breadcrumb_class }}__link" href="{{ routes.all_products_collection_url }}">Shop</a>
+      </li>
+      <li class="{{ breadcrumb_class }}__item" aria-current="page">
+        <span class="{{ breadcrumb_class }}__current">{{ collection.title | escape }}</span>
+      </li>
+    </ol>
+  </nav>
+
+{%- elsif preset == 'article' and article and blog -%}
+  <nav class="{{ breadcrumb_class }}" aria-label="Breadcrumb">
+    <ol class="{{ breadcrumb_class }}__list" role="list">
+      <li class="{{ breadcrumb_class }}__item">
+        <a class="{{ breadcrumb_class }}__link" href="{{ routes.root_url }}">Home</a>
+      </li>
+      <li class="{{ breadcrumb_class }}__item">
+        <a class="{{ breadcrumb_class }}__link" href="{{ blog.url }}">{{ blog.title | escape }}</a>
+      </li>
+      <li class="{{ breadcrumb_class }}__item" aria-current="page">
+        <span class="{{ breadcrumb_class }}__current">{{ article.title | escape }}</span>
+      </li>
+    </ol>
+  </nav>
+
+{%- elsif preset == 'blog' and blog -%}
+  <nav class="{{ breadcrumb_class }}" aria-label="Breadcrumb">
+    <ol class="{{ breadcrumb_class }}__list" role="list">
+      <li class="{{ breadcrumb_class }}__item">
+        <a class="{{ breadcrumb_class }}__link" href="{{ routes.root_url }}">Home</a>
+      </li>
+      <li class="{{ breadcrumb_class }}__item" aria-current="page">
+        <span class="{{ breadcrumb_class }}__current">{{ blog.title | escape }}</span>
+      </li>
+    </ol>
+  </nav>
+
+{%- elsif preset == 'page' and page -%}
+  <nav class="{{ breadcrumb_class }}" aria-label="Breadcrumb">
+    <ol class="{{ breadcrumb_class }}__list" role="list">
+      <li class="{{ breadcrumb_class }}__item">
+        <a class="{{ breadcrumb_class }}__link" href="{{ routes.root_url }}">Home</a>
+      </li>
+      <li class="{{ breadcrumb_class }}__item" aria-current="page">
+        <span class="{{ breadcrumb_class }}__current">{{ page.title | escape }}</span>
+      </li>
+    </ol>
+  </nav>
+
+{%- elsif items != blank -%}
+  <nav class="{{ breadcrumb_class }}" aria-label="Breadcrumb">
+    <ol class="{{ breadcrumb_class }}__list" role="list">
+      {%- for item in items -%}
+        <li class="{{ breadcrumb_class }}__item"{% if forloop.last %} aria-current="page"{% endif %}>
+          {%- if item.url != blank and forloop.last == false -%}
+            <a class="{{ breadcrumb_class }}__link" href="{{ item.url }}">{{ item.title | escape }}</a>
+          {%- else -%}
+            <span class="{{ breadcrumb_class }}__current">{{ item.title | escape }}</span>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ol>
+  </nav>
+{%- endif -%}

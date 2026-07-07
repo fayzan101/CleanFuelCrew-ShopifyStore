@@ -38,8 +38,9 @@
 
   {% render 'page-banner',
     banner_title: collection_banner_title,
-    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
-    banner_image: section.settings.banner_image | default: collection.featured_image
+    banner_image: section.settings.banner_image | default: collection.featured_image,
+    breadcrumb_preset: 'collection',
+    breadcrumb_collection: collection
   %}
 
   <div class="page-width-larger collection-page__inner">

@@ -1,13 +1,14 @@
 <article class="section article" {{ section.shopify_attributes }}>
   {% render 'page-banner',
     banner_title: article.title,
-    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Blog',
-    banner_image: section.settings.banner_image | default: article.image
+    banner_image: section.settings.banner_image | default: article.image,
+    breadcrumb_preset: 'article',
+    breadcrumb_article: article,
+    breadcrumb_blog: blog
   %}
 
   <div class="page-width">
-    <header>
-      <h1>{{ article.title | escape }}</h1>
+    <header class="article__meta">
       <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
         {{ article.published_at | date: format: 'abbreviated_date' }}
       </time>
@@ -17,7 +18,11 @@
       {{
         article.image
         | image_url: width: 1200
-        | image_tag: loading: 'eager', widths: '400, 800, 1200', sizes: '(min-width: 990px) 80vw, 100vw'
+        | image_tag:
+          loading: 'eager',
+          widths: '400, 800, 1200',
+          sizes: '(min-width: 990px) 80vw, 100vw',
+          alt: article.image.alt | default: article.title
       }}
     {%- endif -%}
 

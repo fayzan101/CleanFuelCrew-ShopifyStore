@@ -21,11 +21,34 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
-    {% if page_description %}
-      <meta name="description" content="{{ page_description | escape }}">
-    {% endif %}
+    {%- liquid
+      assign seo_description = page_description
+      if seo_description == blank and request.page_type == 'product' and product.description != blank
+        assign seo_description = product.description | strip_html | truncate: 160
+      elsif seo_description == blank and request.page_type == 'collection' and collection.description != blank
+        assign seo_description = collection.description | strip_html | truncate: 160
+      elsif seo_description == blank and request.page_type == 'article'
+        assign seo_description = article.excerpt | default: article.content | strip_html | truncate: 160
+      elsif seo_description == blank and shop.description != blank
+        assign seo_description = shop.description
+      endif
+    -%}
+    {%- if seo_description != blank -%}
+      <meta name="description" content="{{ seo_description | escape }}">
+    {%- endif -%}
+
+    {%- if request.page_type == 'password' -%}
+      <meta name="robots" content="noindex, nofollow">
+    {%- elsif request.page_type == 'cart' or request.page_type == 'customers' -%}
+      <meta name="robots" content="noindex, nofollow">
+    {%- elsif request.page_type == 'search' -%}
+      <meta name="robots" content="noindex, follow">
+    {%- elsif template.name == '404' -%}
+      <meta name="robots" content="noindex, nofollow">
+    {%- endif -%}
 
     {% render 'meta-tags' %}
+    {% render 'structured-data' %}
     {% render 'css-variables' %}
 
     {{ content_for_header }}

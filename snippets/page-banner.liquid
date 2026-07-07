@@ -24,8 +24,18 @@
   <div class="page-banner__overlay" aria-hidden="true"></div>
 
   <div class="page-width page-banner__content">
-      <h1 class="page-banner__title">{{ banner_title | escape }}</h1>
-    {%- if banner_subtitle != blank -%}
+    <h1 class="page-banner__title">{{ banner_title | escape }}</h1>
+    {%- if breadcrumb_preset != blank -%}
+      {% render 'breadcrumbs',
+        preset: breadcrumb_preset,
+        product: breadcrumb_product,
+        collection: breadcrumb_collection,
+        article: breadcrumb_article,
+        blog: breadcrumb_blog,
+        page: breadcrumb_page,
+        class: 'breadcrumbs breadcrumbs--banner'
+      %}
+    {%- elsif banner_subtitle != blank -%}
       <p class="page-banner__eyebrow">{{ banner_subtitle | escape }}</p>
     {%- endif -%}
   </div>
