@@ -9,7 +9,6 @@
 
   const content = modal.querySelector('[data-quick-view-content]');
   const shippingUrl = modal.dataset.shippingUrl || '/pages/shipping-returns';
-  const shopUrl = modal.dataset.shopUrl || window.location.origin;
 
   function formatMoney(cents) {
     if (window.Shopify && typeof Shopify.formatMoney === 'function') {
@@ -61,32 +60,11 @@
   function buildProductHtml(product) {
     const variant = getDefaultVariant(product);
     const imageSrc = variant.featured_image?.src || product.featured_image || '';
-    const shareUrl = shopUrl + product.url;
     const category = product.type ? escapeHtml(product.type) : '';
 
     const categoryHtml = category
       ? '<p class="product__category"><span class="product__meta-label">Category:</span> ' + category + '</p>'
       : '';
-
-    function shareLink(href, label, iconKey) {
-      const iconUrl = modal.dataset['icon' + iconKey];
-      const icon = iconUrl
-        ? '<span class="product__share-icon" style="--icon-url: url(\'' + iconUrl + '\');"></span>'
-        : '';
-      return '<a href="' + href + '" class="product__share-link" target="_blank" rel="noopener" aria-label="' + label + '">' + icon + '</a>';
-    }
-
-    const shareLinks =
-      shareLink('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl), 'Share on Facebook', 'Facebook') +
-      shareLink('https://wa.me/?text=' + encodeURIComponent(product.title + ' ' + shareUrl), 'Share on WhatsApp', 'Whatsapp') +
-      shareLink('https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(shareUrl), 'Share on LinkedIn', 'Linkedin') +
-      shareLink(
-        'https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(shareUrl) +
-          '&media=' + encodeURIComponent(imageSrc) +
-          '&description=' + encodeURIComponent(product.title),
-        'Share on Pinterest',
-        'Pinterest'
-      );
 
     const descriptionHtml = getDescriptionHtml(product);
 
@@ -136,10 +114,6 @@
           '<div class="product__meta">' +
             categoryHtml +
             '<a href="' + shippingUrl + '" class="product__shipping-link">Shipping &amp; Returns</a>' +
-          '</div>' +
-          '<div class="product__share">' +
-            '<span class="product__share-label">Share:</span>' +
-            '<div class="product__share-links">' + shareLinks + '</div>' +
           '</div>' +
           '<a href="' + product.url + '" class="quick-view__full-link">View full product details</a>' +
         '</div>' +
