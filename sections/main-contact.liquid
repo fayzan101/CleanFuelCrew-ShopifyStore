@@ -1,23 +1,4 @@
-{% render 'page-contact',
-  shopify_attributes: section.shopify_attributes,
-  section_id: section.id,
-  banner_page_title: section.settings.banner_title | default: 'Contact',
-  banner_subtitle: section.settings.banner_subtitle | default: 'Home / Contact',
-  banner_image: section.settings.banner_image,
-  info_heading: section.settings.info_heading,
-  info_text: section.settings.info_text,
-  location_label: section.settings.location_label,
-  location_text: section.settings.location_text,
-  phone_label: section.settings.phone_label,
-  phone_number: section.settings.phone_number,
-  email_label: section.settings.email_label,
-  email_address: section.settings.email_address,
-  instagram_label: section.settings.instagram_label,
-  instagram_handle: section.settings.instagram_handle | default: '@cleanfuelcrew' ,
-  instagram_url: section.settings.instagram_url,
-  form_heading: section.settings.form_heading | default: 'Say Something...',
-  submit_label: section.settings.submit_label | default: 'Send message'
-%}
+{% render 'page-contact', shopify_attributes: section.shopify_attributes, section_id: section.id, banner_page_title: section.settings.banner_title, default: 'Send message', banner_subtitle: section.settings.banner_subtitle, banner_image: section.settings.banner_image, info_heading: section.settings.info_heading, info_text: section.settings.info_text, location_label: section.settings.location_label, location_text: section.settings.location_text, phone_label: section.settings.phone_label, phone_number: section.settings.phone_number, email_label: section.settings.email_label, email_address: section.settings.email_address, instagram_label: section.settings.instagram_label, instagram_handle: section.settings.instagram_handle, instagram_url: section.settings.instagram_url, form_heading: section.settings.form_heading, submit_label: section.settings.submit_label %}
 
 {% schema %}
 {
@@ -134,3 +115,42 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'page-contact',
+      shopify_attributes: section.shopify_attributes,
+      section_id: section.id,
+      banner_page_title: section.settings.banner_title | default: 'Contact',
+      banner_subtitle: section.settings.banner_subtitle | default: 'Home / Contact',
+      banner_image: section.settings.banner_image,
+      info_heading: section.settings.info_heading,
+      info_text: section.settings.info_text,
+      location_label: section.settings.location_label,
+      location_text: section.settings.location_text,
+      phone_label: section.settings.phone_label,
+      phone_number: section.settings.phone_number,
+      email_label: section.settings.email_label,
+      email_address: section.settings.email_address,
+      instagram_label: section.settings.instagram_label,
+      instagram_handle: section.settings.instagram_handle | default: '@cleanfuelcrew' ,
+      instagram_url: section.settings.instagram_url,
+      form_heading: section.settings.form_heading | default: 'Say Something...',
+      submit_label: section.settings.submit_label | default: 'Send message'
+    %}
+  to: "{% render 'page-contact', shopify_attributes: section.shopify_attributes, section_id:
+    section.id, banner_page_title: section.settings.banner_title, default: 'Send message',
+    banner_subtitle: section.settings.banner_subtitle, banner_image: section.settings.banner_image,
+    info_heading: section.settings.info_heading, info_text: section.settings.info_text,
+    location_label: section.settings.location_label, location_text: section.settings.location_text,
+    phone_label: section.settings.phone_label, phone_number: section.settings.phone_number,
+    email_label: section.settings.email_label, email_address: section.settings.email_address,
+    instagram_label: section.settings.instagram_label, instagram_handle: section.settings.instagram_handle,
+    instagram_url: section.settings.instagram_url, form_heading: section.settings.form_heading,
+    submit_label: section.settings.submit_label %}"
+  position: 0..869
+{% endcomment %}

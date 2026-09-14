@@ -20,13 +20,7 @@
     %}
 
   {%- when 'contact' -%}
-    {% render 'page-contact',
-      shopify_attributes: section.shopify_attributes,
-      section_id: section.id,
-      banner_page_title: page.title | default: 'Contact',
-      banner_subtitle: section.settings.banner_subtitle | default: 'Home / Contact',
-      banner_image: section.settings.banner_image
-    %}
+    {% render 'page-contact', shopify_attributes: section.shopify_attributes, section_id: section.id, banner_page_title: page.title, default: 'Home / Contact', banner_subtitle: section.settings.banner_subtitle, banner_image: section.settings.banner_image %}
 
   {%- else -%}
     {% render 'page-default', section: section, shopify_attributes: section.shopify_attributes %}
@@ -62,3 +56,23 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'page-contact',
+          shopify_attributes: section.shopify_attributes,
+          section_id: section.id,
+          banner_page_title: page.title | default: 'Contact',
+          banner_subtitle: section.settings.banner_subtitle | default: 'Home / Contact',
+          banner_image: section.settings.banner_image
+        %}
+  to: "{% render 'page-contact', shopify_attributes: section.shopify_attributes, section_id:
+    section.id, banner_page_title: page.title, default: 'Home / Contact', banner_subtitle:
+    section.settings.banner_subtitle, banner_image: section.settings.banner_image
+    %}"
+  position: 780..1033
+{% endcomment %}

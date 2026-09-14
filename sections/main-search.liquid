@@ -6,11 +6,7 @@
     endif
   -%}
 
-  {% render 'page-banner',
-    banner_title: search_banner_title,
-    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Search',
-    banner_image: section.settings.banner_image
-  %}
+  {% render 'page-banner', banner_title: search_banner_title, banner_subtitle: section.settings.banner_subtitle, default: 'Home / Search', banner_image: section.settings.banner_image %}
 
   <div class="page-width-larger search-page__inner">
     <form action="{{ routes.search_url }}" method="get" role="search" class="search-page__form">
@@ -74,3 +70,20 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'page-banner',
+        banner_title: search_banner_title,
+        banner_subtitle: section.settings.banner_subtitle | default: 'Home / Search',
+        banner_image: section.settings.banner_image
+      %}
+  to: "{% render 'page-banner', banner_title: search_banner_title, banner_subtitle:
+    section.settings.banner_subtitle, default: 'Home / Search', banner_image: section.settings.banner_image
+    %}"
+  position: 286..469
+{% endcomment %}

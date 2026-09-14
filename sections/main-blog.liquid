@@ -1,9 +1,5 @@
 <div class="section blog" {{ section.shopify_attributes }}>
-  {% render 'page-banner',
-    banner_title: blog.title,
-    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Blog',
-    banner_image: section.settings.banner_image | default: blog.image
-  %}
+  {% render 'page-banner', banner_title: blog.title, banner_subtitle: section.settings.banner_subtitle, default: blog.image, banner_image: section.settings.banner_image %}
 
   <div class="page-width">
     <h1>{{ blog.title | escape }}</h1>
@@ -49,3 +45,19 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'page-banner',
+        banner_title: blog.title,
+        banner_subtitle: section.settings.banner_subtitle | default: 'Home / Blog',
+        banner_image: section.settings.banner_image | default: blog.image
+      %}
+  to: "{% render 'page-banner', banner_title: blog.title, banner_subtitle: section.settings.banner_subtitle,
+    default: blog.image, banner_image: section.settings.banner_image %}"
+  position: 62..231
+{% endcomment %}

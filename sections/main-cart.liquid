@@ -1,9 +1,5 @@
 <div class="section cart-page" {{ section.shopify_attributes }}>
-  {% render 'page-banner',
-    banner_title: 'Cart',
-    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Cart',
-    banner_image: section.settings.banner_image
-  %}
+  {% render 'page-banner', banner_title: 'Cart', banner_subtitle: section.settings.banner_subtitle, default: 'Home / Cart', banner_image: section.settings.banner_image %}
 
   <div class="page-width-larger cart-page__inner">
     {%- if cart != empty -%}
@@ -260,3 +256,19 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'page-banner',
+        banner_title: 'Cart',
+        banner_subtitle: section.settings.banner_subtitle | default: 'Home / Cart',
+        banner_image: section.settings.banner_image
+      %}
+  to: "{% render 'page-banner', banner_title: 'Cart', banner_subtitle: section.settings.banner_subtitle,
+    default: 'Home / Cart', banner_image: section.settings.banner_image %}"
+  position: 67..235
+{% endcomment %}

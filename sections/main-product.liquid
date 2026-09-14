@@ -28,11 +28,7 @@
   -%}
 
   {%- if section.settings.show_banner -%}
-    {% render 'page-banner',
-      banner_title: product.title,
-      banner_subtitle: product_banner_subtitle,
-      banner_image: section.settings.banner_image | default: featured_media
-    %}
+    {% render 'page-banner', banner_title: product.title, banner_subtitle: product_banner_subtitle, banner_image: section.settings.banner_image, default: featured_media %}
   {%- endif -%}
 
   <div class="page-width product-page__hero">
@@ -437,3 +433,19 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'page-banner',
+          banner_title: product.title,
+          banner_subtitle: product_banner_subtitle,
+          banner_image: section.settings.banner_image | default: featured_media
+        %}
+  to: "{% render 'page-banner', banner_title: product.title, banner_subtitle: product_banner_subtitle,
+    banner_image: section.settings.banner_image, default: featured_media %}"
+  position: 1280..1447
+{% endcomment %}

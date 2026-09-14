@@ -36,11 +36,7 @@
     endif
   -%}
 
-  {% render 'page-banner',
-    banner_title: collection_banner_title,
-    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
-    banner_image: section.settings.banner_image | default: collection.featured_image
-  %}
+  {% render 'page-banner', banner_title: collection_banner_title, banner_subtitle: section.settings.banner_subtitle, default: collection.featured_image, banner_image: section.settings.banner_image %}
 
   <div class="page-width-larger collection-page__inner">
     <div class="collection-page__layout">
@@ -218,4 +214,20 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'page-banner',
+        banner_title: collection_banner_title,
+        banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
+        banner_image: section.settings.banner_image | default: collection.featured_image
+      %}
+  to: "{% render 'page-banner', banner_title: collection_banner_title, banner_subtitle:
+    section.settings.banner_subtitle, default: collection.featured_image, banner_image:
+    section.settings.banner_image %}"
+  position: 1303..1500
+{%- endcomment -%}

@@ -10,13 +10,10 @@ Thumbs.db
 
 # Editor
 .idea/
-.vscode/
 *.swp
 *.swo
 
 # Environment
-.env
-.env.*
 
 # Logs
 *.log
@@ -25,3 +22,4 @@ npm-debug.log*
 # Build artifacts
 dist/
 .cache/
+config.bat

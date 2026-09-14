@@ -1,9 +1,5 @@
 <div class="section list-collections" {{ section.shopify_attributes }}>
-  {% render 'page-banner',
-    banner_title: 'Shop',
-    banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
-    banner_image: section.settings.banner_image
-  %}
+  {% render 'page-banner', banner_title: 'Shop', banner_subtitle: section.settings.banner_subtitle, default: 'Home / Shop', banner_image: section.settings.banner_image %}
 
   <div class="page-width">
     <h1>{{ 'collections.general.title' | t }}</h1>
@@ -47,3 +43,19 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'page-banner',
+        banner_title: 'Shop',
+        banner_subtitle: section.settings.banner_subtitle | default: 'Home / Shop',
+        banner_image: section.settings.banner_image
+      %}
+  to: "{% render 'page-banner', banner_title: 'Shop', banner_subtitle: section.settings.banner_subtitle,
+    default: 'Home / Shop', banner_image: section.settings.banner_image %}"
+  position: 74..242
+{% endcomment %}
