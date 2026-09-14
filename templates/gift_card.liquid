@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>{{ 'gift_cards.issued.title' | t: value: gift_card.balance | money, shop: shop.name }}</title>
+    <title>{{ 'gift_cards.issued.title' | t: value: gift_card.balance | money: shop: shop.name }}</title>
     {{ content_for_header }}
   </head>
   <body>
@@ -14,3 +14,15 @@
     </main>
   </body>
 </html>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{{ 'gift_cards.issued.title' | t: value: gift_card.balance | money, shop:
+    shop.name }}"
+  to: "{{ 'gift_cards.issued.title' | t: value: gift_card.balance | money: shop: shop.name
+    }}"
+  position: 197..283
+{% endcomment %}

@@ -2,9 +2,9 @@
   "name": "amadal",
   "version": "1.0.0",
   "private": true,
-  "description": "Amadal — Shopify Online Store 2.0 theme",
+  "description": "Amadal \u2014 Shopify Online Store 2.0 theme",
   "scripts": {
-    "dev": "shopify theme dev",
+    "dev": "node init && shopify theme dev",
     "push": "shopify theme push",
     "pull": "shopify theme pull",
     "check": "shopify theme check",

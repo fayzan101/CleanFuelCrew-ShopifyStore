@@ -1,10 +1,6 @@
 <div class="section page"{% if shopify_attributes != blank %} {{ shopify_attributes }}{% endif %}>
   {%- if section.settings.show_banner -%}
-    {% render 'page-banner',
-      banner_title: page.title,
-      banner_subtitle: section.settings.banner_subtitle | default: 'Home / Page',
-      banner_image: section.settings.banner_image
-    %}
+    {% render 'page-banner', banner_title: page.title, banner_subtitle: section.settings.banner_subtitle, default: 'Home / Page', banner_image: section.settings.banner_image %}
   {%- else -%}
     <div class="page-width">
       <h1 class="page-heading">{{ page.title | escape }}</h1>
@@ -15,3 +11,19 @@
     <div class="rte">{{ page.content }}</div>
   </div>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {% render 'page-banner',
+          banner_title: page.title,
+          banner_subtitle: section.settings.banner_subtitle | default: 'Home / Page',
+          banner_image: section.settings.banner_image
+        %}
+  to: "{% render 'page-banner', banner_title: page.title, banner_subtitle: section.settings.banner_subtitle,
+    default: 'Home / Page', banner_image: section.settings.banner_image %}"
+  position: 145..317
+{% endcomment %}
